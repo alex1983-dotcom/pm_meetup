@@ -1,5 +1,5 @@
-FROM node:18-alpine
-
+FROM node:lts-alpine
+RUN apk update && apk upgrade --no-cache
 WORKDIR /app/frontend
 
 # Копируем package.json если есть, иначе создаем пустой билд

@@ -56,3 +56,6 @@ frontend/.env.production.local
 # ===== OS =====
 .DS_Store
 Thumbs.db
+
+# ========== Obsidian ================
+docs/obs_pm_meetup

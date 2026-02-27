@@ -1,4 +1,4 @@
-# Кофигурация проекта
+# Конфигурация проекта
 
 ## config/settings/base.py
 ```python
@@ -125,7 +125,7 @@ SPECTACULAR_SETTINGS = {
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000').split(',')
 ```
 
-## confi/settings/development.py
+## config/settings/development.py
 
 ```python
 from .base import *
@@ -162,7 +162,7 @@ LOGGING = {
             "mode": "a",
             "encoding": "utf-8",
             "formatter": "verbose",
-        },
+          },
         "drf_file": {
             "level": "WARNING",
             "class": "logging.FileHandler",
@@ -186,8 +186,11 @@ LOGGING['loggers']['django.server'] = {
     'propagate': False,
 }
 ```
+
+---
+
 ## config/settings/production.py
-```
+```python
 from .base import *
 from decouple import config
 from pathlib import Path
@@ -197,21 +200,25 @@ DEBUG = False
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
 
+# === БАЗА ДАННЫХ ===
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": config("DB_NAME"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST", default="127.0.0.1"),
-        "PORT": config("DB_PORT", default="3306"),
-        "OPTIONS": {"charset": "utf8mb4"},
+    'default': {
+        'ENGINE': config('DB_ENGINE', default='django.db.backends.postgresql'),
+        'NAME': config('DB_NAME', default='pm_meetup'),
+        'USER': config('DB_USER', default='postgres'),
+        'PASSWORD': config('DB_PASSWORD', default='postgres'),
+        'HOST': config('DB_HOST', default='db'),
+        'PORT': config('DB_PORT', default='5432'),
+        'CONN_MAX_AGE': 600,
+        'OPTIONS': {
+            'connect_timeout': 10,
+        },
     }
 }
 
 
 
-LOG_DIR = Path(config("LOG_DIR", default="/var/log/hub42"))
+LOG_DIR = Path(config("LOG_DIR", default="/var/log/pm_meetup"))
 LOG_DIR.mkdir(mode=0o755, exist_ok=True)
 
 # общий формат

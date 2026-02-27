@@ -21,11 +21,17 @@ INSTALLED_APPS = [
     'corsheaders',
     'drf_spectacular',
     'django_filters',
-    'django_ckeditor_5',
+    'mdeditor',
     
     # Local apps
     'apps.core',
+    'apps.users',
+    'apps.events',
+    'apps.news',
+    'apps.content',
 ]
+
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -119,3 +125,27 @@ SPECTACULAR_SETTINGS = {
 
 # CORS
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000').split(',')
+
+# MDEditor (Markdown)
+X_FRAME_OPTIONS = 'SAMEORIGIN'  # требуется для mdeditor в Django 3.0+
+MDEDITOR_CONFIGS = {
+    'default': {
+        'width': '90%',
+        'height': 500,
+        'toolbar': [
+            "undo", "redo", "|",
+            "bold", "del", "italic", "quote", "|",
+            "h1", "h2", "h3", "h5", "h6", "|",
+            "list-ul", "list-ol", "hr", "|",
+            "link", "image", "code", "table", "|",
+            "preview", "fullscreen",
+        ],
+        'upload_image_formats': ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+        'upload_require_auth': False,
+        'image_folder': 'editor',
+        'theme': 'default',
+        'preview_theme': 'default',
+        'editor_theme': 'default',
+        'language': 'ru',
+    },
+}

@@ -58,4 +58,6 @@ frontend/.env.production.local
 Thumbs.db
 
 # ========== Obsidian ================
-docs/obs_pm_meetup
+docs/obsidian_pm_meetup/.obsidian/
+docs/obsidian_pm_meetup/Daily-Notes/
+

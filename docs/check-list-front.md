@@ -88,6 +88,9 @@ docker-compose up -d
 # В корне проекта PM_Meetup
 docker-compose exec frontend npm install <название-пакета>
 ```
+## В корне проекта создать `.env`
+
+Шаблон  находится в `.env.example`, в корне проекта
 
 ### После установки
 

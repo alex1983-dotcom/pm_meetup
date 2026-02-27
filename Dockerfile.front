@@ -1,13 +1,12 @@
 FROM node:lts-alpine
-RUN apk update && apk upgrade --no-cache
+
 WORKDIR /app/frontend
 
-# Копируем package.json если есть, иначе создаем пустой билд
 COPY frontend/package.json .
-RUN npm install || echo "No package.json, skipping install"
+RUN npm install
 
 COPY frontend .
-RUN npm run build || echo "No build script, skipping build"
+RUN npm run build
 
 FROM nginx:alpine
 COPY --from=0 /app/frontend/build /usr/share/nginx/html

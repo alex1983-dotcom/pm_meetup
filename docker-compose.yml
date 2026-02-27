@@ -1,22 +1,57 @@
+version: '3.8'
+
 services:
+  db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - pm_meetup_network
+
   web:
     build: .
+    restart: unless-stopped
     ports:
       - "8000:8000"
     volumes:
       - ./media:/app/media
       - ./logs:/app/logs
+      - .:/app
     environment:
       - DJANGO_SETTINGS_MODULE=config.settings.development
-      - DEBUG=1
+      - DEBUG=${DEBUG}
+      - DB_ENGINE=${DB_ENGINE}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - SECRET_KEY=${SECRET_KEY}
+    depends_on:
+      db:
+        condition: service_healthy
     command: >
       sh -c "
         python manage.py migrate &&
         python manage.py collectstatic --noinput &&
-        python manage.py runserver 0.0.0.0:8000"
+        python manage.py runserver 0.0.0.0:8000
+      "
+    networks:
+      - pm_meetup_network
 
   frontend:
     image: node:lts-alpine
+    restart: unless-stopped
     working_dir: /app
     volumes:
       - ./frontend:/app
@@ -26,4 +61,14 @@ services:
     command: sh -c "npm install && npm start"
     stdin_open: true
     tty: true
+    networks:
+      - pm_meetup_network
 
+volumes:
+  postgres_data:
+
+networks:
+  pm_meetup_network:
+    driver: bridge
+
+  

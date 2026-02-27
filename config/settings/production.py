@@ -4,7 +4,8 @@ from pathlib import Path
 
 
 DEBUG = False
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")])
+
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
 
 DATABASES = {
     "default": {

@@ -17,34 +17,41 @@
 1. В корне проекта создать файл **`.env`** (скопировать из `.env.example`). В `.env` обязательно совпадают пароли для БД: **`POSTGRES_PASSWORD`** и **`DB_PASSWORD`** (одно и то же значение). Иначе контейнер backend будет падать при старте.
 2. В корне проекта должна быть папка **`static`** (пустая) — иначе backend выведет предупреждение (на работу не влияет).
 
+**Фронту не нужно создавать миграции** — все файлы миграций уже есть в репозитории. Нужно только применить их и один раз создать суперпользователя для админки.
+
 ```bash
 # 1. Клонировать репозиторий
 git clone <URL_репозитория>
 cd pm_meetup
 
 # 2. Создать .env из шаблона (если ещё нет) и проверить, что POSTGRES_PASSWORD = DB_PASSWORD
+cp .env.example .env
+# Отредактировать .env при необходимости
+
 # 3. Запустить всё (Backend + Frontend + DB)
 docker-compose up -d
 
-# 4. Подождать 10–15 секунд, затем проверить, что backend запущен (не перезапускается)
+# 4. Подождать 10–15 секунд, проверить, что backend запущен
 docker-compose ps
-# Контейнер web должен быть в статусе "Up". Если "Restarting" — см. раздел "Типичные проблемы при развёртывании" ниже.
+# Контейнер web должен быть в статусе "Up". Если "Restarting" — см. раздел "Типичные проблемы" ниже.
 
-# 5. Создать файлы миграций (если ещё не созданы)
-docker-compose exec web python manage.py makemigrations
-
-# 6. Применить миграции
+# 5. Применить миграции (схема БД уже в репо — только применить)
 docker-compose exec web python manage.py migrate
+
+# 6. Создать суперпользователя для входа в админку (обязательно при первом запуске)
+docker-compose exec web python manage.py createsuperuser
 ```
 
 ---
-## 3. Создание суперпользователя (для админки)
+## 3. Создание суперпользователя (обязательно при первом запуске)
+
+Без суперпользователя нельзя зайти в админку (`/admin/`) и получить API-ключ. Выполнить **один раз** после первого `migrate`:
 
 ```bash
 docker-compose exec web python manage.py createsuperuser
 ```
 
-Вход в админку — по **email** и паролю (не по отдельному логину). При создании суперпользователя запрашиваются:
+Вход в админку — по **email** и паролю (логина отдельно нет). При создании запрашиваются:
 
 - **Email** (обязательно)
 - **Имя**
@@ -63,16 +70,18 @@ docker-compose exec web python manage.py createsuperuser
 
 ## 6. Основные команды
 
-| Задача                 | Команда                                                            |
-| ---------------------- | ------------------------------------------------------------------ |
-| **Остановить проект**  | `docker-compose down`                                              |
-| **Перезапустить**      | `docker-compose restart`                                           |
-| **Посмотреть логи**    | `docker-compose logs -f`                                           |
-| **Логи только фронта** | `docker-compose logs -f frontend`                                  |
-| **Логи только бэка**   | `docker-compose logs -f web`                                       |
-| **Создать миграции**   | `docker-compose exec web python manage.py makemigrations`          |
-| **Применить миграции** | `docker-compose exec web python manage.py migrate`                 |
-| **Собрать статику**    | `docker-compose exec web python manage.py collectstatic --noinput` |
+| Задача                       | Команда                                                            |
+| ---------------------------- | ------------------------------------------------------------------ |
+| **Остановить проект**        | `docker-compose down`                                              |
+| **Перезапустить**            | `docker-compose restart`                                           |
+| **Посмотреть логи**          | `docker-compose logs -f`                                           |
+| **Логи только фронта**       | `docker-compose logs -f frontend`                                   |
+| **Логи только бэка**         | `docker-compose logs -f web`                                       |
+| **Применить миграции**       | `docker-compose exec web python manage.py migrate`                 |
+| **Создать суперпользователя**| `docker-compose exec web python manage.py createsuperuser`         |
+| **Собрать статику**          | `docker-compose exec web python manage.py collectstatic --noinput` |
+
+> **Фронту:** миграции только **применяются** (`migrate`). Команду `makemigrations` использует backend-разработчик; после обновления кода достаточно сделать `git pull` и снова `migrate`.
 
 ---
 
@@ -106,8 +115,8 @@ docker-compose up -d
    docker-compose logs web --tail=100
    ```
 2. По тексту ошибки:
-   - **`password authentication failed for user "postgres"`** — не совпадают пароли БД. В `.env` должны быть одинаковые значения: `POSTGRES_PASSWORD=...` и `DB_PASSWORD=...`. После исправления: `docker-compose down -v` (удалит данные БД!), затем `docker-compose up -d`. Через 10–15 сек снова `makemigrations` и `migrate`.
-   - **`Dependency on app with no migrations: users`** или **`BadMigrationError ... has no Migration class`** — сломаны или отсутствуют файлы миграций backend. Это чинится на стороне backend (миграции в репозитории). После обновления кода — снова `docker-compose up -d`, затем `migrate`.
+   - **`password authentication failed for user "postgres"`** — не совпадают пароли БД. В `.env` должны быть одинаковые значения: `POSTGRES_PASSWORD=...` и `DB_PASSWORD=...`. После исправления: `docker-compose down -v` (удалит данные БД!), затем `docker-compose up -d`. Через 10–15 сек снова `migrate` и при необходимости `createsuperuser`.
+   - **`Dependency on app with no migrations: users`** или **`BadMigrationError`** — в репозитории не хватает файлов миграций. Нужно обновить код (`git pull`), убедиться, что все миграции в репо, затем снова `docker-compose up -d` и `migrate`.
 
 ### API не отвечает (502, connection refused, CORS)
 
@@ -117,15 +126,16 @@ docker-compose up -d
 
 ### После первого клона или сброса БД
 
-Рекомендуемый порядок:
+Порядок действий:
 
 1. Создать `.env` из `.env.example`, проверить `POSTGRES_PASSWORD` и `DB_PASSWORD`.
 2. `docker-compose up -d`.
 3. Подождать 10–15 сек, проверить `docker-compose ps` (web — Up).
-4. Если web — Up: `makemigrations`, `migrate`, `createsuperuser`.
-5. Открыть фронт и API по URL из таблицы «Проверка работы».
+4. Применить миграции: `docker-compose exec web python manage.py migrate`.
+5. Создать суперпользователя: `docker-compose exec web python manage.py createsuperuser`.
+6. Открыть фронт и API по URL из таблицы «Проверка работы».
 
-Миграции создаёт и применяет backend; фронту достаточно, чтобы backend был запущен и миграции применены.
+Файлы миграций уже в репозитории; фронту нужно только выполнить `migrate` и один раз `createsuperuser`.
 
 ---
 
@@ -137,9 +147,6 @@ docker-compose up -d
 # В корне проекта PM_Meetup
 docker-compose exec frontend npm install <название-пакета>
 ```
-## В корне проекта создать `.env`
-
-Шаблон  находится в `.env.example`, в корне проекта
 
 ### После установки
 

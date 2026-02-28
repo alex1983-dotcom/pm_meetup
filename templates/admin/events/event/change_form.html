@@ -1,0 +1,11 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block submit_buttons_bottom %}
+{{ block.super }}
+{% if original and original.pk %}
+<div class="submit-row">
+  <a href="{% url 'admin:events_event_duplicate' original.pk %}" class="button">Дублировать событие</a>
+</div>
+{% endif %}
+{% endblock %}

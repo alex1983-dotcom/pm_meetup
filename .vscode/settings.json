@@ -6,6 +6,8 @@
   "docker.languageserver.diagnostics.ignore": [
     "critical_high_vulnerabilities",
     "latest_tag"
-  ]
+  ],
+  "cursorpyright.analysis.diagnosticMode": "workspace",
+  "cursorpyright.analysis.typeCheckingMode": "off"
 }
 

@@ -15,6 +15,7 @@ class UserAdmin(BaseUserAdmin):
         (None, {"fields": ("email", "password")}),
         ("Личные данные", {"fields": ("first_name", "last_name", "phone", "avatar")}),
         ("Права", {"fields": ("role", "is_blocked", "is_active", "is_staff", "is_superuser")}),
+        ("Группы и права доступа", {"fields": ("groups", "user_permissions")}),
         ("Даты", {"fields": ("last_login", "created_at")}),
     )
 

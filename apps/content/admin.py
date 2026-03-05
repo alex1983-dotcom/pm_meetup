@@ -1,13 +1,5 @@
 from django.contrib import admin
-from .models import Material, Partner, TeamMember, SiteSettings, Page, PartnershipApplication
-
-
-@admin.register(Material)
-class MaterialAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "view_count", "created_at")
-    list_filter = ("category",)
-    search_fields = ("title",)
-    list_editable = ("category",)
+from .models import Partner, TeamMember, SiteSettings, Page, PartnershipApplication
 
 
 @admin.register(Partner)

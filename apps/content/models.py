@@ -6,36 +6,6 @@ from mdeditor.fields import MDTextField
 from apps.core.models import TimeStampedModel
 
 
-class Material(TimeStampedModel):
-    """Материал: отчёт, курс, чек-лист, запись, кейс."""
-    CATEGORY_CHOICES = [
-        ("report", "Отчёт"),
-        ("course", "Курс"),
-        ("checklist", "Чек-лист"),
-        ("recording", "Запись"),
-        ("case_study", "Кейс"),
-    ]
-
-    title = models.CharField("Название", max_length=300)
-    category = models.CharField(
-        "Категория", max_length=20, choices=CATEGORY_CHOICES, default="report"
-    )
-    description = models.TextField("Описание", blank=True)
-    file_url = models.URLField("Ссылка на файл/страницу", blank=True)
-    cover_image = models.ImageField(
-        "Превью", upload_to="materials/", blank=True, null=True
-    )
-    view_count = models.PositiveIntegerField("Просмотры", default=0)
-
-    class Meta:
-        verbose_name = "Материал"
-        verbose_name_plural = "Материалы"
-        ordering = ["-created_at"]
-
-    def __str__(self):
-        return self.title
-
-
 class Partner(TimeStampedModel):
     """Партнёр сообщества."""
     LEVEL_CHOICES = [

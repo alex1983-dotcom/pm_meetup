@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'apps.news',
     'apps.content',
     'apps.pages',
+    'apps.materials',
 ]
 
 AUTH_USER_MODEL = 'users.User'

@@ -9,6 +9,7 @@ admin.site.site_title = "PM_Meetup Admin"
 admin.site.index_title = "Добро пожаловать"
 
 urlpatterns = [
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path('mdeditor/', include('mdeditor.urls')),
     # Swagger

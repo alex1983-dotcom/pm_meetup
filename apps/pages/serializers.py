@@ -6,7 +6,7 @@ from apps.pages.models import BlockItem, BlockType, Page, PageBlock
 class BlockItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlockItem
-        fields = ("id", "title", "subtitle", "content", "icon", "order")
+        fields = ("id", "title", "subtitle", "content", "icon", "url", "order")
 
 
 class BlockTypeSerializer(serializers.ModelSerializer):

@@ -90,6 +90,11 @@ class BlockItem(TimeStampedModel):
         blank=True,
         help_text="Ключ или путь до иконки, который использует фронтенд",
     )
+    url = models.URLField(
+        "Ссылка",
+        blank=True,
+        help_text="Произвольная ссылка (например, на YouTube-видео или внешний ресурс)",
+    )
     order = models.PositiveIntegerField("Порядок внутри блока", default=0)
 
     class Meta:

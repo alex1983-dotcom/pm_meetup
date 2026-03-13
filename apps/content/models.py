@@ -48,7 +48,11 @@ class TeamMember(TimeStampedModel):
     full_name = models.CharField("ФИО", max_length=200)
     position = models.CharField("Должность", max_length=200, blank=True)
     photo = models.ImageField("Фотография", upload_to="team/", blank=True, null=True)
-    bio = models.TextField("Биография", blank=True)
+    description = models.TextField(
+        "Описание",
+        blank=True,
+        help_text="Краткое описание того, какую задачу выполняет",
+    )
     email = models.EmailField("Email", blank=True)
     linkedin_url = models.URLField("LinkedIn", blank=True)
     twitter_url = models.URLField("Twitter", blank=True)

@@ -114,6 +114,9 @@ if frontend_build_static.exists():
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Фикстуры для фронта и тестов (loaddata ищет здесь и в app/fixtures/)
+FIXTURE_DIRS = [BASE_DIR / 'fixtures']
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # --------------------------------------------------
@@ -136,9 +139,17 @@ REST_FRAMEWORK = {
 # --------------------------------------------------
 SPECTACULAR_SETTINGS = {
     "TITLE": "PM Meetup API",
-    "DESCRIPTION": "Документация REST API проекта PM Meetup",
+    "DESCRIPTION": "Документация REST API проекта PM Meetup. Все эндпоинты для фронтенда: события, новости, контент, материалы.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
+    "TAGS": [
+        {"name": "core", "description": "Теги (для фильтров событий и новостей)"},
+        {"name": "events", "description": "События, категории, спикеры, сегменты программы, галереи, регистрации"},
+        {"name": "news", "description": "Новости и статьи"},
+        {"name": "content", "description": "Партнёры, команда, настройки сайта, статичные страницы, заявки на партнёрство"},
+        {"name": "materials", "description": "Материалы и категории материалов"},
+        {"name": "pages", "description": "Страницы с блоками (конструктор для фронта)"},
+    ],
     "APPEND_COMPONENTS": {
         "securitySchemes": {
             "ApiKeyAuth": {

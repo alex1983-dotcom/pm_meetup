@@ -71,7 +71,22 @@
 
 ---
 
-## 4. Краткая сводка для заказчика
+## 4. REST API (для фронтенда)
+
+Базовый префикс: **`/api/v1/materials/`**. Swagger: **`/api/docs/`** (тег **materials**). Категории отдаются только с `is_active=True`.
+
+| Метод | URL | Описание |
+|-------|-----|----------|
+| GET | `/api/v1/materials/categories/` | Список активных категорий материалов |
+| GET | `/api/v1/materials/categories/<slug>/` | Категория по slug |
+| GET | `/api/v1/materials/materials/` | Список материалов (с категорией) |
+| GET | `/api/v1/materials/materials/<id>/` | Детали материала по id (включая description, file_url) |
+
+Ответ списка материалов: `id`, `label`, `title`, `category`, `date`, `place`, `duration_minutes`, `cover_image`, `view_count`. В деталях дополнительно: `description`, `file_url`.
+
+---
+
+## 5. Краткая сводка для заказчика
 
 
 | Вопрос                                                            | Ответ                                                                                                          |

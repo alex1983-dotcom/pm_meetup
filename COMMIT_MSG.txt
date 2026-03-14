@@ -1,0 +1,23 @@
+feat(api): полный REST API для фронта, Swagger, seed и фикстуры
+
+API и документация
+-----------------
+- Добавлены сериализаторы и ViewSet'ы для всех приложений:
+  • core: теги (GET /api/v1/core/tags/)
+  • events: категории, спикеры, события, сегменты, галереи, регистрации (GET/POST)
+  • news: статьи (только опубликованные)
+  • content: партнёры, команда, настройки сайта, статичные страницы, заявки на партнёрство (POST)
+  • materials: категории и материалы
+  • users: UserPublicSerializer для автора в новостях
+- В config/urls.py подключены маршруты api/v1/{core,events,news,content,materials}/
+- Swagger (drf_spectacular): теги по приложениям (core, events, news, content, materials, pages), обновлено описание и TAGS в SPECTACULAR_SETTINGS
+- Документация: разделы «REST API» в app-доках (core, events, news, content, materials), общий api-endpoints.md, model-schema-graph.md (graph_models)
+
+Тестовые данные и фикстуры
+--------------------------
+- seed_data: команда загрузки данных по макетам Figma (Contacts, Events, EventPage, News, NewsItem, Materials) — теги, пользователи, события, спикеры, новости, контент, страницы с блоками, материалы
+- dump_fixtures: экспорт в один файл fixtures/initial_data.json (dump_fixtures --seed для создания дампа с данными)
+- FIXTURE_DIRS = [BASE_DIR / 'fixtures'], fixtures/README.md: бэкенд создаёт дамп, фронт разворачивает через loaddata initial_data
+- В docs/docker-commands добавлена секция «Тестовые данные (seed)»
+
+Все команды в документации приведены к работе через Docker.

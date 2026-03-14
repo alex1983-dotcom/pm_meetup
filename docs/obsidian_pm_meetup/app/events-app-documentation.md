@@ -189,7 +189,30 @@
 
 ---
 
-## 5. Краткая сводка для заказчика
+## 5. REST API (для фронтенда)
+
+Базовый префикс: **`/api/v1/events/`**. Swagger: **`/api/docs/`** (тег **events**).
+
+| Метод | URL | Описание |
+|-------|-----|----------|
+| GET | `/api/v1/events/categories/` | Список категорий событий |
+| GET | `/api/v1/events/categories/<slug>/` | Категория по slug |
+| GET | `/api/v1/events/speakers/` | Список спикеров |
+| GET | `/api/v1/events/speakers/<id>/` | Спикер по id |
+| GET | `/api/v1/events/events/` | Список событий (query: `?status=published`) |
+| GET | `/api/v1/events/events/<slug>/` | Детали события по slug (с сегментами, спикерами, тегами) |
+| GET | `/api/v1/events/segments/` | Список сегментов программы |
+| GET | `/api/v1/events/segments/<id>/` | Сегмент по id |
+| GET | `/api/v1/events/galleries/` | Список галерей (query: `?event=<slug>`) |
+| GET | `/api/v1/events/galleries/<id>/` | Галерея по id |
+| GET | `/api/v1/events/registrations/` | Мои регистрации (требуется авторизация) |
+| POST | `/api/v1/events/registrations/` | Регистрация на событие (тело: `event`, `extra_data`; требуется авторизация) |
+
+Все эндпоинты (кроме POST регистрации) — только чтение. Для доступа к API нужен заголовок `X-API-KEY` или запрос с доверенного фронта (см. `OnlyWithApiKeyOrFromFrontend`).
+
+---
+
+## 6. Краткая сводка для заказчика
 
 | Вопрос | Ответ |
 |--------|--------|

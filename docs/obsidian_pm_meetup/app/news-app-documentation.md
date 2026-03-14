@@ -71,7 +71,20 @@
 
 ---
 
-## 5. Краткая сводка для заказчика
+## 5. REST API (для фронтенда)
+
+Базовый префикс: **`/api/v1/news/`**. Swagger: **`/api/docs/`** (тег **news**). В API попадают только статьи с `is_published=True`.
+
+| Метод | URL | Описание |
+|-------|-----|----------|
+| GET | `/api/v1/news/articles/` | Список опубликованных новостей (с тегами и автором) |
+| GET | `/api/v1/news/articles/<slug>/` | Детали новости по slug (полный контент, SEO) |
+
+Ответ списка: `id`, `title`, `slug`, `short_description`, `cover_image`, `publication_date`, `read_time_minutes`, `views_count`, `author` (id, first_name, last_name, email, avatar), `tags`. В деталях дополнительно: `content`, `meta_title`, `meta_description`.
+
+---
+
+## 6. Краткая сводка для заказчика
 
 | Вопрос | Ответ |
 |--------|--------|

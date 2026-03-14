@@ -40,7 +40,7 @@
 | full_name | CharField(200) | ФИО |
 | position | CharField(200) | Должность |
 | photo | ImageField | Фотография (media/team/) |
-| bio | TextField | Биография |
+| description | TextField | Описание / биография |
 | email | EmailField | Email |
 | linkedin_url | URLField | LinkedIn |
 | twitter_url | URLField | Twitter |
@@ -105,7 +105,27 @@
 
 ---
 
-## 5. Краткая сводка для заказчика
+## 5. REST API (для фронтенда)
+
+Базовый префикс: **`/api/v1/content/`**. Swagger: **`/api/docs/`** (тег **content**).
+
+| Метод | URL | Описание |
+|-------|-----|----------|
+| GET | `/api/v1/content/partners/` | Список партнёров |
+| GET | `/api/v1/content/partners/<id>/` | Партнёр по id |
+| GET | `/api/v1/content/team/` | Список команды (по display_order) |
+| GET | `/api/v1/content/team/<id>/` | Член команды по id |
+| GET | `/api/v1/content/settings/` | Настройки сайта (singleton; один объект) |
+| GET | `/api/v1/content/settings/1/` | То же (для совместимости с router) |
+| GET | `/api/v1/content/static-pages/` | Список опубликованных статичных страниц (О нас, Контакты) |
+| GET | `/api/v1/content/static-pages/<slug>/` | Статичная страница по slug |
+| POST | `/api/v1/content/partnership-applications/` | Отправить заявку на партнёрство (тело: company_name, contact_name, contact_email, contact_phone, message) |
+
+Все GET — только чтение. POST заявки не требует авторизации.
+
+---
+
+## 6. Краткая сводка для заказчика
 
 | Вопрос | Ответ |
 |--------|--------|

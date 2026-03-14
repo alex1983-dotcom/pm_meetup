@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from drf_spectacular.utils import extend_schema
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -7,6 +8,7 @@ from apps.pages.models import Page
 from apps.pages.serializers import PageSerializer
 
 
+@extend_schema(tags=["pages"])
 class PageDetailAPIView(APIView):
     """
     Возвращает структуру блоков и элементов для указанной страницы.

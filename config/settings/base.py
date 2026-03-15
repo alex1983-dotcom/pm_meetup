@@ -185,6 +185,6 @@ MDEDITOR_CONFIGS = {
         'theme': 'default',
         'preview_theme': 'default',
         'editor_theme': 'default',
-        'language': 'ru',
+        'language': 'en',
     },
 }

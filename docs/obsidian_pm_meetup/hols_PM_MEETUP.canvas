@@ -35,7 +35,6 @@
 		{"id":"01cc7a5fcfd21b0a","type":"text","text":"![[models-draft#4. Спикеры (Speaker)]]","x":-3160,"y":-118,"width":1027,"height":539},
 		{"id":"c2dd7bfa4b2c67af","type":"file","file":"media/Events.jpg","x":-2818,"y":580,"width":578,"height":1614},
 		{"id":"6adc550fa2c811a5","type":"text","text":"","x":-2496,"y":1030,"width":136,"height":50,"color":"1"},
-		{"id":"a1f0033ad38e5e42","type":"file","file":"media/Main_PM_MEETUP.png","x":-4640,"y":1292,"width":840,"height":3983},
 		{"id":"d2b3e0f197e0dff8","type":"file","file":"media/Materials.jpg","x":1200,"y":4100,"width":1043,"height":1393},
 		{"id":"5b68273cca821a21","type":"text","text":"![[models-draft#9. Материалы (Material)]]","x":1360,"y":3240,"width":1102,"height":528},
 		{"id":"502705a2b56ce029","type":"text","text":"![[models-draft#11. Команда (TeamMember)]]\n\n","x":1560,"y":6163,"width":820,"height":520},
@@ -46,7 +45,8 @@
 		{"id":"9c15fe0938480b4d","type":"text","text":"![[models-draft#10. Партнёры (Partner)]]","x":4022,"y":5900,"width":1378,"height":460},
 		{"id":"e10e342ee6709965","type":"text","text":"![[models-codebase#User]]","x":5475,"y":4659,"width":1051,"height":1021},
 		{"id":"de507c8f2591ff83","type":"text","text":"![[models-codebase#UserManager]]","x":4880,"y":4229,"width":764,"height":731},
-		{"id":"c1de07457e3a8260","x":-1490,"y":8089,"width":4694,"height":3208,"type":"file","file":"media/graph.png"}
+		{"id":"c1de07457e3a8260","type":"file","file":"media/graph.png","x":-1490,"y":8089,"width":4694,"height":3208},
+		{"id":"a1f0033ad38e5e42","type":"file","file":"media/Main_PM_MEETUP.png","x":-4640,"y":1292,"width":840,"height":3983}
 	],
 	"edges":[
 		{"id":"186c87442a9b2e44","fromNode":"9c15fe0938480b4d","fromSide":"left","toNode":"33c55393a1cedec4","toSide":"right"},

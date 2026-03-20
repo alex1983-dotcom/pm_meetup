@@ -1,1225 +1,180 @@
 [
 {
-  "model": "core.tag",
-  "pk": 17,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.041Z",
-    "updated_at": "2026-03-14T19:59:17.041Z",
-    "name": "События",
-    "slug": "sobytiya"
-  }
-},
-{
-  "model": "core.tag",
-  "pk": 18,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.046Z",
-    "updated_at": "2026-03-14T19:59:17.046Z",
-    "name": "TechConference",
-    "slug": "techconference"
-  }
-},
-{
-  "model": "core.tag",
-  "pk": 19,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.050Z",
-    "updated_at": "2026-03-14T19:59:17.050Z",
-    "name": "2025",
-    "slug": "2025"
-  }
-},
-{
-  "model": "core.tag",
-  "pk": 20,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.055Z",
-    "updated_at": "2026-03-14T19:59:17.055Z",
-    "name": "Тренды",
-    "slug": "trendy"
-  }
-},
-{
-  "model": "core.tag",
-  "pk": 21,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.061Z",
-    "updated_at": "2026-03-14T19:59:17.061Z",
-    "name": "Партнеры",
-    "slug": "partnery"
-  }
-},
-{
-  "model": "core.tag",
-  "pk": 22,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.066Z",
-    "updated_at": "2026-03-14T19:59:17.066Z",
-    "name": "Развитие",
-    "slug": "razvitie"
-  }
-},
-{
-  "model": "core.tag",
-  "pk": 23,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.073Z",
-    "updated_at": "2026-03-14T19:59:17.073Z",
-    "name": "Старт",
-    "slug": "start"
-  }
-},
-{
-  "model": "core.tag",
-  "pk": 24,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.079Z",
-    "updated_at": "2026-03-14T19:59:17.079Z",
-    "name": "Наставничества",
-    "slug": "nastavnichestva"
-  }
-},
-{
-  "model": "core.tag",
-  "pk": 25,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.085Z",
-    "updated_at": "2026-03-14T19:59:17.085Z",
-    "name": "Meetup",
-    "slug": "meetup"
-  }
-},
-{
-  "model": "core.tag",
-  "pk": 26,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.092Z",
-    "updated_at": "2026-03-14T19:59:17.093Z",
-    "name": "Workshop",
-    "slug": "workshop"
-  }
-},
-{
-  "model": "core.tag",
-  "pk": 27,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.099Z",
-    "updated_at": "2026-03-14T19:59:17.099Z",
-    "name": "Networking",
-    "slug": "networking"
-  }
-},
-{
   "model": "core.apikey",
-  "pk": 3,
+  "pk": 1,
   "fields": {
-    "name": "Тестовый ключ для фронта",
-    "key": "test-api-key-12345",
+    "name": "front",
+    "key": "BmIw0oMSCGCWoKSsR1JOsd1t5Z9PPkIsqbl9RppN",
     "is_active": true,
-    "created_at": "2026-03-14T19:59:16.366Z"
+    "created_at": "2026-03-10T13:35:13.018Z"
   }
 },
 {
   "model": "users.user",
-  "pk": 6,
+  "pk": 1,
   "fields": {
-    "password": "pbkdf2_sha256$1200000$ezltQZGynzoO0jkevNNQer$ayn+fdNplIQ2ZiyZ36S7IZ6GPwveylw9ajRVxMocTh0=",
-    "last_login": null,
+    "password": "pbkdf2_sha256$1200000$2NMVNZm4JYkQjju04UVC4m$hbDez3bU8mH4vJZ0XaslIT5DTrTv7f7jpg8XkqVsklI=",
+    "last_login": "2026-03-20T06:39:48.977Z",
     "is_superuser": true,
-    "first_name": "Админ",
-    "last_name": "Админов",
+    "first_name": "Саша",
+    "last_name": "Макаров",
     "is_staff": true,
     "is_active": true,
-    "date_joined": "2026-03-14T19:59:16.376Z",
-    "email": "admin@pm.meetup",
+    "date_joined": "2026-02-28T08:17:16.622Z",
+    "email": "test@test.com",
     "phone": "",
     "avatar": "",
     "role": "superadmin",
     "is_blocked": false,
-    "created_at": "2026-03-14T19:59:16.376Z",
+    "created_at": "2026-02-28T08:17:16.713Z",
     "groups": [],
     "user_permissions": []
   }
 },
 {
   "model": "users.user",
-  "pk": 7,
+  "pk": 2,
   "fields": {
-    "password": "pbkdf2_sha256$1200000$yHl8DmmO1r3QnUAgDqFVKf$dojDuPFev0d/xPe3ur+zdPO1AVXQCk2g7qWKhhg4vPc=",
-    "last_login": null,
+    "password": "pbkdf2_sha256$600000$vBye25Itr8Cre45qqInO7V$VeQ+y3hRplLEI9ovp65v+VfBAqNedU8d9wsHOSlUIKE=",
+    "last_login": "2026-03-04T06:34:59Z",
     "is_superuser": false,
-    "first_name": "Иван",
-    "last_name": "Авторов",
-    "is_staff": false,
+    "first_name": "Александр",
+    "last_name": "Макаров",
+    "is_staff": true,
     "is_active": true,
-    "date_joined": "2026-03-14T19:59:16.608Z",
-    "email": "author@pm.meetup",
-    "phone": "",
-    "avatar": "",
-    "role": "organizer",
-    "is_blocked": false,
-    "created_at": "2026-03-14T19:59:16.608Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "users.user",
-  "pk": 8,
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$DKqEP20njkmrPiV13oPpds$Gt1s69MUQ5odKgTO6K+WkdaYXgsaFLpw95vc1m/GSF8=",
-    "last_login": null,
-    "is_superuser": false,
-    "first_name": "Пётр",
-    "last_name": "Участников",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2026-03-14T19:59:16.795Z",
-    "email": "user@pm.meetup",
+    "date_joined": "2026-03-04T06:32:54.060Z",
+    "email": "tiresservice08@gmail.com",
     "phone": "",
     "avatar": "",
     "role": "member",
     "is_blocked": false,
-    "created_at": "2026-03-14T19:59:16.795Z",
+    "created_at": "2026-03-04T06:32:54.154Z",
     "groups": [],
     "user_permissions": []
   }
 },
 {
-  "model": "events.eventcategory",
-  "pk": 7,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.106Z",
-    "updated_at": "2026-03-14T19:59:17.106Z",
-    "name": "Митап",
-    "slug": "meetup",
-    "description": "",
-    "order": 1
-  }
-},
-{
-  "model": "events.eventcategory",
-  "pk": 8,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.113Z",
-    "updated_at": "2026-03-14T19:59:17.113Z",
-    "name": "Воркшоп",
-    "slug": "workshop",
-    "description": "",
-    "order": 2
-  }
-},
-{
-  "model": "events.eventcategory",
-  "pk": 9,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.120Z",
-    "updated_at": "2026-03-14T19:59:17.120Z",
-    "name": "Нетворкинг",
-    "slug": "networking",
-    "description": "",
-    "order": 3
-  }
-},
-{
-  "model": "events.speaker",
-  "pk": 7,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.128Z",
-    "updated_at": "2026-03-14T19:59:17.128Z",
-    "full_name": "Анна Петрова",
-    "position": "Руководитель программ",
-    "company": "",
-    "photo": "",
-    "bio": "Спикер по AI в бизнесе и управлению проектами.",
-    "email": "",
-    "social_links": {},
-    "topics": [
-      19,
-      18,
-      17
-    ]
-  }
-},
-{
-  "model": "events.speaker",
-  "pk": 8,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.146Z",
-    "updated_at": "2026-03-14T19:59:17.146Z",
-    "full_name": "Михаил Сергеев",
-    "position": "Эксперт по цифровому маркетингу",
-    "company": "",
-    "photo": "",
-    "bio": "Погружение в тренды и инструменты цифрового маркетинга.",
-    "email": "",
-    "social_links": {},
-    "topics": [
-      19,
-      18,
-      17
-    ]
-  }
-},
-{
-  "model": "events.speaker",
-  "pk": 9,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.164Z",
-    "updated_at": "2026-03-14T19:59:17.164Z",
-    "full_name": "Ольга Иванова",
-    "position": "Предприниматель",
-    "company": "",
-    "photo": "",
-    "bio": "Неформальное общение опытных предпринимателей.",
-    "email": "",
-    "social_links": {},
-    "topics": [
-      19,
-      18,
-      17
-    ]
-  }
-},
-{
-  "model": "events.speaker",
-  "pk": 10,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.187Z",
-    "updated_at": "2026-03-14T19:59:17.187Z",
-    "full_name": "Иван Козлов",
-    "position": "Предприниматель",
-    "company": "",
-    "photo": "",
-    "bio": "Нетворкинг: предприниматели Минска.",
-    "email": "",
-    "social_links": {},
-    "topics": [
-      19,
-      18,
-      17
-    ]
-  }
-},
-{
   "model": "events.event",
-  "pk": 13,
+  "pk": 1,
   "fields": {
-    "created_at": "2026-03-14T19:59:17.208Z",
-    "updated_at": "2026-03-14T19:59:17.208Z",
-    "title": "Networking: Предприниматели Минска",
-    "slug": "networking-predprinimateli-minska",
-    "description": "Неформальное общение опытных предпринимателей. Онлайн-встреча общение предпринимателей.",
-    "date": "2025-11-01",
-    "time_start": "19:00:00",
-    "time_end": "21:00:00",
+    "created_at": "2026-02-28T14:39:17.389Z",
+    "updated_at": "2026-02-28T14:39:17.389Z",
+    "title": "Тестовый митап для проверки дублирования",
+    "slug": "testovyj-mitap-dlya-proverki-dublirovaniya",
+    "description": "",
+    "date": "2026-02-28",
+    "time_start": "17:38:56",
+    "time_end": "06:00:00",
     "format": "offline",
-    "location_address": "г. Минск, ул. Ленина 3",
-    "location_city": "Минск",
-    "location_venue": "ул. Ленина 3",
-    "online_url": "",
-    "online_platform": "",
-    "event_type": "networking",
-    "cover_image": "",
-    "capacity": 50,
-    "price": "0.00",
-    "registration_type": "open",
-    "status": "published",
-    "cancellation_reason": "",
-    "meta_title": "",
-    "meta_description": "",
-    "is_featured": false,
-    "categories": [
-      7,
-      8,
-      9
-    ],
-    "tags": [
-      19,
-      18,
-      21,
-      17,
-      20
-    ],
-    "speakers": [
-      10,
-      9
-    ]
-  }
-},
-{
-  "model": "events.event",
-  "pk": 14,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.245Z",
-    "updated_at": "2026-03-14T19:59:17.245Z",
-    "title": "Workshop: Digital Marketing 2026",
-    "slug": "workshop-digital-marketing-2026",
-    "description": "Погружение в тренды и инструменты цифрового маркетинга.",
-    "date": "2025-11-09",
-    "time_start": "19:00:00",
-    "time_end": "21:00:00",
-    "format": "online",
     "location_address": "",
     "location_city": "",
     "location_venue": "",
-    "online_url": "https://example.com/stream",
-    "online_platform": "Zoom",
-    "event_type": "workshop",
-    "cover_image": "",
-    "capacity": 100,
-    "price": "50.00",
-    "registration_type": "open",
-    "status": "published",
-    "cancellation_reason": "",
-    "meta_title": "",
-    "meta_description": "",
-    "is_featured": false,
-    "categories": [
-      7,
-      8,
-      9
-    ],
-    "tags": [
-      19,
-      18,
-      21,
-      17,
-      20
-    ],
-    "speakers": [
-      8
-    ]
-  }
-},
-{
-  "model": "events.event",
-  "pk": 15,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.273Z",
-    "updated_at": "2026-03-14T19:59:17.273Z",
-    "title": "Tech Meetup: AI в бизнесе",
-    "slug": "tech-meetup-ai-v-biznese",
-    "description": "Tech Meetup: AI в бизнесе — встреча для проектных менеджеров, предпринимателей и специалистов, которые хотят понять, как использовать искусственный интеллект для повышения эффективности команд и бизнес-процессов.\n\nНа митапе обсудим, как AI уже влияет на управление проектами, где он реально экономит ресурсы, а где — вызывает новые вызовы. Вас ждут живые кейсы, практические инсайты и нетворкинг с коллегами из индустрии.",
-    "date": "2025-11-15",
-    "time_start": "19:00:00",
-    "time_end": "20:30:00",
-    "format": "offline",
-    "location_address": "г. Минск, пр. Независимости 95",
-    "location_city": "Минск",
-    "location_venue": "пр. Независимости 95",
     "online_url": "",
     "online_platform": "",
     "event_type": "meetup",
     "cover_image": "",
-    "capacity": 60,
-    "price": "100.00",
-    "registration_type": "open",
-    "status": "published",
-    "cancellation_reason": "",
-    "meta_title": "",
-    "meta_description": "",
-    "is_featured": true,
-    "categories": [
-      7,
-      8,
-      9
-    ],
-    "tags": [
-      19,
-      18,
-      21,
-      17,
-      20
-    ],
-    "speakers": [
-      7
-    ]
-  }
-},
-{
-  "model": "events.event",
-  "pk": 16,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.302Z",
-    "updated_at": "2026-03-14T19:59:17.302Z",
-    "title": "Networking: Предприниматели Минска",
-    "slug": "networking-predprinimateli-minska-2",
-    "description": "Неформальное общение опытных предпринимателей.",
-    "date": "2025-11-24",
-    "time_start": "19:00:00",
-    "time_end": "21:00:00",
-    "format": "offline",
-    "location_address": "г. Минск, ул. Ленина 3",
-    "location_city": "Минск",
-    "location_venue": "ул. Ленина 3",
-    "online_url": "",
-    "online_platform": "",
-    "event_type": "networking",
-    "cover_image": "",
-    "capacity": 50,
+    "capacity": 0,
     "price": "0.00",
     "registration_type": "open",
-    "status": "published",
+    "status": "draft",
     "cancellation_reason": "",
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "categories": [
-      7,
-      8,
-      9
-    ],
-    "tags": [
-      19,
-      18,
-      21,
-      17,
-      20
-    ],
-    "speakers": [
-      10,
-      9
-    ]
-  }
-},
-{
-  "model": "events.event",
-  "pk": 17,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.329Z",
-    "updated_at": "2026-03-14T19:59:17.329Z",
-    "title": "Networking: Предприниматели Минска",
-    "slug": "networking-predprinimateli-minska-3",
-    "description": "Неформальное общение опытных предпринимателей.",
-    "date": "2025-11-27",
-    "time_start": "19:00:00",
-    "time_end": "21:00:00",
-    "format": "offline",
-    "location_address": "г. Минск, ул. Ленина 3",
-    "location_city": "Минск",
-    "location_venue": "ул. Ленина 3",
-    "online_url": "",
-    "online_platform": "",
-    "event_type": "networking",
-    "cover_image": "",
-    "capacity": 50,
-    "price": "0.00",
-    "registration_type": "open",
-    "status": "published",
-    "cancellation_reason": "",
-    "meta_title": "",
-    "meta_description": "",
-    "is_featured": false,
-    "categories": [
-      7,
-      8,
-      9
-    ],
-    "tags": [
-      19,
-      18,
-      21,
-      17,
-      20
-    ],
-    "speakers": [
-      10,
-      9
-    ]
-  }
-},
-{
-  "model": "events.event",
-  "pk": 18,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.366Z",
-    "updated_at": "2026-03-14T19:59:17.366Z",
-    "title": "Tech Conference 2025",
-    "slug": "tech-conference-2025",
-    "description": "Крупнейшая технологическая конференция года.",
-    "date": "2025-09-10",
-    "time_start": "10:00:00",
-    "time_end": "18:00:00",
-    "format": "offline",
-    "location_address": "",
-    "location_city": "Минск",
-    "location_venue": "",
-    "online_url": "",
-    "online_platform": "",
-    "event_type": "conference",
-    "cover_image": "",
-    "capacity": 500,
-    "price": "0.00",
-    "registration_type": "open",
-    "status": "completed",
-    "cancellation_reason": "",
-    "meta_title": "",
-    "meta_description": "",
-    "is_featured": false,
-    "categories": [
-      7,
-      8,
-      9
-    ],
-    "tags": [
-      19,
-      18,
-      21,
-      17,
-      20
-    ],
+    "categories": [],
+    "tags": [],
     "speakers": []
   }
 },
 {
   "model": "events.event",
-  "pk": 19,
+  "pk": 2,
   "fields": {
-    "created_at": "2026-03-14T19:59:17.397Z",
-    "updated_at": "2026-03-14T19:59:17.397Z",
-    "title": "Бизнес-завтрак. Июль",
-    "slug": "biznes-zavtrak-iyul",
-    "description": "Бизнес-завтрак для предпринимателей.",
-    "date": "2025-07-08",
-    "time_start": "09:00:00",
-    "time_end": "11:00:00",
+    "created_at": "2026-02-28T14:40:25.758Z",
+    "updated_at": "2026-02-28T14:40:25.758Z",
+    "title": "Тестовый митап для проверки дублирования",
+    "slug": "тестовый-митап-для-проверки-дублирования-копия",
+    "description": "",
+    "date": "2026-02-28",
+    "time_start": "17:38:56",
+    "time_end": "06:00:00",
     "format": "offline",
     "location_address": "",
-    "location_city": "Минск",
+    "location_city": "",
     "location_venue": "",
     "online_url": "",
     "online_platform": "",
-    "event_type": "networking",
+    "event_type": "meetup",
     "cover_image": "",
-    "capacity": 50,
+    "capacity": 0,
     "price": "0.00",
     "registration_type": "open",
-    "status": "completed",
+    "status": "draft",
     "cancellation_reason": "",
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "categories": [
-      7,
-      8,
-      9
-    ],
-    "tags": [
-      19,
-      18,
-      21,
-      17,
-      20
-    ],
+    "categories": [],
+    "tags": [],
     "speakers": []
-  }
-},
-{
-  "model": "events.eventsegment",
-  "pk": 7,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.427Z",
-    "updated_at": "2026-03-14T19:59:17.427Z",
-    "event": 15,
-    "title": "Как AI помогает в планировании и анализе проектов",
-    "description": "",
-    "time_start": "19:00:00",
-    "time_end": "20:30:00",
-    "order": 1,
-    "location": "",
-    "speakers": [
-      7
-    ]
-  }
-},
-{
-  "model": "events.eventsegment",
-  "pk": 8,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.435Z",
-    "updated_at": "2026-03-14T19:59:17.435Z",
-    "event": 15,
-    "title": "Инструменты, упрощающие работу менеджера",
-    "description": "",
-    "time_start": "19:00:00",
-    "time_end": "20:30:00",
-    "order": 2,
-    "location": "",
-    "speakers": [
-      7
-    ]
-  }
-},
-{
-  "model": "events.eventsegment",
-  "pk": 9,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.443Z",
-    "updated_at": "2026-03-14T19:59:17.443Z",
-    "event": 15,
-    "title": "Кейсы внедрения AI в компаниях разного масштаба",
-    "description": "",
-    "time_start": "19:00:00",
-    "time_end": "20:30:00",
-    "order": 3,
-    "location": "",
-    "speakers": [
-      7
-    ]
-  }
-},
-{
-  "model": "events.eventsegment",
-  "pk": 10,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.450Z",
-    "updated_at": "2026-03-14T19:59:17.450Z",
-    "event": 15,
-    "title": "Этика и границы автоматизации",
-    "description": "",
-    "time_start": "19:00:00",
-    "time_end": "20:30:00",
-    "order": 4,
-    "location": "",
-    "speakers": [
-      7
-    ]
-  }
-},
-{
-  "model": "events.eventregistration",
-  "pk": 5,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.507Z",
-    "updated_at": "2026-03-14T19:59:17.507Z",
-    "user": 8,
-    "event": 15,
-    "status": "confirmed",
-    "attendance_status": "unknown",
-    "extra_data": {}
-  }
-},
-{
-  "model": "events.eventregistration",
-  "pk": 6,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.512Z",
-    "updated_at": "2026-03-14T19:59:17.512Z",
-    "user": 7,
-    "event": 15,
-    "status": "confirmed",
-    "attendance_status": "unknown",
-    "extra_data": {}
-  }
-},
-{
-  "model": "events.eventgallery",
-  "pk": 4,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.490Z",
-    "updated_at": "2026-03-14T19:59:17.490Z",
-    "event": 18,
-    "title": "ФОТОГРАФИИ Tech Conference 2025",
-    "cover_image": "",
-    "photo_count": 478,
-    "external_album_url": ""
-  }
-},
-{
-  "model": "events.eventgallery",
-  "pk": 5,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.496Z",
-    "updated_at": "2026-03-14T19:59:17.496Z",
-    "event": 19,
-    "title": "ФОТОГРАФИИ Бизнес-завтрак. Июль",
-    "cover_image": "",
-    "photo_count": 112,
-    "external_album_url": ""
-  }
-},
-{
-  "model": "news.newsarticle",
-  "pk": 6,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.528Z",
-    "updated_at": "2026-03-14T19:59:17.528Z",
-    "title": "Итоги Tech Conference 2025",
-    "slug": "itogi-tech-conference-2025",
-    "short_description": "Более 200 участников собрались на крупнейшей технологической конференции года. Обсуждали тренды и перспективы развития отрасли.",
-    "content": "Более 200 участников собрались на крупнейшей технологической конференции года, чтобы обсудить тренды и перспективы развития отрасли.\n\nTech Conference 2025 стала главным событием для всех, кто живет технологиями и строит цифровое будущее. Более двухсот специалистов — от проектных менеджеров и IT-директоров до стартаперов и аналитиков — встретились, чтобы обменяться опытом, обсудить влияние искусственного интеллекта на бизнес и вместе заглянуть в будущее индустрии.\n\n## Главная тема – AI как катализатор перемен\n\nИскусственный интеллект стал центральной темой конференции. Спикеры говорили о том, как AI меняет подход к управлению проектами, ускоряет принятие решений и открывает новые возможности для автоматизации.\n\nОсобое внимание уделили реальным кейсам: компании поделились историями успешной интеграции AI-решений — от чат-ботов для поддержки клиентов до аналитических инструментов, прогнозирующих риски и эффективность команд.\n\nКак отметил один из выступающих, «AI больше не просто тренд — это рабочий инструмент, без которого уже невозможно представлять развитие бизнеса».\n\n## Управление проектами будущего\n\nВ отдельной секции конференции обсудили трансформацию роли проектного менеджера. Если раньше акцент делался на контроле задач и сроков, то сегодня всё большее значение приобретает стратегическое мышление, умение работать с данными и использовать технологии для оптимизации процессов.\n\nСпикеры подчеркнули, что успешный менеджер 2025 года – это человек, который умеет сочетать человеческую эмпатию с технологической осведомлённостью.\n\n## Нетворкинг и обмен опытом\n\nПомимо выступлений и панельных дискуссий, участники активно знакомились, обменивались контактами и идеями. Многие отметили, что неформальное общение стало не менее ценным, чем сами доклады — именно здесь рождаются будущие коллаборации и стартапы.\n\n## Что дальше\n\nОрганизаторы уже анонсировали серию тематических митапов и воркшопов, посвящённых практическому применению AI в управлении проектами. Следующее мероприятие состоится весной 2026 года, и, судя по интересу аудитории, оно обещает стать ещё масштабнее.\n\nTech Conference 2025 в очередной раз доказала: будущее технологий – это не только про код и алгоритмы, но и про людей, которые умеют объединять знания, опыт и креатив, чтобы создавать новые смыслы и решения.",
-    "cover_image": "",
-    "publication_date": "2025-01-10T09:00:00Z",
-    "read_time_minutes": 3,
-    "views_count": 0,
-    "author": 8,
-    "is_published": true,
-    "meta_title": "",
-    "meta_description": "",
-    "tags": [
-      19,
-      18,
-      17,
-      20
-    ]
-  }
-},
-{
-  "model": "news.newsarticle",
-  "pk": 7,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.543Z",
-    "updated_at": "2026-03-14T19:59:17.543Z",
-    "title": "Новые партнеры сообщества",
-    "slug": "novye-partnery-soobshchestva",
-    "short_description": "К нашему сообществу присоединились 5 новых компаний партнеров, которые будут поддерживать развитие профессионального комьюнити.",
-    "content": "К нашему сообществу присоединились 5 новых компаний партнеров. Они будут поддерживать развитие профессионального комьюнити и совместные мероприятия.",
-    "cover_image": "",
-    "publication_date": "2025-01-10T09:00:00Z",
-    "read_time_minutes": 3,
-    "views_count": 0,
-    "author": 8,
-    "is_published": true,
-    "meta_title": "",
-    "meta_description": "",
-    "tags": [
-      21,
-      22,
-      17
-    ]
-  }
-},
-{
-  "model": "news.newsarticle",
-  "pk": 8,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.557Z",
-    "updated_at": "2026-03-14T19:59:17.557Z",
-    "title": "Запуск менторской программы",
-    "slug": "zapusk-mentorskoj-programmy",
-    "short_description": "Стартует новая программа наставничества для молодых специалистов. Опытные профессионалы поделятся знаниями и помогут в карьерном развитии.",
-    "content": "Стартует новая программа наставничества для молодых специалистов. Опытные профессионалы поделятся знаниями и помогут в карьерном развитии.",
-    "cover_image": "",
-    "publication_date": "2025-01-10T09:00:00Z",
-    "read_time_minutes": 3,
-    "views_count": 0,
-    "author": 8,
-    "is_published": true,
-    "meta_title": "",
-    "meta_description": "",
-    "tags": [
-      24,
-      21,
-      22,
-      17,
-      23
-    ]
-  }
-},
-{
-  "model": "content.partner",
-  "pk": 4,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.575Z",
-    "updated_at": "2026-03-14T19:59:17.575Z",
-    "name": "TECH CORP",
-    "logo": "",
-    "description": "Надёжные IT решения",
-    "website_url": "",
-    "partnership_level": "general",
-    "event": null,
-    "display_order": 1
-  }
-},
-{
-  "model": "content.teammember",
-  "pk": 5,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.579Z",
-    "updated_at": "2026-03-14T19:59:17.579Z",
-    "full_name": "Максим Сидоров",
-    "position": "Руководитель программ",
-    "photo": "",
-    "description": "Координирует образовательные программы и воркшопы",
-    "email": "",
-    "linkedin_url": "",
-    "twitter_url": "",
-    "display_order": 1
-  }
-},
-{
-  "model": "content.teammember",
-  "pk": 6,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.583Z",
-    "updated_at": "2026-03-14T19:59:17.583Z",
-    "full_name": "Елена Козлова",
-    "position": "Руководитель программ",
-    "photo": "",
-    "description": "Координирует образовательные программы и воркшопы",
-    "email": "",
-    "linkedin_url": "",
-    "twitter_url": "",
-    "display_order": 2
   }
 },
 {
   "model": "content.sitesettings",
   "pk": 1,
   "fields": {
-    "created_at": "2026-03-14T19:59:17.568Z",
-    "updated_at": "2026-03-14T19:59:17.568Z",
-    "site_name": "PM.MEETUP",
+    "created_at": "2026-02-28T08:27:41.733Z",
+    "updated_at": "2026-03-04T13:51:23.661Z",
+    "site_name": "PM.Meetup",
     "logo": "",
     "favicon": "",
-    "email": "hello@community.by",
-    "phone": "+375 29 123-45-67",
-    "address": "г. Минск, пр. Независимости 95",
-    "social_links": {
-      "linkedin": "https://linkedin.com/company/pmmeetup",
-      "instagram": "https://instagram.com/pmmeetup"
-    }
-  }
-},
-{
-  "model": "content.page",
-  "pk": 3,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.588Z",
-    "updated_at": "2026-03-14T19:59:17.588Z",
-    "title": "О нас",
-    "slug": "about",
-    "content": "Создаём пространство, где идеи рождаются, знания передаются, а каждый может расти профессионально. 578+ участников.",
-    "is_published": true,
-    "meta_title": "",
-    "meta_description": ""
-  }
-},
-{
-  "model": "content.page",
-  "pk": 4,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.594Z",
-    "updated_at": "2026-03-14T19:59:17.594Z",
-    "title": "Контакты",
-    "slug": "contacts",
-    "content": "**Контакты**\n\nEmail: hello@community.by\nТелефон: +375 29 123-45-67\nАдрес: г. Минск, пр. Независимости 95",
-    "is_published": true,
-    "meta_title": "",
-    "meta_description": ""
-  }
-},
-{
-  "model": "content.partnershipapplication",
-  "pk": 3,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.599Z",
-    "updated_at": "2026-03-14T19:59:17.599Z",
-    "company_name": "TECH CORP",
-    "contact_name": "Контакты партнёра",
-    "contact_email": "info@techcorp.by",
-    "contact_phone": "",
-    "message": "Хотим стать партнёром сообщества.",
-    "status": "new"
+    "email": "pm_meetup@example.com",
+    "phone": "+375291111111",
+    "address": "Минск, площадь Свободы 10",
+    "social_links": {}
   }
 },
 {
   "model": "pages.page",
-  "pk": 2,
+  "pk": 1,
   "fields": {
-    "created_at": "2026-03-14T19:59:17.605Z",
-    "updated_at": "2026-03-14T19:59:17.605Z",
+    "created_at": "2026-03-05T06:56:53.076Z",
+    "updated_at": "2026-03-05T06:56:53.076Z",
     "slug": "home",
-    "name": "Главная"
+    "name": "Главная страница"
   }
 },
 {
   "model": "pages.blocktype",
-  "pk": 6,
+  "pk": 1,
   "fields": {
     "code": "hero",
-    "name": "Hero-блок",
-    "description": ""
-  }
-},
-{
-  "model": "pages.blocktype",
-  "pk": 7,
-  "fields": {
-    "code": "faq",
-    "name": "FAQ",
-    "description": ""
-  }
-},
-{
-  "model": "pages.blocktype",
-  "pk": 8,
-  "fields": {
-    "code": "applications",
-    "name": "Блок заявок",
+    "name": "Шапка сайта",
     "description": ""
   }
 },
 {
   "model": "pages.pageblock",
-  "pk": 4,
+  "pk": 1,
   "fields": {
-    "page": 2,
-    "block_type": 6,
-    "order": 1
-  }
-},
-{
-  "model": "pages.pageblock",
-  "pk": 5,
-  "fields": {
-    "page": 2,
-    "block_type": 7,
-    "order": 2
+    "page": 1,
+    "block_type": 1,
+    "order": 0
   }
 },
 {
   "model": "pages.blockitem",
-  "pk": 7,
+  "pk": 1,
   "fields": {
-    "created_at": "2026-03-14T19:59:17.638Z",
-    "updated_at": "2026-03-14T19:59:17.639Z",
-    "block": 4,
-    "title": "АКТИВНОЕ КОМЬЮНИТИ ДЛЯ МЕНЕДЖЕРОВ ПРОЕКТОВ",
-    "subtitle": "578+ участников",
-    "content": "Создаём пространство, где идеи рождаются, знания передаются, а каждый может расти профессионально.",
-    "icon": "hero-main",
-    "url": "",
-    "order": 1
-  }
-},
-{
-  "model": "pages.blockitem",
-  "pk": 8,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.644Z",
-    "updated_at": "2026-03-14T19:59:17.644Z",
-    "block": 5,
-    "title": "Как зарегистрироваться?",
+    "created_at": "2026-03-05T06:59:55.287Z",
+    "updated_at": "2026-03-05T06:59:55.287Z",
+    "block": 1,
+    "title": "PM_Meetup",
     "subtitle": "",
-    "content": "Нажмите «Участвовать» или «Пойти» на карточке события.",
-    "icon": "faq",
+    "content": "",
+    "icon": "",
     "url": "",
-    "order": 1
-  }
-},
-{
-  "model": "pages.blockitem",
-  "pk": 9,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.649Z",
-    "updated_at": "2026-03-14T19:59:17.649Z",
-    "block": 5,
-    "title": "Нужна ли оплата?",
-    "subtitle": "",
-    "content": "Часть мероприятий бесплатна, на части участие платное (указано на карточке).",
-    "icon": "faq",
-    "url": "",
-    "order": 2
-  }
-},
-{
-  "model": "materials.materialcategory",
-  "pk": 7,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.655Z",
-    "updated_at": "2026-03-14T19:59:17.655Z",
-    "slug": "courses",
-    "title": "КУРСЫ",
-    "display_order": 1,
-    "is_active": true
-  }
-},
-{
-  "model": "materials.materialcategory",
-  "pk": 8,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.663Z",
-    "updated_at": "2026-03-14T19:59:17.663Z",
-    "slug": "handbooks",
-    "title": "ХЕНДБУКИ",
-    "display_order": 2,
-    "is_active": true
-  }
-},
-{
-  "model": "materials.materialcategory",
-  "pk": 9,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.669Z",
-    "updated_at": "2026-03-14T19:59:17.669Z",
-    "slug": "event_photos",
-    "title": "ФОТО С МЕРОПРИЯТИЙ",
-    "display_order": 3,
-    "is_active": true
-  }
-},
-{
-  "model": "materials.materialcategory",
-  "pk": 10,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.676Z",
-    "updated_at": "2026-03-14T19:59:17.676Z",
-    "slug": "talk_records",
-    "title": "ЗАПИСИ ВЫСТУПЛЕНИЙ",
-    "display_order": 4,
-    "is_active": true
-  }
-},
-{
-  "model": "materials.materialcategory",
-  "pk": 11,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.683Z",
-    "updated_at": "2026-03-14T19:59:17.683Z",
-    "slug": "presentations",
-    "title": "ПРЕЗЕНТАЦИИ",
-    "display_order": 5,
-    "is_active": true
-  }
-},
-{
-  "model": "materials.materialcategory",
-  "pk": 12,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.687Z",
-    "updated_at": "2026-03-14T19:59:17.687Z",
-    "slug": "books",
-    "title": "КНИГИ",
-    "display_order": 6,
-    "is_active": true
-  }
-},
-{
-  "model": "materials.material",
-  "pk": 10,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.700Z",
-    "updated_at": "2026-03-14T19:59:17.700Z",
-    "label": "ФОТОГРАФИИ",
-    "title": "Tech Conference 2025",
-    "category": 9,
-    "date": "2025-09-10",
-    "place": "Минск",
-    "duration_minutes": null,
-    "description": "",
-    "file_url": "",
-    "cover_image": "",
-    "view_count": 478
-  }
-},
-{
-  "model": "materials.material",
-  "pk": 11,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.706Z",
-    "updated_at": "2026-03-14T19:59:17.706Z",
-    "label": "ЗАПИСЬ",
-    "title": "Воркшоп: Жизненный цикл проекта в РМВОК 6 и 7",
-    "category": 10,
-    "date": "2025-09-01",
-    "place": "Online",
-    "duration_minutes": 44,
-    "description": "",
-    "file_url": "",
-    "cover_image": "",
-    "view_count": 0
-  }
-},
-{
-  "model": "materials.material",
-  "pk": 12,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.712Z",
-    "updated_at": "2026-03-14T19:59:17.712Z",
-    "label": "КУРС",
-    "title": "Project Manager in IT",
-    "category": 7,
-    "date": "2025-07-06",
-    "place": "Online",
-    "duration_minutes": 348,
-    "description": "",
-    "file_url": "",
-    "cover_image": "",
-    "view_count": 0
-  }
-},
-{
-  "model": "materials.material",
-  "pk": 13,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.717Z",
-    "updated_at": "2026-03-14T19:59:17.717Z",
-    "label": "ХЕНДБУК",
-    "title": "По эффективному написанию промтов",
-    "category": 8,
-    "date": "2025-10-11",
-    "place": "Online",
-    "duration_minutes": 120,
-    "description": "",
-    "file_url": "",
-    "cover_image": "",
-    "view_count": 0
-  }
-},
-{
-  "model": "materials.material",
-  "pk": 14,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.724Z",
-    "updated_at": "2026-03-14T19:59:17.724Z",
-    "label": "ЗАПИСЬ",
-    "title": "Воркшоп: Спиральная динамика",
-    "category": 10,
-    "date": "2025-09-01",
-    "place": "Online",
-    "duration_minutes": 28,
-    "description": "",
-    "file_url": "",
-    "cover_image": "",
-    "view_count": 0
-  }
-},
-{
-  "model": "materials.material",
-  "pk": 15,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.730Z",
-    "updated_at": "2026-03-14T19:59:17.730Z",
-    "label": "ФОТОГРАФИИ",
-    "title": "Бизнес-завтрак. Июль",
-    "category": 9,
-    "date": "2025-07-08",
-    "place": "Минск",
-    "duration_minutes": null,
-    "description": "",
-    "file_url": "",
-    "cover_image": "",
-    "view_count": 112
-  }
-},
-{
-  "model": "materials.material",
-  "pk": 16,
-  "fields": {
-    "created_at": "2026-03-14T19:59:17.738Z",
-    "updated_at": "2026-03-14T19:59:17.738Z",
-    "label": "КУРС",
-    "title": "Разработка и AI",
-    "category": 7,
-    "date": "2025-10-11",
-    "place": "Online",
-    "duration_minutes": 244,
-    "description": "",
-    "file_url": "",
-    "cover_image": "",
-    "view_count": 0
+    "order": 0
   }
 }
 ]

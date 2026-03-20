@@ -1,4 +1,4 @@
-#  Полное руководство по Docker командам для PM_Meetup (HUB42)
+#  Полное руководство по Docker командам для PM_Meetup
 
 ---
 
@@ -80,7 +80,7 @@ docker-compose exec web python manage.py seed_data --clear
 # Создать суперпользователя (интерактивно)
 docker-compose exec web python manage.py createsuperuser
 
-# Создать суперпользователя без вопросов (через env)
+# Создать суперпользователя (через env)
 docker-compose exec web python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'admin123')"
 ```
 
@@ -152,7 +152,7 @@ docker-compose exec db du -sh /var/lib/mysql
 # Создать дамп данных (фикстуры)
 docker-compose exec web python manage.py dumpdata --indent 2 --output fixtures/initial_data.json
 
-# Создать дамп конкретных приложений (как в HUB42)
+# Создать дамп конкретных приложений
 docker-compose exec web python manage.py dumpdata pages equipment blog requests social --indent 2 --output fixtures/initial_data.json
 
 # Загрузить фикстуры в базу

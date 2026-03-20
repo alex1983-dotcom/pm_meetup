@@ -39,6 +39,10 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'users.User'
 
+# django.contrib.sites: иначе get_current_site() ищет Site по Host (localhost) и не находит
+# запись по умолчанию (example.com) → Site.DoesNotExist на /admin/login/ и др.
+SITE_ID = 1
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',

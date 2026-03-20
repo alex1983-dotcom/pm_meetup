@@ -10,7 +10,7 @@
 
 - хранение **категорий материалов** (кнопки-фильтры над карточками: «Курсы», «Хендбуки», «Фото с мероприятий» и т.д.);
 - хранение самих **материалов** (карточки с обложкой, датой, местом проведения/форматом, длительностью, счётчиком просмотров);
-- выдачу данных для отдельной страницы «Материалы» и API-фильтрации по категории/поисковой строке.
+- выдачу данных через REST API.
 
 Все модели используют **TimeStampedModel** из приложения `core`.
 
@@ -27,7 +27,6 @@
 - **display_order** — PositiveIntegerField. Порядок отображения кнопок категорий.
 - **is_active** — BooleanField. Показывать ли категорию на сайте.
 - **created_at, updated_at** — DateTimeField. Авто-поля TimeStampedModel.
-
 
 Рекомендуемые slug'и:
 
@@ -54,7 +53,6 @@
 - **view_count** — PositiveIntegerField, default=0. Счётчик просмотров материала.
 - **created_at, updated_at** — DateTimeField. Авто-поля TimeStampedModel.
 
-
 ---
 
 ## 3. Админ-панель
@@ -73,14 +71,16 @@
 
 ## 4. REST API (для фронтенда)
 
-Базовый префикс: **`/api/v1/materials/`**. Swagger: **`/api/docs/`** (тег **materials**). Категории отдаются только с `is_active=True`.
+Базовый префикс: `**/api/v1/materials/`**. Swagger: `**/api/docs/**` (тег **materials**). Категории отдаются только с `is_active=True`.
 
-| Метод | URL | Описание |
-|-------|-----|----------|
-| GET | `/api/v1/materials/categories/` | Список активных категорий материалов |
-| GET | `/api/v1/materials/categories/<slug>/` | Категория по slug |
-| GET | `/api/v1/materials/materials/` | Список материалов (с категорией) |
-| GET | `/api/v1/materials/materials/<id>/` | Детали материала по id (включая description, file_url) |
+
+| Метод | URL                                    | Описание                                               |
+| ----- | -------------------------------------- | ------------------------------------------------------ |
+| GET   | `/api/v1/materials/categories/`        | Список активных категорий материалов                   |
+| GET   | `/api/v1/materials/categories/<slug>/` | Категория по slug                                      |
+| GET   | `/api/v1/materials/materials/`         | Список материалов (с категорией)                       |
+| GET   | `/api/v1/materials/materials/<id>/`    | Детали материала по id (включая description, file_url) |
+
 
 Ответ списка материалов: `id`, `label`, `title`, `category`, `date`, `place`, `duration_minutes`, `cover_image`, `view_count`. В деталях дополнительно: `description`, `file_url`.
 

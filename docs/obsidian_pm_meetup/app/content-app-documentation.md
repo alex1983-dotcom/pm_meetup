@@ -22,70 +22,80 @@
 
 ### 2.1. Partner (партнёр)
 
-| Поле | Тип | Описание |
-|------|-----|----------|
-| name | CharField(200) | Название компании |
-| logo | ImageField | Логотип (media/partners/) |
-| description | TextField | Описание |
-| website_url | URLField | Сайт партнёра |
-| partnership_level | CharField, выбор | general / gold / silver |
-| event | FK → Event, null | Событие (пусто = глобальный партнёр) |
-| display_order | PositiveIntegerField | Порядок отображения |
-| created_at, updated_at | DateTimeField | Авто |
+
+| Поле                   | Тип                  | Описание                             |
+| ---------------------- | -------------------- | ------------------------------------ |
+| name                   | CharField(200)       | Название компании                    |
+| logo                   | ImageField           | Логотип (media/partners/)            |
+| description            | TextField            | Описание                             |
+| website_url            | URLField             | Сайт партнёра                        |
+| partnership_level      | CharField, выбор     | general / gold / silver              |
+| event                  | FK → Event, null     | Событие (пусто = глобальный партнёр) |
+| display_order          | PositiveIntegerField | Порядок отображения                  |
+| created_at, updated_at | DateTimeField        | Авто                                 |
+
 
 ### 2.2. TeamMember (член команды)
 
-| Поле | Тип | Описание |
-|------|-----|----------|
-| full_name | CharField(200) | ФИО |
-| position | CharField(200) | Должность |
-| photo | ImageField | Фотография (media/team/) |
-| description | TextField | Описание / биография |
-| email | EmailField | Email |
-| linkedin_url | URLField | LinkedIn |
-| twitter_url | URLField | Twitter |
-| display_order | PositiveIntegerField | Порядок отображения |
-| created_at, updated_at | DateTimeField | Авто |
+
+| Поле                   | Тип                  | Описание                 |
+| ---------------------- | -------------------- | ------------------------ |
+| full_name              | CharField(200)       | ФИО                      |
+| position               | CharField(200)       | Должность                |
+| photo                  | ImageField           | Фотография (media/team/) |
+| description            | TextField            | Описание / биография     |
+| email                  | EmailField           | Email                    |
+| linkedin_url           | URLField             | LinkedIn                 |
+| twitter_url            | URLField             | Twitter                  |
+| display_order          | PositiveIntegerField | Порядок отображения      |
+| created_at, updated_at | DateTimeField        | Авто                     |
+
 
 ### 2.3. SiteSettings (настройки сайта)
 
 Одна запись на весь проект (singleton), pk=1. Добавить вторую или удалить запись в админке нельзя.
 
-| Поле | Тип | Описание |
-|------|-----|----------|
-| site_name | CharField(100) | Название сайта |
-| logo | ImageField | Логотип (media/settings/) |
-| favicon | ImageField | Иконка |
-| email | EmailField | Email для контактов |
-| phone | CharField(30) | Телефон |
-| address | TextField | Адрес |
-| social_links | JSONField | Ссылки на соцсети |
-| created_at, updated_at | DateTimeField | Авто |
+
+| Поле                   | Тип            | Описание                  |
+| ---------------------- | -------------- | ------------------------- |
+| site_name              | CharField(100) | Название сайта            |
+| logo                   | ImageField     | Логотип (media/settings/) |
+| favicon                | ImageField     | Иконка                    |
+| email                  | EmailField     | Email для контактов       |
+| phone                  | CharField(30)  | Телефон                   |
+| address                | TextField      | Адрес                     |
+| social_links           | JSONField      | Ссылки на соцсети         |
+| created_at, updated_at | DateTimeField  | Авто                      |
+
 
 В коде: `SiteSettings.load()`.
 
 ### 2.4. Page (страница)
 
-| Поле | Тип | Описание |
-|------|-----|----------|
-| title | CharField(200) | Заголовок |
-| slug | SlugField(220), уникальный | URL-путь |
-| content | MDTextField | Содержимое (Markdown) |
-| is_published | BooleanField | Опубликовано |
-| meta_title, meta_description | CharField | SEO |
-| created_at, updated_at | DateTimeField | Авто |
+
+| Поле                         | Тип                        | Описание              |
+| ---------------------------- | -------------------------- | --------------------- |
+| title                        | CharField(200)             | Заголовок             |
+| slug                         | SlugField(220), уникальный | URL-путь              |
+| content                      | MDTextField                | Содержимое (Markdown) |
+| is_published                 | BooleanField               | Опубликовано          |
+| meta_title, meta_description | CharField                  | SEO                   |
+| created_at, updated_at       | DateTimeField              | Авто                  |
+
 
 ### 2.5. PartnershipApplication (заявка на партнёрство)
 
-| Поле | Тип | Описание |
-|------|-----|----------|
-| company_name | CharField(200) | Название компании |
-| contact_name | CharField(200) | Контактное лицо |
-| contact_email | EmailField | Email |
-| contact_phone | CharField(30) | Телефон |
-| message | TextField | Сообщение |
-| status | CharField, выбор | new / in_review / accepted / rejected |
-| created_at, updated_at | DateTimeField | Авто |
+
+| Поле                   | Тип              | Описание                              |
+| ---------------------- | ---------------- | ------------------------------------- |
+| company_name           | CharField(200)   | Название компании                     |
+| contact_name           | CharField(200)   | Контактное лицо                       |
+| contact_email          | EmailField       | Email                                 |
+| contact_phone          | CharField(30)    | Телефон                               |
+| message                | TextField        | Сообщение                             |
+| status                 | CharField, выбор | new / in_review / accepted / rejected |
+| created_at, updated_at | DateTimeField    | Авто                                  |
+
 
 ---
 
@@ -107,31 +117,36 @@
 
 ## 5. REST API (для фронтенда)
 
-Базовый префикс: **`/api/v1/content/`**. Swagger: **`/api/docs/`** (тег **content**).
+Базовый префикс: `**/api/v1/content/`**. Swagger: `**/api/docs/**` (тег **content**).
 
-| Метод | URL | Описание |
-|-------|-----|----------|
-| GET | `/api/v1/content/partners/` | Список партнёров |
-| GET | `/api/v1/content/partners/<id>/` | Партнёр по id |
-| GET | `/api/v1/content/team/` | Список команды (по display_order) |
-| GET | `/api/v1/content/team/<id>/` | Член команды по id |
-| GET | `/api/v1/content/settings/` | Настройки сайта (singleton; один объект) |
-| GET | `/api/v1/content/settings/1/` | То же (для совместимости с router) |
-| GET | `/api/v1/content/static-pages/` | Список опубликованных статичных страниц (О нас, Контакты) |
-| GET | `/api/v1/content/static-pages/<slug>/` | Статичная страница по slug |
-| POST | `/api/v1/content/partnership-applications/` | Отправить заявку на партнёрство (тело: company_name, contact_name, contact_email, contact_phone, message) |
 
-Все GET — только чтение. POST заявки не требует авторизации.
+| Метод | URL                                         | Описание                                                                                                  |
+| ----- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| GET   | `/api/v1/content/partners/`                 | Список партнёров                                                                                          |
+| GET   | `/api/v1/content/partners/<id>/`            | Партнёр по id                                                                                             |
+| GET   | `/api/v1/content/team/`                     | Список команды (по display_order)                                                                         |
+| GET   | `/api/v1/content/team/<id>/`                | Член команды по id                                                                                        |
+| GET   | `/api/v1/content/settings/`                 | Настройки сайта (singleton; один объект)                                                                  |
+| GET   | `/api/v1/content/settings/1/`               | То же (для совместимости с router)                                                                        |
+| GET   | `/api/v1/content/static-pages/`             | Список опубликованных статичных страниц (О нас, Контакты)                                                 |
+| GET   | `/api/v1/content/static-pages/<slug>/`      | Статичная страница по slug                                                                                |
+| POST  | `/api/v1/content/partnership-applications/` | Отправить заявку на партнёрство (тело: company_name, contact_name, contact_email, contact_phone, message) |
+
+
+Все GET — только чтение. POST заявки не требует логина пользователя, но доступ к API по-прежнему ограничен пермишеном DocsOrApiKey (X-API-KEY или доверенный origin).
 
 ---
 
 ## 6. Краткая сводка для заказчика
 
-| Вопрос | Ответ |
-|--------|--------|
-| Где контакты и логотип сайта? | Настройки сайта (одна запись). |
-| Где партнёры? | Раздел «Партнёры». Порядок — поле «Порядок отображения». Событие можно указать или оставить пустым. |
-| Где команда? | Раздел «Команда»: ФИО, должность, фото, соцсети, порядок. |
-| Где заявки «Стать партнёром»? | Раздел «Заявки на партнёрство». Статусы: новая, на рассмотрении, принята, отклонена. |
-| Где материалы (отчёты, курсы)? | Вынесены в приложение `materials` и раздел «Материалы» админки. |
-| Можно ли удалить настройки сайта? | Нет; удаление в админке отключено. |
+
+| Вопрос                            | Ответ                                                                                               |
+| --------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Где контакты и логотип сайта?     | Настройки сайта (одна запись).                                                                      |
+| Где партнёры?                     | Раздел «Партнёры». Порядок — поле «Порядок отображения». Событие можно указать или оставить пустым. |
+| Где команда?                      | Раздел «Команда»: ФИО, должность, фото, соцсети, порядок.                                           |
+| Где заявки «Стать партнёром»?     | Раздел «Заявки на партнёрство». Статусы: новая, на рассмотрении, принята, отклонена.                |
+| Где материалы (отчёты, курсы)?    | Вынесены в приложение `materials` и раздел «Материалы» админки.                                     |
+| Можно ли удалить настройки сайта? | Нет; удаление в админке отключено.                                                                  |
+
+

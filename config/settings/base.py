@@ -143,7 +143,7 @@ REST_FRAMEWORK = {
 # --------------------------------------------------
 SPECTACULAR_SETTINGS = {
     "TITLE": "PM Meetup API",
-    "DESCRIPTION": "Документация REST API проекта PM Meetup. Все эндпоинты для фронтенда: события, новости, контент, материалы.",
+    "DESCRIPTION": "Документация REST API проекта PM Meetup.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "TAGS": [

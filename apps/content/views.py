@@ -1,4 +1,4 @@
-from drf_spectacular.utils import extend_schema_view
+from drf_spectacular.utils import extend_schema
 from rest_framework import viewsets
 from rest_framework.response import Response
 
@@ -12,19 +12,19 @@ from apps.content.serializers import (
 )
 
 
-@extend_schema_view(tags=["content"])
+@extend_schema(tags=["content"])
 class PartnerViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Partner.objects.all()
     serializer_class = PartnerSerializer
 
 
-@extend_schema_view(tags=["content"])
+@extend_schema(tags=["content"])
 class TeamMemberViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TeamMember.objects.all().order_by("display_order", "full_name")
     serializer_class = TeamMemberSerializer
 
 
-@extend_schema_view(tags=["content"])
+@extend_schema(tags=["content"])
 class SiteSettingsViewSet(viewsets.ReadOnlyModelViewSet):
     """Singleton: одна запись настроек сайта."""
 
@@ -42,7 +42,7 @@ class SiteSettingsViewSet(viewsets.ReadOnlyModelViewSet):
         return Response(serializer.data)
 
 
-@extend_schema_view(tags=["content"])
+@extend_schema(tags=["content"])
 class ContentPageViewSet(viewsets.ReadOnlyModelViewSet):
     """Статичные страницы (О нас, Контакты) — только опубликованные."""
 
@@ -52,7 +52,7 @@ class ContentPageViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_url_kwarg = "slug"
 
 
-@extend_schema_view(tags=["content"])
+@extend_schema(tags=["content"])
 class PartnershipApplicationViewSet(viewsets.ModelViewSet):
     """Публичная отправка заявки на партнёрство; список только для админов через админку."""
 

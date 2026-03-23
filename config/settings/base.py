@@ -164,6 +164,26 @@ SPECTACULAR_SETTINGS = {
         }
     },
     "SECURITY": [{"ApiKeyAuth": []}],
+    "ENUM_NAME_OVERRIDES": {
+        "EventStatusEnum": [
+            ("draft", "Черновик"),
+            ("published", "Опубликовано"),
+            ("registration_closed", "Регистрация закрыта"),
+            ("completed", "Завершено"),
+            ("cancelled", "Отменено"),
+        ],
+        "EventRegistrationStatusEnum": [
+            ("pending", "Ожидает подтверждения"),
+            ("confirmed", "Подтверждена"),
+            ("cancelled", "Отменена"),
+        ],
+        "PartnershipApplicationStatusEnum": [
+            ("new", "Новая"),
+            ("in_review", "На рассмотрении"),
+            ("accepted", "Принята"),
+            ("rejected", "Отклонена"),
+        ],
+    },
 }
 
 # CORS

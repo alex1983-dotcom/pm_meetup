@@ -17,7 +17,9 @@ class PageDetailAPIView(APIView):
     """
 
     permission_classes = [OnlyWithApiKeyOrFromFrontend]
+    serializer_class = PageSerializer
 
+    @extend_schema(responses=PageSerializer)
     def get(self, request, slug: str, *args, **kwargs) -> Response:
         page = get_object_or_404(
             Page.objects.prefetch_related(

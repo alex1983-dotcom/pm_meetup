@@ -31,14 +31,14 @@
 ### Events
 - `GET /api/v1/events/categories/`, `GET .../categories/<slug>/`
 - `GET /api/v1/events/speakers/`, `GET .../speakers/<id>/`
-- `GET /api/v1/events/events/` (query: `?status=published`), `GET .../events/<slug>/`
+- `GET /api/v1/events/events/` (query: `?status=published&search=...&min_rank=0.12&tag=<slug>&tags=<slug1,slug2>&ordering=-date`), `GET .../events/<slug>/`
 - `GET /api/v1/events/segments/`, `GET .../segments/<id>/`
 - `GET /api/v1/events/galleries/` (query: `?event=<slug>`), `GET .../galleries/<id>/`
 - `GET /api/v1/events/registrations/` — мои регистрации (авторизация)
 - `POST /api/v1/events/registrations/` — регистрация на событие (авторизация)
 
 ### News
-- `GET /api/v1/news/articles/` — список опубликованных статей
+- `GET /api/v1/news/articles/` — список опубликованных статей (query: `?search=...&min_rank=0.12&tag=<slug>&tags=<slug1,slug2>&ordering=-publication_date`)
 - `GET /api/v1/news/articles/<slug>/` — статья по slug
 
 ### Content
@@ -50,7 +50,7 @@
 
 ### Materials
 - `GET /api/v1/materials/categories/`, `GET .../categories/<slug>/`
-- `GET /api/v1/materials/materials/`, `GET .../materials/<id>/`
+- `GET /api/v1/materials/materials/` (query: `?search=...&min_rank=0.12&category=<slug>&ordering=-created_at`), `GET .../materials/<id>/`
 
 ### Pages (блоки)
 - `GET /api/pages/<slug>/` — структура страницы (блоки и элементы) для конструктора фронта
@@ -60,6 +60,10 @@
 ## Пагинация и фильтрация
 
 - Списочные эндпоинты используют **PageNumberPagination** (размер страницы задаётся в настройках DRF, по умолчанию 20).
-- Фильтры через **django-filter**: параметры запроса зависят от ViewSet (например, `?status=published` для событий, `?event=<slug>` для галерей).
+- Для `events/news/materials` включён PostgreSQL **trigram fuzzy search** через параметр `search`:
+  - `search` — строка поиска;
+  - `min_rank` — порог релевантности (0..1, по умолчанию `0.12`);
+  - дополнительные фильтры: `tag/tags` (events/news), `category` (materials).
+- Пошаговая инструкция для фронта: `docs/obsidian_pm_meetup/search-swagger-guide.md`.
 
 Подробности — в Swagger и в `config.settings.base` (REST_FRAMEWORK, SPECTACULAR_SETTINGS).

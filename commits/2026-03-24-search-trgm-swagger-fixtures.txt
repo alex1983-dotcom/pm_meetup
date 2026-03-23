@@ -1,0 +1,28 @@
+feat(api): триграммный поиск, тесты, Swagger, фикстуры и документация
+
+Поиск и фильтрация (PostgreSQL pg_trgm)
+- События, новости, материалы: fuzzy-поиск через TrigramSimilarity, параметры search и min_rank.
+- Фильтры по тегам: tag, tags (events/news); category (materials).
+- Сортировка по релевантности (-search_rank) при активном search; отключение OrderingFilter
+  в этом режиме, чтобы не перебивать порядок датой.
+- Миграции: расширение pg_trgm; GIN trigram-индексы для полей поиска (events, news, materials).
+
+Тесты
+- Автотесты API-поиска (smoke, min_rank, tag/tags, category).
+- Интеграционные тесты: порядок выдачи совпадает с get_queryset() (search_rank).
+
+Данные для тестов
+- Заполнение БД по макетам: manage.py seed_data (и при необходимости dump_fixtures --seed).
+- Обновление fixtures/initial_data.json через каноничную команду dump_fixtures.
+
+Swagger / drf-spectacular
+- Теги разделов: @extend_schema(tags=[...]) на ViewSet вместо некорректного extend_schema_view(tags=...).
+- PageDetailAPIView: serializer_class и @extend_schema(responses=...) для схемы без предупреждений.
+- ENUM_NAME_OVERRIDES для коллизий enum status (события, регистрации, заявки на партнёрство).
+
+Документация
+- docs/obsidian_pm_meetup/search-swagger-guide.md — пошагово поиск в Swagger.
+- Обновлены api-endpoints.md и app-доки (events, news, materials) под новые query-параметры.
+
+Прочее (окружение)
+- SITE_ID и django.contrib.sites: устранение Site.DoesNotExist на /admin/login/ при работе с localhost.

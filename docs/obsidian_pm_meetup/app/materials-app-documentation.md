@@ -78,11 +78,22 @@
 | ----- | -------------------------------------- | ------------------------------------------------------ |
 | GET   | `/api/v1/materials/categories/`        | Список активных категорий материалов                   |
 | GET   | `/api/v1/materials/categories/<slug>/` | Категория по slug                                      |
-| GET   | `/api/v1/materials/materials/`         | Список материалов (с категорией)                       |
+| GET   | `/api/v1/materials/materials/`         | Список материалов (query: `?search=...&min_rank=0.12&category=<slug>&ordering=-created_at`) |
 | GET   | `/api/v1/materials/materials/<id>/`    | Детали материала по id (включая description, file_url) |
 
 
 Ответ списка материалов: `id`, `label`, `title`, `category`, `date`, `place`, `duration_minutes`, `cover_image`, `view_count`. В деталях дополнительно: `description`, `file_url`.
+
+### Поиск и фильтрация материалов
+
+- `search` — триграммный fuzzy-поиск (PostgreSQL `pg_trgm`) по `title`, `label`, `description`, `place`, `category.title`.
+- `min_rank` — порог релевантности `0..1` (по умолчанию `0.12`).
+- `category` — slug категории.
+- `ordering` — сортировка (`date`, `-date`, `created_at`, `-created_at`, `view_count`, `-view_count`, `title`, `-title`).
+
+Пример:
+
+`/api/v1/materials/materials/?search=воркшп&min_rank=0.10&category=courses`
 
 ---
 

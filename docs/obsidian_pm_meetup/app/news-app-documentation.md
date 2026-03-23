@@ -80,11 +80,23 @@
 
 | Метод | URL                             | Описание                                            |
 | ----- | ------------------------------- | --------------------------------------------------- |
-| GET   | `/api/v1/news/articles/`        | Список опубликованных новостей (с тегами и автором) |
+| GET   | `/api/v1/news/articles/`        | Список опубликованных новостей (query: `?search=...&min_rank=0.12&tag=<slug>&tags=<slug1,slug2>&ordering=-publication_date`) |
 | GET   | `/api/v1/news/articles/<slug>/` | Детали новости по slug (полный контент, SEO)        |
 
 
 Ответ списка: `id`, `title`, `slug`, `short_description`, `cover_image`, `publication_date`, `read_time_minutes`, `views_count`, `author` (id, first_name, last_name, email, avatar), `tags`. В деталях дополнительно: `content`, `meta_title`, `meta_description`.
+
+### Поиск и фильтрация новостей
+
+- `search` — триграммный fuzzy-поиск (PostgreSQL `pg_trgm`) по `title`, `short_description`, `content`, а также по тегам (`tags.name`, `tags.slug`).
+- `min_rank` — порог релевантности `0..1` (по умолчанию `0.12`).
+- `tag` — один тег по slug.
+- `tags` — несколько тегов через запятую.
+- `ordering` — сортировка (`publication_date`, `-publication_date`, `created_at`, `-created_at`, `views_count`, `-views_count`, `title`, `-title`).
+
+Пример:
+
+`/api/v1/news/articles/?search=проджект%20менеджер&min_rank=0.12&tags=trendy,techconference`
 
 ---
 

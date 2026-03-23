@@ -199,7 +199,7 @@
 | GET | `/api/v1/events/categories/<slug>/` | Категория по slug |
 | GET | `/api/v1/events/speakers/` | Список спикеров |
 | GET | `/api/v1/events/speakers/<id>/` | Спикер по id |
-| GET | `/api/v1/events/events/` | Список событий (query: `?status=published`) |
+| GET | `/api/v1/events/events/` | Список событий (query: `?search=...&min_rank=0.12&status=published&tag=<slug>&tags=<slug1,slug2>&ordering=-date`) |
 | GET | `/api/v1/events/events/<slug>/` | Детали события по slug (с сегментами, спикерами, тегами) |
 | GET | `/api/v1/events/segments/` | Список сегментов программы |
 | GET | `/api/v1/events/segments/<id>/` | Сегмент по id |
@@ -209,6 +209,19 @@
 | POST | `/api/v1/events/registrations/` | Регистрация на событие (тело: `event`, `extra_data`; требуется авторизация) |
 
 Все эндпоинты (кроме POST регистрации) — только чтение. Для доступа к API нужен заголовок `X-API-KEY` или запрос с доверенного фронта (см. `OnlyWithApiKeyOrFromFrontend`).
+
+### Поиск и фильтрация событий
+
+- `search` — триграммный fuzzy-поиск (PostgreSQL `pg_trgm`) по `title`, `description`, `location_city`, `location_venue`, `speakers.full_name`, а также по тегам (`tags.name`, `tags.slug`).
+- `min_rank` — порог релевантности `0..1` (по умолчанию `0.12`).
+- `status` — фильтр по статусу (`draft`, `published`, ...).
+- `tag` — один тег по slug.
+- `tags` — несколько тегов через запятую.
+- `ordering` — сортировка (`date`, `-date`, `time_start`, `-time_start`, `created_at`, `-created_at`, `title`, `-title`).
+
+Пример:
+
+`/api/v1/events/events/?search=менеджемнт&min_rank=0.12&status=published&tags=sobytiya,techconference`
 
 ---
 

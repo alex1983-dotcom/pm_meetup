@@ -186,42 +186,6 @@
   }
 },
 {
-  "model": "events.eventtheme",
-  "pk": 4,
-  "fields": {
-    "created_at": "2026-03-23T19:57:11.264Z",
-    "updated_at": "2026-03-23T19:57:11.264Z",
-    "name": "Митап",
-    "slug": "meetup",
-    "description": "",
-    "order": 1
-  }
-},
-{
-  "model": "events.eventtheme",
-  "pk": 5,
-  "fields": {
-    "created_at": "2026-03-23T19:57:11.267Z",
-    "updated_at": "2026-03-23T19:57:11.267Z",
-    "name": "Воркшоп",
-    "slug": "workshop",
-    "description": "",
-    "order": 2
-  }
-},
-{
-  "model": "events.eventtheme",
-  "pk": 6,
-  "fields": {
-    "created_at": "2026-03-23T19:57:11.269Z",
-    "updated_at": "2026-03-23T19:57:11.269Z",
-    "name": "Нетворкинг",
-    "slug": "networking",
-    "description": "",
-    "order": 3
-  }
-},
-{
   "model": "events.speaker",
   "pk": 5,
   "fields": {
@@ -329,11 +293,6 @@
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "themes": [
-      4,
-      5,
-      6
-    ],
     "tags": [
       14,
       13,
@@ -375,11 +334,6 @@
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "themes": [
-      4,
-      5,
-      6
-    ],
     "tags": [
       14,
       13,
@@ -420,11 +374,6 @@
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "themes": [
-      4,
-      5,
-      6
-    ],
     "tags": [
       14,
       13,
@@ -465,11 +414,6 @@
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "themes": [
-      4,
-      5,
-      6
-    ],
     "tags": [
       14,
       13,
@@ -511,11 +455,6 @@
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "themes": [
-      4,
-      5,
-      6
-    ],
     "tags": [
       14,
       13,
@@ -557,11 +496,6 @@
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "themes": [
-      4,
-      5,
-      6
-    ],
     "tags": [
       14,
       13,
@@ -600,11 +534,6 @@
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "themes": [
-      4,
-      5,
-      6
-    ],
     "tags": [
       14,
       13,

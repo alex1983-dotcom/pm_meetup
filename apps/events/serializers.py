@@ -8,15 +8,8 @@ from apps.events.models import (
     EventGallery,
     EventRegistration,
     EventSegment,
-    EventTheme,
     Speaker,
 )
-
-
-class EventThemeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = EventTheme
-        fields = ("id", "name", "slug", "description", "order")
 
 
 class SpeakerListSerializer(serializers.ModelSerializer):

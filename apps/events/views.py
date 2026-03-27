@@ -10,7 +10,6 @@ from apps.events.models import (
     EventGallery,
     EventRegistration,
     EventSegment,
-    EventTheme,
     Speaker,
 )
 from apps.events.serializers import (
@@ -19,17 +18,8 @@ from apps.events.serializers import (
     EventListSerializer,
     EventRegistrationSerializer,
     EventSegmentSerializer,
-    EventThemeSerializer,
     SpeakerListSerializer,
 )
-
-
-@extend_schema(tags=["events"])
-class EventThemeViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = EventTheme.objects.all()
-    serializer_class = EventThemeSerializer
-    lookup_field = "slug"
-    lookup_url_kwarg = "slug"
 
 
 @extend_schema(tags=["events"])
@@ -104,7 +94,6 @@ class EventViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         qs = Event.objects.prefetch_related(
-            "themes",
             "tags",
             "speakers",
             "segments__speakers",

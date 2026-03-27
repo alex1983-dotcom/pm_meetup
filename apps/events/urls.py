@@ -5,13 +5,11 @@ from apps.events.views import (
     EventGalleryViewSet,
     EventRegistrationViewSet,
     EventSegmentViewSet,
-    EventThemeViewSet,
     EventViewSet,
     SpeakerViewSet,
 )
 
 router = DefaultRouter()
-router.register(r"themes", EventThemeViewSet, basename="eventtheme")
 router.register(r"speakers", SpeakerViewSet, basename="speaker")
 router.register(r"events", EventViewSet, basename="event")
 router.register(r"segments", EventSegmentViewSet, basename="eventsegment")

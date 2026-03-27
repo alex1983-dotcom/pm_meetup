@@ -142,34 +142,6 @@ class Tag(TimeStampedModel):
 
 ---
 
-## EventTheme
-
-Файл: `apps/events/models.py`
-
-```python
-class EventTheme(TimeStampedModel):
-    """Справочник тематик для внутренней аналитики (не для карточек на сайте)."""
-    name = models.CharField("Название", max_length=100)
-    slug = models.SlugField("URL-путь", max_length=120, unique=True)
-    description = models.TextField("Заметки", blank=True)
-    order = models.PositiveIntegerField("Порядок", default=0)
-
-    class Meta:
-        verbose_name = "Тематика мероприятия"
-        verbose_name_plural = "Тематики мероприятий"
-        ordering = ["order", "name"]
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name, allow_unicode=True)
-        super().save(*args, **kwargs)
-```
-
----
-
 ## Speaker
 
 Файл: `apps/events/models.py`
@@ -272,13 +244,6 @@ class Event(TimeStampedModel):
         help_text="Показывать в блоке рекомендованных событий на сайте.",
     )
 
-    themes = models.ManyToManyField(
-        EventTheme,
-        verbose_name="Тематики (аналитика)",
-        related_name="events",
-        blank=True,
-        help_text="Для внутренних отчётов и раздела аналитики; не дублирует теги для витрины.",
-    )
     tags = models.ManyToManyField(
         Tag, verbose_name="Теги", related_name="events", blank=True
     )

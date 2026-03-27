@@ -22,7 +22,7 @@
 
 | Документ | Содержание |
 |----------|------------|
-| [event-type-vs-categories.md](event-type-vs-categories.md) | **Для заказчика:** тип события (витрина) и тематики (внутренняя аналитика) — разница и примеры |
+| [event-type-vs-categories.md](event-type-vs-categories.md) | **Для заказчика:** тип события, теги и программа (сегменты) — без отдельной «тематики» |
 | [obsidian_pm_meetup/models-codebase.md](obsidian_pm_meetup/models-codebase.md) | Код моделей в одном месте (справочник) |
 | [obsidian_pm_meetup/models-relations-diagram.md](obsidian_pm_meetup/models-relations-diagram.md) | Связи между сущностями |
 | [obsidian_pm_meetup/model-schema-graph.md](obsidian_pm_meetup/model-schema-graph.md) | Схема графа моделей |

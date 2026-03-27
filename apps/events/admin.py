@@ -5,11 +5,11 @@ from django.urls import path, reverse
 from django.contrib import messages
 from django.utils.text import slugify
 
-from .models import EventCategory, Speaker, Event, EventSegment, EventRegistration, EventGallery
+from .models import EventTheme, Speaker, Event, EventSegment, EventRegistration, EventGallery
 
 
-@admin.register(EventCategory)
-class EventCategoryAdmin(admin.ModelAdmin):
+@admin.register(EventTheme)
+class EventThemeAdmin(admin.ModelAdmin):
     list_display = ("name", "slug", "order", "created_at")
     search_fields = ("name",)
     prepopulated_fields = {"slug": ("name",)}
@@ -42,7 +42,7 @@ class EventAdmin(admin.ModelAdmin):
     search_fields = ("title", "location_city")
     prepopulated_fields = {"slug": ("title",)}
     readonly_fields = ("created_at", "updated_at")
-    filter_horizontal = ("categories", "tags", "speakers")
+    filter_horizontal = ("themes", "tags", "speakers")
     inlines = [EventSegmentInline]
     date_hierarchy = "date"
     list_editable = ("status", "is_featured")
@@ -76,6 +76,7 @@ class EventAdmin(admin.ModelAdmin):
         new_event = Event(
             title=original.title,
             slug=slug,
+            short_description=original.short_description,
             description=original.description,
             date=original.date,
             time_start=original.time_start,
@@ -98,7 +99,7 @@ class EventAdmin(admin.ModelAdmin):
             is_featured=original.is_featured,
         )
         new_event.save()
-        new_event.categories.set(original.categories.all())
+        new_event.themes.set(original.themes.all())
         new_event.tags.set(original.tags.all())
         new_event.speakers.set(original.speakers.all())
         for seg in original.segments.all():

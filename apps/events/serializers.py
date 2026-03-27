@@ -1,19 +1,21 @@
+from decimal import Decimal
+
 from rest_framework import serializers
 
 from apps.core.serializers import TagSerializer
 from apps.events.models import (
     Event,
-    EventCategory,
     EventGallery,
     EventRegistration,
     EventSegment,
+    EventTheme,
     Speaker,
 )
 
 
-class EventCategorySerializer(serializers.ModelSerializer):
+class EventThemeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = EventCategory
+        model = EventTheme
         fields = ("id", "name", "slug", "description", "order")
 
 
@@ -52,15 +54,24 @@ class EventSegmentSerializer(serializers.ModelSerializer):
         )
 
 
-class EventListSerializer(serializers.ModelSerializer):
-    categories = EventCategorySerializer(many=True, read_only=True)
+class _EventPriceRepresentationMixin:
+    """Пустая цена в БД (null) в API отдаётся как 0 — бесплатно."""
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if data.get("price") is None:
+            data["price"] = Decimal("0")
+        return data
+
+
+class EventListSerializer(_EventPriceRepresentationMixin, serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = (
             "id",
             "title",
             "slug",
+            "short_description",
             "description",
             "date",
             "time_start",
@@ -69,16 +80,13 @@ class EventListSerializer(serializers.ModelSerializer):
             "event_type",
             "cover_image",
             "location_city",
-            "location_venue",
             "price",
             "status",
             "is_featured",
-            "categories",
         )
 
 
-class EventDetailSerializer(serializers.ModelSerializer):
-    categories = EventCategorySerializer(many=True, read_only=True)
+class EventDetailSerializer(_EventPriceRepresentationMixin, serializers.ModelSerializer):
     tags = TagSerializer(many=True, read_only=True)
     speakers = SpeakerListSerializer(many=True, read_only=True)
     segments = EventSegmentSerializer(many=True, read_only=True)
@@ -89,6 +97,7 @@ class EventDetailSerializer(serializers.ModelSerializer):
             "id",
             "title",
             "slug",
+            "short_description",
             "description",
             "date",
             "time_start",
@@ -108,7 +117,6 @@ class EventDetailSerializer(serializers.ModelSerializer):
             "meta_title",
             "meta_description",
             "is_featured",
-            "categories",
             "tags",
             "speakers",
             "segments",

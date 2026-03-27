@@ -7,27 +7,27 @@ from rest_framework.exceptions import ValidationError
 
 from apps.events.models import (
     Event,
-    EventCategory,
     EventGallery,
     EventRegistration,
     EventSegment,
+    EventTheme,
     Speaker,
 )
 from apps.events.serializers import (
-    EventCategorySerializer,
     EventDetailSerializer,
     EventGallerySerializer,
     EventListSerializer,
     EventRegistrationSerializer,
     EventSegmentSerializer,
+    EventThemeSerializer,
     SpeakerListSerializer,
 )
 
 
 @extend_schema(tags=["events"])
-class EventCategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = EventCategory.objects.all()
-    serializer_class = EventCategorySerializer
+class EventThemeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = EventTheme.objects.all()
+    serializer_class = EventThemeSerializer
     lookup_field = "slug"
     lookup_url_kwarg = "slug"
 
@@ -104,7 +104,7 @@ class EventViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         qs = Event.objects.prefetch_related(
-            "categories",
+            "themes",
             "tags",
             "speakers",
             "segments__speakers",
@@ -120,6 +120,7 @@ class EventViewSet(viewsets.ReadOnlyModelViewSet):
             qs = qs.annotate(
                 search_rank=Greatest(
                     Coalesce(TrigramSimilarity("title", search_query), Value(0.0)),
+                    Coalesce(TrigramSimilarity("short_description", search_query), Value(0.0)),
                     Coalesce(TrigramSimilarity("description", search_query), Value(0.0)),
                     Coalesce(TrigramSimilarity("location_city", search_query), Value(0.0)),
                     Coalesce(TrigramSimilarity("location_venue", search_query), Value(0.0)),

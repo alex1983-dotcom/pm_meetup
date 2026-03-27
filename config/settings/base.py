@@ -148,7 +148,7 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
     "TAGS": [
         {"name": "core", "description": "Теги (для фильтров событий и новостей)"},
-        {"name": "events", "description": "События, категории, спикеры, сегменты программы, галереи, регистрации"},
+        {"name": "events", "description": "События, тематики (аналитика), спикеры, сегменты программы, галереи, регистрации"},
         {"name": "news", "description": "Новости и статьи"},
         {"name": "content", "description": "Партнёры, команда, настройки сайта, статичные страницы, заявки на партнёрство"},
         {"name": "materials", "description": "Материалы и категории материалов"},

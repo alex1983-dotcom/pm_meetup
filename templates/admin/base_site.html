@@ -1,0 +1,22 @@
+{% extends "admin/base.html" %}
+
+{# CSS из Django #36850: фильтры changelist не переносятся над таблицей (регрессия 6.0 / flex-wrap). #}
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  .changelist-form-container {
+    flex-wrap: nowrap !important;
+  }
+</style>
+{% endblock %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<div id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></div>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

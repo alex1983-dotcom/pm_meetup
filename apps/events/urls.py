@@ -2,16 +2,16 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from apps.events.views import (
-    EventCategoryViewSet,
     EventGalleryViewSet,
     EventRegistrationViewSet,
     EventSegmentViewSet,
+    EventThemeViewSet,
     EventViewSet,
     SpeakerViewSet,
 )
 
 router = DefaultRouter()
-router.register(r"categories", EventCategoryViewSet, basename="eventcategory")
+router.register(r"themes", EventThemeViewSet, basename="eventtheme")
 router.register(r"speakers", SpeakerViewSet, basename="speaker")
 router.register(r"events", EventViewSet, basename="event")
 router.register(r"segments", EventSegmentViewSet, basename="eventsegment")

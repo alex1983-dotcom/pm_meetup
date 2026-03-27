@@ -14,10 +14,10 @@ from apps.content.models import Partner, PartnershipApplication, SiteSettings, T
 from apps.core.models import ApiKey, Tag
 from apps.events.models import (
     Event,
-    EventCategory,
     EventGallery,
     EventRegistration,
     EventSegment,
+    EventTheme,
     Speaker,
 )
 from apps.materials.models import Material, MaterialCategory
@@ -43,9 +43,9 @@ class Command(BaseCommand):
         self._seed_core()
         self._seed_users()
         tags = self._seed_tags()
-        categories = self._seed_event_categories()
+        themes = self._seed_event_themes()
         speakers = self._seed_speakers(tags)
-        events = self._seed_events(categories, tags, speakers)
+        events = self._seed_events(themes, tags, speakers)
         self._seed_event_segments_and_galleries(events, speakers)
         users = list(User.objects.filter(email__in=["admin@pm.meetup", "author@pm.meetup", "user@pm.meetup"]))
         if users and events:
@@ -75,7 +75,7 @@ class Command(BaseCommand):
         EventRegistration.objects.all().delete()
         Event.objects.all().delete()
         Speaker.objects.all().delete()
-        EventCategory.objects.all().delete()
+        EventTheme.objects.all().delete()
         User.objects.all().delete()
         Tag.objects.all().delete()
         ApiKey.objects.all().delete()
@@ -155,8 +155,8 @@ class Command(BaseCommand):
         u3.save()
         self.stdout.write("  Пользователи: admin@pm.meetup (admin123), author@pm.meetup (author123), user@pm.meetup (user123)")
 
-    def _seed_event_categories(self):
-        """Категории для фильтра (из макета Афиша)."""
+    def _seed_event_themes(self):
+        """Тематики для внутренней аналитики (справочник)."""
         data = [
             ("Митап", "meetup", "", 1),
             ("Воркшоп", "workshop", "", 2),
@@ -164,9 +164,11 @@ class Command(BaseCommand):
         ]
         created = []
         for name, slug, desc, order in data:
-            cat, _ = EventCategory.objects.get_or_create(slug=slug, defaults={"name": name, "description": desc, "order": order})
-            created.append(cat)
-        self.stdout.write(f"  Категории событий: {len(created)}")
+            th, _ = EventTheme.objects.get_or_create(
+                slug=slug, defaults={"name": name, "description": desc, "order": order}
+            )
+            created.append(th)
+        self.stdout.write(f"  Тематики мероприятий: {len(created)}")
         return created
 
     def _seed_speakers(self, tags):
@@ -189,7 +191,7 @@ class Command(BaseCommand):
         self.stdout.write(f"  Спикеры: {len(created)}")
         return created
 
-    def _seed_events(self, categories, tags, speakers):
+    def _seed_events(self, themes, tags, speakers):
         """События как на макетах Events.jpg и EventPage.jpg: ноябрь 2025 + прошедшие для галерей."""
         # Ноябрь 2025 — предстоящие
         data_upcoming = [
@@ -245,7 +247,7 @@ class Command(BaseCommand):
                 "price": Decimal("100"),
                 "registration_type": "open",
                 "status": "published",
-                "is_featured": True,
+                "is_featured": False,
             },
             {
                 "title": "Networking: Предприниматели Минска",
@@ -320,8 +322,8 @@ class Command(BaseCommand):
         created = []
         for d in data_upcoming + data_past:
             ev, _ = Event.objects.get_or_create(slug=d["slug"], defaults=d)
-            if categories and not ev.categories.exists():
-                ev.categories.set(categories)
+            if themes and not ev.themes.exists():
+                ev.themes.set(themes)
             if tags and not ev.tags.exists():
                 ev.tags.set(tags[:5])
             if speakers and not ev.speakers.exists():

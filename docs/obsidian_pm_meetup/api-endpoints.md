@@ -12,7 +12,7 @@
 | Префикс | Приложение | Описание |
 |---------|------------|----------|
 | `/api/v1/core/` | core | Теги |
-| `/api/v1/events/` | events | События, категории, спикеры, сегменты, галереи, регистрации |
+| `/api/v1/events/` | events | События, тематики (аналитика), спикеры, сегменты, галереи, регистрации |
 | `/api/v1/news/` | news | Новости (только опубликованные) |
 | `/api/v1/content/` | content | Партнёры, команда, настройки сайта, статичные страницы, заявки на партнёрство |
 | `/api/v1/materials/` | materials | Категории и материалы |
@@ -29,7 +29,7 @@
 - `GET /api/v1/core/tags/<slug>/` — тег по slug
 
 ### Events
-- `GET /api/v1/events/categories/`, `GET .../categories/<slug>/`
+- `GET /api/v1/events/themes/`, `GET .../themes/<slug>/` (справочник тематик для внутренней аналитики)
 - `GET /api/v1/events/speakers/`, `GET .../speakers/<id>/`
 - `GET /api/v1/events/events/` (query: `?status=published&search=...&min_rank=0.12&tag=<slug>&tags=<slug1,slug2>&ordering=-date`), `GET .../events/<slug>/`
 - `GET /api/v1/events/segments/`, `GET .../segments/<id>/`

@@ -186,7 +186,7 @@
   }
 },
 {
-  "model": "events.eventcategory",
+  "model": "events.eventtheme",
   "pk": 4,
   "fields": {
     "created_at": "2026-03-23T19:57:11.264Z",
@@ -198,7 +198,7 @@
   }
 },
 {
-  "model": "events.eventcategory",
+  "model": "events.eventtheme",
   "pk": 5,
   "fields": {
     "created_at": "2026-03-23T19:57:11.267Z",
@@ -210,7 +210,7 @@
   }
 },
 {
-  "model": "events.eventcategory",
+  "model": "events.eventtheme",
   "pk": 6,
   "fields": {
     "created_at": "2026-03-23T19:57:11.269Z",
@@ -329,7 +329,7 @@
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "categories": [
+    "themes": [
       4,
       5,
       6
@@ -375,7 +375,7 @@
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "categories": [
+    "themes": [
       4,
       5,
       6
@@ -419,8 +419,8 @@
     "cancellation_reason": "",
     "meta_title": "",
     "meta_description": "",
-    "is_featured": true,
-    "categories": [
+    "is_featured": false,
+    "themes": [
       4,
       5,
       6
@@ -465,7 +465,7 @@
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "categories": [
+    "themes": [
       4,
       5,
       6
@@ -511,7 +511,7 @@
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "categories": [
+    "themes": [
       4,
       5,
       6
@@ -557,7 +557,7 @@
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "categories": [
+    "themes": [
       4,
       5,
       6
@@ -600,7 +600,7 @@
     "meta_title": "",
     "meta_description": "",
     "is_featured": false,
-    "categories": [
+    "themes": [
       4,
       5,
       6

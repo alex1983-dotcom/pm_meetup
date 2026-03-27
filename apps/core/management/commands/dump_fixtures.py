@@ -39,7 +39,7 @@ class Command(BaseCommand):
                 "core.Tag",
                 "core.ApiKey",
                 "users.User",
-                "events.EventCategory",
+                "events.EventTheme",
                 "events.Speaker",
                 "events.Event",
                 "events.EventSegment",

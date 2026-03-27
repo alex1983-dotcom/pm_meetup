@@ -15,7 +15,7 @@ class OnlyWithApiKeyOrFromFrontend(BasePermission):
             return True
 
         # Проверяем Referer / Origin
-        referer = request.headers.get("X-API-KEY", "")
+        referer = request.headers.get("Referer", "")
         origin = request.headers.get("Origin", "")
         allowed = [
             "http://localhost:3000",
@@ -38,6 +38,4 @@ class DocsOrApiKey(BasePermission):
         path = request.path
         if path.startswith("/api/schema/") or path.startswith("/api/docs/"):
             return True
-        # иначе применяем прежнюю логику
-        from .permissions import OnlyWithApiKeyOrFromFrontend
         return OnlyWithApiKeyOrFromFrontend().has_permission(request, view)

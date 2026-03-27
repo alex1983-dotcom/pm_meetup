@@ -18,7 +18,7 @@ flowchart TB
     EventGallery
   end
   subgraph ref [Справочники]
-    EventCategory
+    EventTheme
     Speaker
     Tag
   end
@@ -28,7 +28,7 @@ flowchart TB
   EventSegment -->|"event"| Event
   EventGallery -->|"event"| Event
 
-  Event ---|"categories / events"| EventCategory
+  Event ---|"themes / events"| EventTheme
   Event ---|"tags / events"| Tag
   Event ---|"speakers / events"| Speaker
   EventSegment ---|"speakers / event_segments"| Speaker
@@ -36,7 +36,7 @@ flowchart TB
 ```
 
 - **Стрелка (→):** ForeignKey. Направление от модели, у которой объявлено поле, к модели, на которую ссылаются. Подпись — имя поля (например, `event`, `user`).
-- **Двойная линия (—):** ManyToMany. Подпись в формате `поле / related_name` (например, у Event поле `categories`, у EventCategory обратный доступ `events`).
+- **Двойная линия (—):** ManyToMany. Подпись в формате `поле / related_name` (например, у Event поле `themes`, у EventTheme обратный доступ `events`).
 
 ---
 
@@ -73,7 +73,7 @@ flowchart TB
 | Обозначение | Значение | Пример в коде |
 |-------------|----------|----------------|
 | **Стрелка → с подписью** | ForeignKey: у модели-источника есть поле с таким именем | `EventSegment.event` — поле в коде; у события обратно: `event.segments` (related_name) |
-| **Линия — с подписью "A / B"** | ManyToMany: с одной стороны поле A, с другой related_name B | У Event поле `categories`, у EventCategory — `category.events` |
+| **Линия — с подписью "A / B"** | ManyToMany: с одной стороны поле A, с другой related_name B | У Event поле `themes`, у EventTheme обратный доступ — `events` |
 
 **Как читать подписи:**
 - **Поле** — объявлено в классе модели (например, `event = models.ForeignKey(Event, ...)`). Обращение: `объект_сегмента.event` → получишь событие.

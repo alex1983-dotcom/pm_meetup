@@ -1,5 +1,3 @@
-from decimal import Decimal
-
 from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
@@ -8,16 +6,16 @@ from mdeditor.fields import MDTextField
 from apps.core.models import TimeStampedModel, Tag
 
 
-class EventCategory(TimeStampedModel):
-    """Категория событий (тематика)."""
+class EventTheme(TimeStampedModel):
+    """Справочник тематик для внутренней аналитики (не для карточек на сайте)."""
     name = models.CharField("Название", max_length=100)
     slug = models.SlugField("URL-путь", max_length=120, unique=True)
-    description = models.TextField("Описание", blank=True)
+    description = models.TextField("Заметки", blank=True)
     order = models.PositiveIntegerField("Порядок", default=0)
 
     class Meta:
-        verbose_name = "Категория событий"
-        verbose_name_plural = "Категории событий"
+        verbose_name = "Тематика мероприятия"
+        verbose_name_plural = "Тематики мероприятий"
         ordering = ["order", "name"]
 
     def __str__(self):
@@ -56,7 +54,6 @@ class Event(TimeStampedModel):
     FORMAT_CHOICES = [
         ("offline", "Офлайн"),
         ("online", "Онлайн"),
-        ("hybrid", "Гибрид"),
     ]
     TYPE_CHOICES = [
         ("meetup", "Митап"),
@@ -79,6 +76,12 @@ class Event(TimeStampedModel):
 
     title = models.CharField("Название", max_length=200)
     slug = models.SlugField("URL-путь", max_length=220, unique=True)
+    short_description = models.CharField(
+        "Краткое описание (превью)",
+        max_length=500,
+        blank=True,
+        help_text="Текст для карточек и списков",
+    )
     description = MDTextField("Описание", blank=True)
     date = models.DateField("Дата проведения")
     time_start = models.TimeField("Время начала")
@@ -99,7 +102,13 @@ class Event(TimeStampedModel):
     )
     capacity = models.PositiveIntegerField("Лимит участников", default=0)
     price = models.DecimalField(
-        "Цена участия", max_digits=10, decimal_places=2, default=Decimal("0")
+        "Цена участия",
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True,
+        default=None,
+        help_text="Если не указано — участие бесплатное.",
     )
     registration_type = models.CharField(
         "Тип регистрации",
@@ -113,10 +122,18 @@ class Event(TimeStampedModel):
     cancellation_reason = models.TextField("Причина отмены", blank=True)
     meta_title = models.CharField("SEO: заголовок", max_length=200, blank=True)
     meta_description = models.CharField("SEO: описание", max_length=300, blank=True)
-    is_featured = models.BooleanField("Показывать в «Ваш выбор»", default=False)
+    is_featured = models.BooleanField(
+        "Рекомендованное событие",
+        default=False,
+        help_text="Показывать в блоке рекомендованных событий на сайте.",
+    )
 
-    categories = models.ManyToManyField(
-        EventCategory, verbose_name="Категории", related_name="events", blank=True
+    themes = models.ManyToManyField(
+        EventTheme,
+        verbose_name="Тематики (аналитика)",
+        related_name="events",
+        blank=True,
+        help_text="Для внутренних отчётов и раздела аналитики; не дублирует теги для витрины.",
     )
     tags = models.ManyToManyField(
         Tag, verbose_name="Теги", related_name="events", blank=True

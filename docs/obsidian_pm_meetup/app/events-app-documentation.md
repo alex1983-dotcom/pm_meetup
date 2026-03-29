@@ -25,17 +25,19 @@
 
 Профиль спикера для повторного использования в разных событиях.
 
-| Поле | Тип | Описание |
-|------|-----|----------|
-| full_name | CharField(200) | ФИО |
-| position | CharField(200) | Должность |
-| company | CharField(200) | Компания |
-| photo | ImageField | Фотография (media/speakers/) |
-| bio | TextField | Биография |
-| email | EmailField | Email для связи |
-| social_links | JSONField | Ссылки на соцсети (словарь) |
-| topics | M2M → Tag | Темы выступлений (теги из core) |
-| created_at, updated_at | DateTimeField | Авто |
+
+| Поле                   | Тип            | Описание                        |
+| ---------------------- | -------------- | ------------------------------- |
+| full_name              | CharField(200) | ФИО                             |
+| position               | CharField(200) | Должность                       |
+| company                | CharField(200) | Компания                        |
+| photo                  | ImageField     | Фотография (media/speakers/)    |
+| bio                    | TextField      | Биография                       |
+| email                  | EmailField     | Email для связи                 |
+| social_links           | JSONField      | Ссылки на соцсети (словарь)     |
+| topics                 | M2M → Tag      | Темы выступлений (теги из core) |
+| created_at, updated_at | DateTimeField  | Авто                            |
+
 
 Спикер может быть привязан к **событию** в целом и к отдельным **сегментам** программы (EventSegment).
 
@@ -45,31 +47,33 @@
 
 Основная модель мероприятия.
 
-| Поле | Тип | Описание |
-|------|-----|----------|
-| title | CharField(200) | Название |
-| slug | SlugField(220), уникальный | URL-путь страницы события |
-| description | MDTextField | Описание (Markdown) |
-| date | DateField | Дата проведения |
-| time_start, time_end | TimeField | Время начала и окончания |
-| format | CharField, выбор | offline / online / hybrid |
-| location_address | CharField(300) | Адрес (офлайн) |
-| location_city | CharField(100) | Город |
-| location_venue | CharField(200) | Помещение/зал |
-| online_url | URLField | Ссылка на трансляцию (онлайн) |
-| online_platform | CharField(100) | Платформа (Zoom и т.п.) |
-| event_type | CharField, выбор | meetup / workshop / conference / networking |
-| cover_image | ImageField | Обложка (media/events/) |
-| capacity | PositiveIntegerField | Лимит участников (0 = без лимита) |
-| price | DecimalField | Цена участия |
-| registration_type | CharField, выбор | open / requires_approval / closed |
-| status | CharField, выбор | draft / published / registration_closed / completed / cancelled |
-| cancellation_reason | TextField | Причина отмены (если status=cancelled) |
-| meta_title, meta_description | CharField | SEO |
-| is_featured | BooleanField | Рекомендованное событие (блок рекомендаций на сайте) |
-| tags | M2M → Tag (core) | Теги |
-| speakers | M2M → Speaker | Спикеры события |
-| created_at, updated_at | DateTimeField | Авто |
+
+| Поле                         | Тип                        | Описание                                                        |
+| ---------------------------- | -------------------------- | --------------------------------------------------------------- |
+| title                        | CharField(200)             | Название                                                        |
+| slug                         | SlugField(220), уникальный | URL-путь страницы события                                       |
+| description                  | MDTextField                | Описание (Markdown)                                             |
+| date                         | DateField                  | Дата проведения                                                 |
+| time_start, time_end         | TimeField                  | Время начала и окончания                                        |
+| format                       | CharField, выбор           | offline / online / hybrid                                       |
+| location_address             | CharField(300)             | Адрес (офлайн)                                                  |
+| location_city                | CharField(100)             | Город                                                           |
+| location_venue               | CharField(200)             | Помещение/зал                                                   |
+| online_url                   | URLField                   | Ссылка на трансляцию (онлайн)                                   |
+| online_platform              | CharField(100)             | Платформа (Zoom и т.п.)                                         |
+| event_type                   | CharField, выбор           | meetup / workshop / conference / networking                     |
+| cover_image                  | ImageField                 | Обложка (media/events/)                                         |
+| capacity                     | PositiveIntegerField       | Лимит участников (0 = без лимита)                               |
+| price                        | DecimalField               | Цена участия                                                    |
+| registration_type            | CharField, выбор           | open / requires_approval / closed                               |
+| status                       | CharField, выбор           | draft / published / registration_closed / completed / cancelled |
+| cancellation_reason          | TextField                  | Причина отмены (если status=cancelled)                          |
+| meta_title, meta_description | CharField                  | SEO                                                             |
+| is_featured                  | BooleanField               | Рекомендованное событие (блок рекомендаций на сайте)            |
+| tags                         | M2M → Tag (core)           | Теги                                                            |
+| speakers                     | M2M → Speaker              | Спикеры события                                                 |
+| created_at, updated_at       | DateTimeField              | Авто                                                            |
+
 
 **Статусы события:** черновик → опубликовано → регистрация закрыта → завершено / отменено.
 
@@ -79,16 +83,18 @@
 
 Один элемент расписания: доклад, кофе-брейк, панель и т.п.
 
-| Поле | Тип | Описание |
-|------|-----|----------|
-| event | FK → Event | Событие |
-| title | CharField(200) | Название сегмента |
-| description | TextField | Описание |
-| time_start, time_end | TimeField | Время начала и окончания |
-| order | PositiveIntegerField | Порядок вывода |
-| location | CharField(200) | Место (для многозальных событий) |
-| speakers | M2M → Speaker | Спикеры этого сегмента |
-| created_at, updated_at | DateTimeField | Авто |
+
+| Поле                   | Тип                  | Описание                         |
+| ---------------------- | -------------------- | -------------------------------- |
+| event                  | FK → Event           | Событие                          |
+| title                  | CharField(200)       | Название сегмента                |
+| description            | TextField            | Описание                         |
+| time_start, time_end   | TimeField            | Время начала и окончания         |
+| order                  | PositiveIntegerField | Порядок вывода                   |
+| location               | CharField(200)       | Место (для многозальных событий) |
+| speakers               | M2M → Speaker        | Спикеры этого сегмента           |
+| created_at, updated_at | DateTimeField        | Авто                             |
+
 
 В админке сегменты можно редактировать прямо в карточке события (inline).
 
@@ -98,14 +104,16 @@
 
 Связь «пользователь зарегистрировался на событие». Один пользователь — одна регистрация на одно событие (unique_together: user + event).
 
-| Поле | Тип | Описание |
-|------|-----|----------|
-| user | FK → User (users) | Участник |
-| event | FK → Event | Событие |
-| status | CharField, выбор | pending / confirmed / cancelled |
-| attendance_status | CharField, выбор | unknown / attended / no_show |
-| extra_data | JSONField | Доп. поля формы регистрации |
-| created_at, updated_at | DateTimeField | Авто |
+
+| Поле                   | Тип               | Описание                        |
+| ---------------------- | ----------------- | ------------------------------- |
+| user                   | FK → User (users) | Участник                        |
+| event                  | FK → Event        | Событие                         |
+| status                 | CharField, выбор  | pending / confirmed / cancelled |
+| attendance_status      | CharField, выбор  | unknown / attended / no_show    |
+| extra_data             | JSONField         | Доп. поля формы регистрации     |
+| created_at, updated_at | DateTimeField     | Авто                            |
+
 
 ---
 
@@ -113,14 +121,16 @@
 
 Фотографии или ссылка на альбом после мероприятия.
 
-| Поле | Тип | Описание |
-|------|-----|----------|
-| event | FK → Event | Событие |
-| title | CharField(200) | Название галереи |
-| cover_image | ImageField | Обложка (media/galleries/) |
-| photo_count | PositiveIntegerField | Количество фото |
-| external_album_url | URLField | Ссылка на альбом (VK и т.п.) |
-| created_at, updated_at | DateTimeField | Авто |
+
+| Поле                   | Тип                  | Описание                     |
+| ---------------------- | -------------------- | ---------------------------- |
+| event                  | FK → Event           | Событие                      |
+| title                  | CharField(200)       | Название галереи             |
+| cover_image            | ImageField           | Обложка (media/galleries/)   |
+| photo_count            | PositiveIntegerField | Количество фото              |
+| external_album_url     | URLField             | Ссылка на альбом (VK и т.п.) |
+| created_at, updated_at | DateTimeField        | Авто                         |
+
 
 ---
 
@@ -168,22 +178,30 @@
 
 ## 5. REST API (для фронтенда)
 
-Базовый префикс: **`/api/v1/events/`**. Swagger: **`/api/docs/`** (тег **events**).
+Базовый префикс: `**/api/v1/events/`**. Swagger: `**/api/docs/**` (тег **events**).
 
-| Метод | URL | Описание |
-|-------|-----|----------|
-| GET | `/api/v1/events/speakers/` | Список спикеров |
-| GET | `/api/v1/events/speakers/<id>/` | Спикер по id |
-| GET | `/api/v1/events/events/` | Список событий (query: `?search=...&min_rank=0.12&status=published&tag=<slug>&tags=<slug1,slug2>&ordering=-date`) |
-| GET | `/api/v1/events/events/<slug>/` | Детали события по slug (с сегментами, спикерами, тегами) |
-| GET | `/api/v1/events/segments/` | Список сегментов программы |
-| GET | `/api/v1/events/segments/<id>/` | Сегмент по id |
-| GET | `/api/v1/events/galleries/` | Список галерей (query: `?event=<slug>`) |
-| GET | `/api/v1/events/galleries/<id>/` | Галерея по id |
-| GET | `/api/v1/events/registrations/` | Мои регистрации (требуется авторизация) |
-| POST | `/api/v1/events/registrations/` | Регистрация на событие (тело: `event`, `extra_data`; требуется авторизация) |
+
+| Метод | URL                              | Описание                                                                                                          |
+| ----- | -------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| GET   | `/api/v1/events/speakers/`       | Список спикеров                                                                                                   |
+| GET   | `/api/v1/events/speakers/<id>/`  | Спикер по id                                                                                                      |
+| GET   | `/api/v1/events/events/`         | Список событий (query: `?search=...&min_rank=0.12&status=published&tag=<slug>&tags=<slug1,slug2>&ordering=-date`) |
+| GET   | `/api/v1/events/events/<slug>/`  | Детали события по slug (с сегментами, спикерами, тегами)                                                          |
+| GET   | `/api/v1/events/segments/`       | Список сегментов программы                                                                                        |
+| GET   | `/api/v1/events/segments/<id>/`  | Сегмент по id                                                                                                     |
+| GET   | `/api/v1/events/galleries/`      | Список галерей (query: `?event=<slug>`)                                                                           |
+| GET   | `/api/v1/events/galleries/<id>/` | Галерея по id                                                                                                     |
+| GET   | `/api/v1/events/registrations/`  | Мои регистрации (требуется авторизация)                                                                           |
+| POST  | `/api/v1/events/registrations/`  | Регистрация на событие (тело: `event`, `extra_data`; требуется авторизация)                                       |
+
 
 Все эндпоинты (кроме POST регистрации) — только чтение. Для доступа к API нужен заголовок `X-API-KEY` или запрос с доверенного фронта (см. `OnlyWithApiKeyOrFromFrontend`).
+
+**Поля события в JSON**
+
+- **Список** `GET /api/v1/events/events/` — сериализатор `EventListSerializer`: `id`, `title`, `slug`, `short_description`, `description`, `date`, `time_start`, `time_end`, `format`, `cover_image`, `location_city`, `price`, `status`, `is_featured`. Поле **`event_type` в ответе списка не отдаётся** (в модели и админке оно по-прежнему есть).
+- **Деталь** `GET /api/v1/events/events/<slug>/` — сериализатор `EventDetailSerializer`: расширенный набор, в том числе **`event_type`**, адреса и площадка, онлайн, лимит, тип регистрации, SEO, теги, спикеры, сегменты программы.
+- **Галереи** `GET /api/v1/events/galleries/`, `GET .../galleries/<id>/` — сериализатор `EventGallerySerializer`: у каждой галереи поле **`event`** — вложенный объект (`EventGalleryEventSerializer`) с полями `id`, `slug`, `title`, `date`, `location_city`, плюс поля самой галереи: `title`, `cover_image`, `photo_count`, `external_album_url`.
 
 ### Поиск и фильтрация событий
 
@@ -202,11 +220,14 @@
 
 ## 6. Краткая сводка для заказчика
 
-| Вопрос | Ответ |
-|--------|--------|
-| Где создавать мероприятия? | Админка → События. Можно задать дату, место, формат, лимит, цену, статус. |
-| Как задать программу события? | В карточке события — блок «Сегменты программы» или раздел «Сегменты программы». |
-| Где хранятся спикеры? | Раздел «Спикеры»; одного спикера можно привязать к разным событиям и сегментам. |
-| Как посмотреть регистрации? | Раздел «Регистрации на события»: кто на какое событие записан, статус, посетил/не явился. |
-| Где галереи после мероприятия? | Раздел «Галереи событий»: можно указать ссылку на альбом (VK и т.д.) и обложку. |
-| Что такое «Рекомендованное событие»? | Флаг `is_featured` — событие можно выводить в блоке рекомендованных на сайте. |
+
+| Вопрос                               | Ответ                                                                                     |
+| ------------------------------------ | ----------------------------------------------------------------------------------------- |
+| Где создавать мероприятия?           | Админка → События. Можно задать дату, место, формат, лимит, цену, статус.                 |
+| Как задать программу события?        | В карточке события — блок «Сегменты программы» или раздел «Сегменты программы».           |
+| Где хранятся спикеры?                | Раздел «Спикеры»; одного спикера можно привязать к разным событиям и сегментам.           |
+| Как посмотреть регистрации?          | Раздел «Регистрации на события»: кто на какое событие записан, статус, посетил/не явился. |
+| Где галереи после мероприятия?       | Раздел «Галереи событий»: можно указать ссылку на альбом (VK и т.д.) и обложку.           |
+| Что такое «Рекомендованное событие»? | Флаг `is_featured` — событие можно выводить в блоке рекомендованных на сайте.             |
+
+

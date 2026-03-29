@@ -70,8 +70,7 @@ class EventListSerializer(_EventPriceRepresentationMixin, serializers.ModelSeria
             "time_start",
             "time_end",
             "format",
-            "event_type",
-            "cover_image",
+            "cover_image",  
             "location_city",
             "price",
             "status",
@@ -116,11 +115,22 @@ class EventDetailSerializer(_EventPriceRepresentationMixin, serializers.ModelSer
         )
 
 
+class EventGalleryEventSerializer(serializers.ModelSerializer):
+    """Минимальные поля события для карточки галереи (дата, город)."""
+
+    class Meta:
+        model = Event
+        fields = ("id", "slug", "title", "date", "location_city")
+
+
 class EventGallerySerializer(serializers.ModelSerializer):
+    event = EventGalleryEventSerializer(read_only=True)
+
     class Meta:
         model = EventGallery
         fields = (
             "id",
+            "event",
             "title",
             "cover_image",
             "photo_count",

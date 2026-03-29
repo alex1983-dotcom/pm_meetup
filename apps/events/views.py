@@ -145,7 +145,7 @@ class EventSegmentViewSet(viewsets.ReadOnlyModelViewSet):
 
 @extend_schema(tags=["events"])
 class EventGalleryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = EventGallery.objects.all()
+    queryset = EventGallery.objects.select_related("event")
     serializer_class = EventGallerySerializer
 
     def get_queryset(self):

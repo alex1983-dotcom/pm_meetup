@@ -163,16 +163,16 @@
 
 Раздел «Материалы»: отчёты, курсы, чек-листы, записи.
 
-| Поле | Тип | Описание |
-|------|-----|----------|
-| title | CharField | Название материала |
-| category | CharField | Тип: report / course / checklist / recording / case_study |
-| description | TextField | Описание |
-| file_url | URLField | Ссылка на файл или страницу |
-| cover_image | ImageField | Превью |
-| view_count | IntegerField | Количество просмотров |
-| created_at | DateTimeField | Дата добавления |
-| updated_at | DateTimeField | Дата последнего изменения |
+| Поле        | Тип           | Описание                                                  |
+| ----------- | ------------- | --------------------------------------------------------- |
+| title       | CharField     | Название материала                                        |
+| category    | CharField     | Тип: report / course / checklist / recording / case_study |
+| description | TextField     | Описание                                                  |
+| file_url    | URLField      | Ссылка на файл или страницу                               |
+| cover_image | ImageField    | Превью                                                    |
+| view_count  | IntegerField  | Количество просмотров                                     |
+| created_at  | DateTimeField | Дата добавления                                           |
+| updated_at  | DateTimeField | Дата последнего изменения                                 |
 
 **Связи:** нет (модель не ссылается на другие приложения).
 

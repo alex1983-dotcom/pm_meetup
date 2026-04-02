@@ -57,9 +57,8 @@ frontend/.env.production.local
 .DS_Store
 Thumbs.db
 
-# ========== Obsidian ================
-docs/obsidian_pm_meetup/.obsidian/
-docs/obsidian_pm_meetup/Daily-Notes/
-docs/obsidian_pm_meetup/app_pdf/
-docs/obsidian_pm_meetup/hols_PM_MEETUP.canvas
+# ========== Документация ================
+docs/Daily-Notes/
+docs/app_pdf/
+
 

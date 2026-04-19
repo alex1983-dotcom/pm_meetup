@@ -63,6 +63,6 @@
   - `search` — строка поиска;
   - `min_rank` — порог релевантности (0..1, по умолчанию `0.12`);
   - дополнительные фильтры: `tag/tags` (events/news), `category` (materials).
-- Пошаговая инструкция для фронта: `docs/obsidian_pm_meetup/search-swagger-guide.md`.
+- Пошаговая инструкция для фронта: [search-swagger-guide.md](search-swagger-guide.md).
 
 Подробности — в Swagger и в `config.settings.base` (REST_FRAMEWORK, SPECTACULAR_SETTINGS).

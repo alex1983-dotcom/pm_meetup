@@ -52,10 +52,11 @@
 | ---------------------------- | -------------------------- | --------------------------------------------------------------- |
 | title                        | CharField(200)             | Название                                                        |
 | slug                         | SlugField(220), уникальный | URL-путь страницы события                                       |
+| short_description            | CharField(500), blank      | Краткое описание для карточек и превью                          |
 | description                  | MDTextField                | Описание (Markdown)                                             |
 | date                         | DateField                  | Дата проведения                                                 |
 | time_start, time_end         | TimeField                  | Время начала и окончания                                        |
-| format                       | CharField, выбор           | offline / online / hybrid                                       |
+| format                       | CharField, выбор           | **offline** / **online** (варианта hybrid в модели нет)         |
 | location_address             | CharField(300)             | Адрес (офлайн)                                                  |
 | location_city                | CharField(100)             | Город                                                           |
 | location_venue               | CharField(200)             | Помещение/зал                                                   |
@@ -64,7 +65,7 @@
 | event_type                   | CharField, выбор           | meetup / workshop / conference / networking                     |
 | cover_image                  | ImageField                 | Обложка (media/events/)                                         |
 | capacity                     | PositiveIntegerField       | Лимит участников (0 = без лимита)                               |
-| price                        | DecimalField               | Цена участия                                                    |
+| price                        | DecimalField, null, blank  | Цена участия; пусто — бесплатно (см. `help_text` в модели)       |
 | registration_type            | CharField, выбор           | open / requires_approval / closed                               |
 | status                       | CharField, выбор           | draft / published / registration_closed / completed / cancelled |
 | cancellation_reason          | TextField                  | Причина отмены (если status=cancelled)                          |

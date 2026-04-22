@@ -194,6 +194,10 @@ docker compose exec web coverage report
 
 ## Production
 
+Сервис **`nginx`** собирается из `Dockerfile.nginx.prod`: внутри multi-stage собирается **React** (`npm run build`) и подключается `nginx.prod.conf` — один вход `:80`/`:443`, с фронта отдаётся SPA, на Django уходят `/api/`, `/admin/`, `/mdeditor/`, а **Django-статика** — с тома `./staticfiles` по префиксу `/static/`. У CRA задан `PUBLIC_URL=/react-assets`, чтобы пути ассетов не пересекались с `/static/` админки.
+
+После изменений в `frontend/` или `nginx.prod.conf` нужна пересборка: `docker compose -f docker-compose.prod.yml up -d --build`.
+
 ```bash
 docker compose -f docker-compose.prod.yml up -d
 docker compose -f docker-compose.prod.yml build

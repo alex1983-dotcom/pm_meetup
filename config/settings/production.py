@@ -127,6 +127,10 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 # --------------- безопасность -------------------------------------------------
+# За nginx с TLS: иначе Django видит HTTP и некорректно оценивает «безопасность» запроса.
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True

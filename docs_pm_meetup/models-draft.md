@@ -1,381 +1,399 @@
 # Набросок моделей PM.Meetup
 
-## 1. Пользователи (User)
+Документ приведён в соответствие с кодом в `apps/*/models.py` (актуально на момент правки). Ниже — доменные модели и служебные сущности ядра.
 
-Расширение `AbstractUser` Django или кастомная модель для участников сообщества.
-
-**Связи (обратные):**
-- **EventRegistration** — у пользователя много регистраций на события (`user.event_registrations`).
-- **NewsArticle** — у пользователя много статей как у автора (`user.news_articles`, author, FK с SET_NULL).
-
-| Поле | Тип | Описание |
-|------|-----|----------|
-| email | EmailField, unique | Email — используется для входа вместо username |
-| first_name | CharField(150), blank | Имя |
-| last_name | CharField(150), blank | Фамилия |
-| phone | CharField(20), blank | Номер телефона |
-| avatar | ImageField, blank, null | Фото профиля |
-| role | CharField(30) | Роль: member / organizer / moderator / admin / superadmin |
-| is_blocked | BooleanField | Статус блокировки учётной записи |
-| created_at | DateTimeField | Дата регистрации |
-| **event_registrations** | **обратная FK (EventRegistration.user)** | **related_name='event_registrations', CASCADE** |
-| **news_articles** | **обратная FK (NewsArticle.author)** | **related_name='news_articles', SET_NULL** |
+**Общее:** модели `Event`, `Speaker`, `EventSegment`, `EventRegistration`, `EventGallery`, `NewsArticle`, `Partner`, `TeamMember`, `SiteSettings`, `content.Page`, `PartnershipApplication`, `Material`, `MaterialCategory`, `BlockItem` наследуют **`TimeStampedModel`** (`created_at`, `updated_at`) из `apps.core.models`. **`Tag`** тоже наследует `TimeStampedModel`. **`ApiKey`** — отдельная модель без таймстампов обновления (только `created_at`). **`pages.Page`**, **`BlockType`**, **`PageBlock`** — без `TimeStampedModel` (у `PageBlock` нет своих `created_at`/`updated_at` в модели).
 
 ---
 
-## 2. События (Event)
+## 0. API-ключи (`core.ApiKey`)
 
-**Связи:**
-- **ForeignKey (обратные):** EventSegment (`event.segments`), EventRegistration (`event.registrations`), Partner (`event.partners`, null=True), EventGallery (`event.galleries`).
-- **ManyToMany:** Tag (`event.tags` ↔ `tag.events`), Speaker (`event.speakers` ↔ `speaker.events`).
+Используются для доступа к API (не путать с сессией пользователя).
 
 | Поле | Тип | Описание |
 |------|-----|----------|
-| title | CharField(200) | Название события |
-| slug | SlugField(220), unique | URL-путь для страницы события |
-| short_description | CharField(500), blank | Краткое описание для карточек и превью |
-| description | MDTextField | Описание (markdown) |
+| name | CharField(120), unique | Название ключа |
+| key | CharField(40), unique, editable=False | Токен (генерируется при сохранении, если пусто) |
+| is_active | BooleanField, default=True | Активен ли ключ |
+| created_at | DateTimeField, auto_now_add | Создан |
+
+**Связи:** нет FK на `User` / `Event`.
+
+---
+
+## 1. Пользователи (`users.User`)
+
+Кастомная модель: **`AbstractUser`**, поле **`username = None`**, вход по **`email`** (`USERNAME_FIELD = "email"`). Унаследованы поля Django: в т.ч. `first_name`, `last_name`, `is_staff`, `is_active`, `is_superuser`, `date_joined`, `last_login`, `password` и т.д.
+
+| Поле | Тип | Описание |
+|------|-----|----------|
+| email | EmailField, unique | Email — вход вместо username |
+| first_name | CharField(150), blank | Из `AbstractUser` |
+| last_name | CharField(150), blank | Из `AbstractUser` |
+| phone | CharField(20), blank | Телефон |
+| avatar | ImageField, blank, null, upload_to=avatars/ | Фото профиля |
+| role | CharField(30), choices, default=member | member / organizer / moderator / admin / superadmin |
+| is_blocked | BooleanField, default=False | Блокировка учётной записи |
+| created_at | DateTimeField, auto_now_add | Дата регистрации (доп. поле проекта) |
+| **event_registrations** | **обратная FK (`EventRegistration.user`)** | **related_name='event_registrations', CASCADE** |
+| **news_articles** | **обратная FK (`NewsArticle.author`)** | **related_name='news_articles', SET_NULL** |
+
+---
+
+## 2. События (`events.Event`)
+
+**Связи:**
+- **Обратные FK:** `EventSegment` (`event.segments`), `EventRegistration` (`event.registrations`), `Partner` (`event.partners`, null=True), `EventGallery` (`event.galleries`).
+- **ManyToMany:** `Tag` (`event.tags` ↔ `tag.events`), `Speaker` (`event.speakers` ↔ `speaker.events`).
+
+Отдельной модели категорий/тем события в текущем коде **нет** (исторически были категории/темы — сняты миграциями).
+
+| Поле | Тип | Описание |
+|------|-----|----------|
+| title | CharField(200) | Название |
+| slug | SlugField(220), unique | URL-путь (автозаполнение из title при сохранении, если пусто) |
+| short_description | CharField(500), blank | Краткое описание для карточек |
+| description | MDTextField, blank | Описание (markdown) |
 | date | DateField | Дата проведения |
 | time_start | TimeField | Время начала |
-| time_end | TimeField, null, blank | Время окончания (опционально) |
-| format | CharField(20) | Формат: **offline** / **online** (hybrid убран из модели) |
-| location_address | CharField(300), blank | Адрес (для офлайн) |
+| time_end | TimeField, null, blank | Время окончания |
+| format | CharField(20), choices, default=offline | offline / online |
+| location_address | CharField(300), blank | Адрес |
 | location_city | CharField(100), blank | Город |
-| location_venue | CharField(200), blank | Название помещения, зала |
-| online_url | URLField, blank | Ссылка на трансляцию (для онлайн) |
-| online_platform | CharField(100), blank | Платформа: Zoom, Google Meet и т.п. |
-| event_type | CharField(20) | Тип: meetup / workshop / conference / networking |
-| cover_image | ImageField, blank, null | Обложка события (рекомендуемый размер 1200×630) |
-| capacity | PositiveIntegerField | Лимит участников (0 — по смыслу UI часто «без лимита») |
-| price | DecimalField(10,2), null, blank | Цена; пусто — бесплатно |
-| registration_type | CharField(20) | open / requires_approval / closed |
-| status | CharField(30) | draft / published / registration_closed / completed / cancelled |
-| cancellation_reason | TextField, blank | Причина отмены (если status=cancelled) |
-| meta_title | CharField(200), blank | SEO: заголовок страницы |
-| meta_description | CharField(300), blank | SEO: описание для поисковиков |
-| is_featured | BooleanField | Рекомендованное событие (блок рекомендаций) |
-| **tags** | **ManyToManyField(Tag)** | **related_name='events', blank** |
-| **speakers** | **ManyToManyField(Speaker)** | **related_name='events', blank** |
-| created_at | DateTimeField | Дата создания |
-| updated_at | DateTimeField | Дата последнего изменения |
+| location_venue | CharField(200), blank | Помещение / зал |
+| online_url | URLField, blank | Ссылка на трансляцию |
+| online_platform | CharField(100), blank | Платформа |
+| event_type | CharField(20), choices, default=meetup | meetup / workshop / conference / networking |
+| cover_image | ImageField, blank, null, upload_to=events/ | Обложка |
+| capacity | PositiveIntegerField, default=0 | Лимит участников |
+| price | DecimalField(10,2), null, blank, default=None | Цена; пусто — бесплатно |
+| registration_type | CharField(20), choices, default=open | open / requires_approval / closed |
+| status | CharField(30), choices, default=draft | draft / published / registration_closed / completed / cancelled |
+| cancellation_reason | TextField, blank | Причина отмены |
+| meta_title | CharField(200), blank | SEO |
+| meta_description | CharField(300), blank | SEO |
+| is_featured | BooleanField, default=False | Рекомендованное событие |
+| **tags** | **M2M → Tag** | **related_name='events', blank** |
+| **speakers** | **M2M → Speaker** | **related_name='events', blank** |
+| created_at, updated_at | DateTimeField | Из `TimeStampedModel` |
 
 ---
 
-## 3. Расписание события (EventSegment)
-
-Сегмент программы мероприятия (доклад, кофе-брейк и т.п.).
+## 3. Расписание (`events.EventSegment`)
 
 | Поле | Тип | Описание |
 |------|-----|----------|
-| **event** | **ForeignKey(Event)** | **CASCADE, related_name='segments'** |
+| **event** | **FK → Event** | **CASCADE, related_name='segments'** |
 | title | CharField(200) | Название сегмента |
-| description | TextField, blank | Описание сегмента |
-| time_start | TimeField | Время начала |
-| time_end | TimeField | Время окончания |
-| order | PositiveIntegerField | Порядок отображения |
-| location | CharField(200), blank | Место (для многозальных событий) |
-| **speakers** | **ManyToManyField(Speaker)** | **related_name='event_segments', blank** |
-
-**Связи:**
-- **ForeignKey:** Event (`segment.event` → Event, `related_name='segments'`).
-- **ManyToMany:** Speaker (`segment.speakers` ↔ `speaker.event_segments` — спикеры сегмента).
+| description | TextField, blank | Описание |
+| time_start | TimeField | Начало |
+| time_end | TimeField | Конец (в коде обязателен, без null) |
+| order | PositiveIntegerField, default=0 | Порядок |
+| location | CharField(200), blank | Место |
+| **speakers** | **M2M → Speaker** | **related_name='event_segments', blank** |
 
 ---
 
-## 4. Спикеры (Speaker)
+## 4. Спикеры (`events.Speaker`)
 
 | Поле | Тип | Описание |
 |------|-----|----------|
 | full_name | CharField(200) | ФИО |
 | position | CharField(200), blank | Должность |
 | company | CharField(200), blank | Компания |
-| photo | ImageField, blank, null | Фотография |
-| bio | TextField, blank | Краткая биография |
-| email | EmailField, blank | Email для связи |
-| social_links | JSONField, default=dict, blank | Ссылки на соцсети (LinkedIn, Telegram и т.п.) |
-| **topics** | **ManyToManyField(Tag)** | **related_name='speakers', blank — темы выступлений** |
-| created_at | DateTimeField | Дата добавления в базу |
-| updated_at | DateTimeField | Дата последнего изменения |
+| photo | ImageField, blank, null | Фото |
+| bio | TextField, blank | Биография |
+| email | EmailField, blank | Контакт |
+| social_links | JSONField, default=dict, blank | Соцсети |
+| **topics** | **M2M → Tag** | **related_name='speakers', blank** |
+| created_at, updated_at | DateTimeField | `TimeStampedModel` |
 
-**Связи (обратные M2M, поле не в Speaker):** Event (`speaker.events` — через Event.speakers), EventSegment (`speaker.event_segments` — через EventSegment.speakers).
-
----
-
-## 5. Теги (Tag)
-
-Общие теги для событий и новостей.
-
-| Поле | Тип | Описание |
-|------|-----|----------|
-| name | CharField(100) | Название тега |
-| slug | SlugField(120), unique | URL-путь |
-| created_at | DateTimeField | Дата создания |
-| updated_at | DateTimeField | Дата последнего изменения |
-| **events** | **обратная M2M (Event.tags)** | **related_name='events'** |
-| **news_articles** | **обратная M2M (NewsArticle.tags)** | **related_name='news_articles'** |
-| **speakers** | **обратная M2M (Speaker.topics)** | **related_name='speakers' — спикеры с этой темой** |
-
-**Связи (обратные):** Поля связи заданы в Event (tags), NewsArticle (tags), Speaker (topics). Со стороны Tag доступны `tag.events`, `tag.news_articles`, `tag.speakers`.
+**Обратные M2M:** `speaker.events` (через `Event.speakers`), `speaker.event_segments` (через `EventSegment.speakers`).
 
 ---
 
-## 6. Регистрации на события (EventRegistration)
+## 5. Теги (`core.Tag`)
 
 | Поле | Тип | Описание |
 |------|-----|----------|
-| **user** | **ForeignKey(User)** | **CASCADE, related_name='event_registrations'** |
-| **event** | **ForeignKey(Event)** | **CASCADE, related_name='registrations'** |
-| status | CharField(20) | pending / confirmed / cancelled |
-| attendance_status | CharField(20) | unknown / attended / no_show |
-| extra_data | JSONField, default=dict, blank | Дополнительные поля формы регистрации |
-| created_at | DateTimeField | Дата регистрации |
-| updated_at | DateTimeField | Дата последнего изменения |
+| name | CharField(100) | Название |
+| slug | SlugField(120), unique | URL (авто из name, если пусто) |
+| created_at, updated_at | DateTimeField | `TimeStampedModel` |
 
-**Ограничение:** unique_together = (user, event).
+**Обратные M2M:** `Event.tags`, `NewsArticle.tags`, `Speaker.topics` — со стороны тега: `tag.events`, `tag.news_articles`, `tag.speakers`.
 
 ---
 
-## 7. Новости (NewsArticle)
+## 6. Регистрации (`events.EventRegistration`)
 
 | Поле | Тип | Описание |
 |------|-----|----------|
-| title | CharField(300) | Заголовок статьи |
-| slug | SlugField(320), unique | URL-путь для страницы новости |
-| short_description | TextField, blank | Краткое описание (для карточки) |
-| content | MDTextField, blank | Полный текст статьи (markdown) |
-| cover_image | ImageField, blank, null | Обложка статьи |
+| **user** | **FK → User** | **CASCADE, related_name='event_registrations'** |
+| **event** | **FK → Event** | **CASCADE, related_name='registrations'** |
+| status | CharField(20), choices, default=pending | pending / confirmed / cancelled |
+| attendance_status | CharField(20), choices, default=unknown | unknown / attended / no_show |
+| extra_data | JSONField, default=dict, blank | Доп. поля формы |
+| created_at, updated_at | DateTimeField | `TimeStampedModel` |
+
+**Meta:** `unique_together = [['user', 'event']]`.
+
+---
+
+## 7. Новости (`news.NewsArticle`)
+
+| Поле | Тип | Описание |
+|------|-----|----------|
+| title | CharField(300) | Заголовок |
+| slug | SlugField(320), unique | URL |
+| short_description | TextField, blank | Краткое описание |
+| content | MDTextField, blank | Текст |
+| cover_image | ImageField, blank, null | Обложка |
 | publication_date | DateTimeField, null, blank | Дата публикации |
-| read_time_minutes | PositiveIntegerField | Время чтения в минутах |
-| views_count | PositiveIntegerField | Количество просмотров |
-| **author** | **ForeignKey(User)** | **SET_NULL, null=True, blank=True, related_name='news_articles'** |
-| is_published | BooleanField | Опубликована или черновик |
-| meta_title | CharField(200), blank | SEO: заголовок |
-| meta_description | CharField(300), blank | SEO: описание |
-| **tags** | **ManyToManyField(Tag)** | **related_name='news_articles', blank** |
-| created_at | DateTimeField | Дата создания |
-| updated_at | DateTimeField | Дата последнего изменения |
+| read_time_minutes | PositiveIntegerField, default=0 | Время чтения |
+| views_count | PositiveIntegerField, default=0 | Просмотры |
+| **author** | **FK → User** | **SET_NULL, null, blank, related_name='news_articles'** |
+| is_published | BooleanField, default=False | Черновик / опубликовано |
+| meta_title | CharField(200), blank | SEO |
+| meta_description | CharField(300), blank | SEO |
+| **tags** | **M2M → Tag** | **related_name='news_articles', blank** |
+| created_at, updated_at | DateTimeField | `TimeStampedModel` |
 
 ---
 
-## 8. Материалы (MaterialCategory, Material)
+## 8. Материалы (`materials.MaterialCategory`, `materials.Material`)
 
-Раздел «Материалы»: отчёты, курсы, записи и т.д.
-
-**MaterialCategory** — справочник категорий (`slug`, `title`, порядок, флаг активности).
-
-**Material** — карточка материала:
+**MaterialCategory**
 
 | Поле | Тип | Описание |
 |------|-----|----------|
-| label | CharField, null, blank | Лейбл на карточке (КУРС, ЗАПИСЬ, …) |
+| slug | SlugField(50), unique | Слаг |
+| title | CharField(100) | Название |
+| display_order | PositiveIntegerField, default=0 | Порядок |
+| is_active | BooleanField, default=True | Активна |
+| created_at, updated_at | DateTimeField | `TimeStampedModel` |
+
+**Material**
+
+| Поле | Тип | Описание |
+|------|-----|----------|
+| label | CharField(50), null, blank | Лейбл карточки |
 | title | CharField(300) | Название |
-| category | ForeignKey → MaterialCategory | Категория |
+| **category** | **FK → MaterialCategory** | **PROTECT, related_name='materials'** |
 | date | DateField, null, blank | Дата |
-| place | CharField, blank | Место / формат |
-| duration_minutes | PositiveIntegerField, null, blank | Длительность |
+| place | CharField(100), blank | Место / формат |
+| duration_minutes | PositiveIntegerField, null, blank | Длительность, мин |
 | description | TextField, blank | Описание |
-| file_url | URLField, blank | Ссылка на файл или страницу |
+| file_url | URLField, blank | Ссылка |
 | cover_image | ImageField, blank, null | Превью |
-| view_count | PositiveIntegerField | Просмотры |
-
-**Связи:** FK на `MaterialCategory`; остальные приложения не задействованы.
-
----
-
-## 9. Партнёры (Partner)
-
-| Поле | Тип | Описание |
-|------|-----|----------|
-| name | CharField | Название компании |
-| logo | ImageField | Логотип |
-| description | TextField | Краткое описание |
-| website_url | URLField | Сайт партнёра |
-| partnership_level | CharField(20) | Уровень: general / gold / silver |
-| **event** | **ForeignKey(Event)** | **SET_NULL, null=True, blank=True, related_name='partners' — null = глобальный партнёр** |
-| display_order | PositiveIntegerField | Порядок отображения на сайте |
-| created_at | DateTimeField | Дата добавления |
-| updated_at | DateTimeField | Дата последнего изменения |
+| view_count | PositiveIntegerField, default=0 | Просмотры |
+| created_at, updated_at | DateTimeField | `TimeStampedModel` |
 
 ---
 
-## 10. Команда (TeamMember)
+## 9. Партнёры (`content.Partner`)
 
 | Поле | Тип | Описание |
 |------|-----|----------|
-| full_name | CharField | ФИО |
-| position | CharField | Должность в команде |
-| photo | ImageField | Фотография |
-| description | TextField | Описание / биография (в коде поле называется `description`, не `bio`) |
-| email | EmailField | Email |
-| linkedin_url | URLField | Профиль LinkedIn |
-| twitter_url | URLField | Профиль Twitter |
-| display_order | PositiveIntegerField | Порядок отображения |
-| created_at | DateTimeField | Дата добавления |
-| updated_at | DateTimeField | Дата последнего изменения |
-
-**Связи:** нет (модель не ссылается на другие приложения).
+| name | CharField(200) | Компания |
+| logo | ImageField, blank, null, upload_to=partners/ | Логотип |
+| description | TextField, blank | Описание |
+| website_url | URLField, blank | Сайт |
+| partnership_level | CharField(20), choices, default=general | general / gold / silver |
+| **event** | **FK → Event** | **SET_NULL, null, blank, related_name='partners'** |
+| display_order | PositiveIntegerField, default=0 | Порядок |
+| created_at, updated_at | DateTimeField | `TimeStampedModel` |
 
 ---
 
-## 11. Галерея прошедших событий (EventGallery)
+## 10. Команда (`content.TeamMember`)
 
 | Поле | Тип | Описание |
 |------|-----|----------|
-| **event** | **ForeignKey(Event)** | **CASCADE, related_name='galleries'** |
-| title | CharField(200) | Название галереи |
-| cover_image | ImageField, blank, null | Обложка галереи |
-| photo_count | PositiveIntegerField | Количество фотографий |
-| external_album_url | URLField, blank | Ссылка на альбом (VK и т.п.) |
-| created_at | DateTimeField | Дата создания |
-| updated_at | DateTimeField | Дата последнего изменения |
+| full_name | CharField(200) | ФИО |
+| position | CharField(200), blank | Должность |
+| photo | ImageField, blank, null | Фото |
+| description | TextField, blank | Описание / роль в команде |
+| email | EmailField, blank | Email |
+| linkedin_url | URLField, blank | LinkedIn |
+| twitter_url | URLField, blank | Twitter |
+| display_order | PositiveIntegerField, default=0 | Порядок |
+| created_at, updated_at | DateTimeField | `TimeStampedModel` |
 
 ---
 
-## 12. Настройки сайта (SiteSettings)
-
-Singleton-модель для общих настроек.
+## 11. Галерея (`events.EventGallery`)
 
 | Поле | Тип | Описание |
 |------|-----|----------|
-| site_name | CharField | Название сайта |
-| logo | ImageField | Логотип |
-| favicon | ImageField | Иконка сайта |
-| email | EmailField | Email для контактов |
-| phone | CharField | Телефон |
-| address | TextField | Адрес |
-| social_links | JSONField | Ссылки на соцсети |
-| created_at | DateTimeField | Дата создания |
-| updated_at | DateTimeField | Дата последнего изменения |
+| **event** | **FK → Event** | **CASCADE, related_name='galleries'** |
+| title | CharField(200) | Название |
+| cover_image | ImageField, blank, null | Обложка |
+| photo_count | PositiveIntegerField, default=0 | Кол-во фото |
+| external_album_url | URLField, blank | Внешний альбом |
+| created_at, updated_at | DateTimeField | `TimeStampedModel` |
 
-**Связи:** нет (singleton, не ссылается на другие модели).
+---
+
+## 12. Настройки сайта (`content.SiteSettings`)
+
+Singleton: в `save()` принудительно **`pk = 1`**, есть `SiteSettings.load()`.
+
+| Поле | Тип | Описание |
+|------|-----|----------|
+| site_name | CharField(100), default="PM.Meetup" | Название |
+| logo | ImageField, blank, null | Логотип |
+| favicon | ImageField, blank, null | Иконка |
+| email | EmailField, blank | Контактный email |
+| phone | CharField(30), blank | Телефон |
+| address | TextField, blank | Адрес |
+| social_links | JSONField, default=dict, blank | Соцсети |
+| created_at, updated_at | DateTimeField | `TimeStampedModel` |
 
 ---
 
 ## 13. Статичные страницы контента (`content.Page`)
 
-Страницы вида «О нас», «Контакты» с текстом в Markdown (`MDTextField`).
-
-Отдельно от них в приложении **`pages`** существует другая модель **`pages.Page`** — логическая страница SPA с блоками (`PageBlock`, `BlockItem`). Не смешивать при проектировании API и админки.
+Текстовые страницы («О нас», «Контакты») в Markdown.
 
 | Поле | Тип | Описание |
 |------|-----|----------|
-| title | CharField | Заголовок страницы |
-| slug | SlugField | URL-путь |
-| content | MDTextField | Содержимое |
-| is_published | BooleanField | Опубликована или черновик |
-| meta_title | CharField | SEO: заголовок |
-| meta_description | CharField | SEO: описание |
-| created_at | DateTimeField | Дата создания |
-| updated_at | DateTimeField | Дата последнего изменения |
+| title | CharField(200) | Заголовок |
+| slug | SlugField(220), unique | URL |
+| content | MDTextField, blank | Содержимое |
+| is_published | BooleanField, default=False | Публикация |
+| meta_title | CharField(200), blank | SEO |
+| meta_description | CharField(300), blank | SEO |
+| created_at, updated_at | DateTimeField | `TimeStampedModel` |
 
-**Связи:** нет с моделями конструктора страниц (`apps.pages`).
+**Не путать** с `pages.Page` (конструктор блоков для SPA).
 
 ---
 
-## 14. Заявки на партнёрство (PartnershipApplication)
+## 14. Заявки на партнёрство (`content.PartnershipApplication`)
 
 | Поле | Тип | Описание |
 |------|-----|----------|
-| company_name | CharField | Название компании |
-| contact_name | CharField | Контактное лицо |
+| company_name | CharField(200) | Компания |
+| contact_name | CharField(200) | Контакт |
 | contact_email | EmailField | Email |
-| contact_phone | CharField | Телефон |
-| message | TextField | Сообщение |
-| status | CharField(20) | new / in_review / accepted / rejected |
-| created_at | DateTimeField | Дата заявки |
-| updated_at | DateTimeField | Дата последнего изменения |
-
-**Связи:** нет (заявка не привязана к User/Event и т.д.).
+| contact_phone | CharField(30), blank | Телефон |
+| message | TextField, blank | Сообщение |
+| status | CharField(20), choices, default=new | new / in_review / accepted / rejected |
+| created_at, updated_at | DateTimeField | `TimeStampedModel` |
 
 ---
 
-## Схема связей
+## 15. Конструктор страниц SPA (`pages.Page`, `PageBlock`, `BlockItem`, `BlockType`)
 
-Диаграммы в отдельных файлах не ведутся; связи см. ниже и в коде.
+Логические страницы фронта (`slug`: home, about, …) и их блоки. **Не** `content.Page`.
+
+### `pages.Page`
+
+| Поле | Тип | Описание |
+|------|-----|----------|
+| slug | SlugField(100), unique | Идентификатор страницы для API/фронта |
+| name | CharField(200) | Человекочитаемое название |
+| created_at, updated_at | DateTimeField | `TimeStampedModel` |
+
+### `pages.BlockType`
+
+Справочник типов блоков (без `TimeStampedModel`).
+
+| Поле | Тип | Описание |
+|------|-----|----------|
+| code | CharField(50), unique | Код (hero, faq, …) |
+| name | CharField(200) | Название |
+| description | TextField, blank | Описание |
+
+### `pages.PageBlock`
+
+| Поле | Тип | Описание |
+|------|-----|----------|
+| **page** | **FK → pages.Page** | **CASCADE, related_name='blocks'** |
+| **block_type** | **FK → BlockType** | **CASCADE, related_name='page_blocks'** |
+| order | PositiveIntegerField, default=0 | Порядок на странице |
+
+### `pages.BlockItem`
+
+| Поле | Тип | Описание |
+|------|-----|----------|
+| **block** | **FK → PageBlock** | **CASCADE, related_name='items'** |
+| title | CharField(255), blank | Заголовок |
+| subtitle | CharField(500), blank | Подзаголовок |
+| content | TextField, blank | Контент |
+| icon | CharField(255), blank | Ключ иконки для фронта |
+| url | URLField, blank | Ссылка |
+| order | PositiveIntegerField, default=0 | Порядок в блоке |
+| created_at, updated_at | DateTimeField | `TimeStampedModel` |
+
+---
+
+## Схема связей (кратко)
 
 ```
 User
- ├── event_registrations (EventRegistration) ──► event
- └── news_articles (NewsArticle, author, SET_NULL)
+ ├── event_registrations (EventRegistration)
+ └── news_articles (NewsArticle.author, SET_NULL)
 
 Event
- ├── segments (EventSegment, FK, CASCADE)
- ├── registrations (EventRegistration, FK, CASCADE)
- ├── partners (Partner, FK, SET_NULL, null=True)
- ├── galleries (EventGallery, FK, CASCADE)
- ├── tags (Tag, M2M)
- └── speakers (Speaker, M2M)
+ ├── segments (EventSegment)
+ ├── registrations (EventRegistration)
+ ├── partners (Partner, SET_NULL, null=True)
+ ├── galleries (EventGallery)
+ ├── tags (M2M → Tag)
+ └── speakers (M2M → Speaker)
 
 EventSegment
- ├── event (Event, FK, CASCADE)
- └── speakers (Speaker, M2M)
+ ├── event (FK)
+ └── speakers (M2M → Speaker)
 
 Speaker
- ├── events (Event, M2M)
- ├── event_segments (EventSegment, M2M)
- └── topics (Tag, M2M)
+ ├── events (M2M)
+ ├── event_segments (M2M)
+ └── topics (M2M → Tag)
 
+Tag ↔ Event, NewsArticle, Speaker (см. выше)
 
-Tag
- ├── events (Event, M2M)
- ├── news_articles (NewsArticle, M2M)
- └── speakers (Speaker, M2M — поле topics)
+Material → MaterialCategory (FK, PROTECT)
 
-EventRegistration
- ├── user (User, FK, CASCADE)
- └── event (Event, FK, CASCADE)   unique_together (user, event)
-
-NewsArticle
- ├── author (User, FK, SET_NULL, null, blank)
- └── tags (Tag, M2M)
-
-Partner ─── event (Event, FK, SET_NULL, null=True)
-
-EventGallery ─── event (Event, FK, CASCADE)
-
-Material → MaterialCategory (FK); TeamMember, SiteSettings, PartnershipApplication и **content.Page** без FK на другие доменные модели. **pages.Page** (конструктор блоков) связана с BlockType/PageBlock/BlockItem.
+pages.Page → PageBlock (FK, related_name='blocks')
+PageBlock → BlockItem (FK, related_name='items')
+PageBlock → BlockType (FK)
 ```
 
 ---
 
-## Сводная таблица связей
+## Сводная таблица связей (FK / M2M)
 
-| Модель | Поле в модели | Тип | С кем | related_name (обратная сторона) | on_delete / примечание |
-|--------|----------------|-----|--------|----------------------------------|------------------------|
-| **User** | — | обратная FK | EventRegistration | `user.event_registrations` | задано в EventRegistration.user, CASCADE |
-| **User** | — | обратная FK | NewsArticle | `user.news_articles` | задано в NewsArticle.author, SET_NULL, null, blank |
-| **Event** | tags | M2M | Tag | `event.tags` ↔ `tag.events` | blank |
-| **Event** | speakers | M2M | Speaker | `event.speakers` ↔ `speaker.events` | blank |
-| **Event** | — | обратная FK | EventSegment | `event.segments` | задано в EventSegment.event, CASCADE |
-| **Event** | — | обратная FK | EventRegistration | `event.registrations` | задано в EventRegistration.event, CASCADE |
-| **Event** | — | обратная FK | Partner | `event.partners` | задано в Partner.event, SET_NULL, null, blank |
-| **Event** | — | обратная FK | EventGallery | `event.galleries` | задано в EventGallery.event, CASCADE |
-| **EventSegment** | event | FK | Event | `segment.event` → `event.segments` | CASCADE |
-| **EventSegment** | speakers | M2M | Speaker | `segment.speakers` ↔ `speaker.event_segments` | blank |
-| **Speaker** | topics | M2M | Tag | `speaker.topics` ↔ `tag.speakers` | blank, темы выступлений |
-| **Speaker** | — | обратная M2M | Event | `speaker.events` | задано в Event.speakers |
-| **Speaker** | — | обратная M2M | EventSegment | `speaker.event_segments` | задано в EventSegment.speakers |
-| **Tag** | — | обратная M2M | Event | `tag.events` | задано в Event.tags |
-| **Tag** | — | обратная M2M | NewsArticle | `tag.news_articles` | задано в NewsArticle.tags |
-| **Tag** | — | обратная M2M | Speaker | `tag.speakers` | задано в Speaker.topics |
-| **EventRegistration** | user | FK | User | `registration.user` → `user.event_registrations` | CASCADE |
-| **EventRegistration** | event | FK | Event | `registration.event` → `event.registrations` | CASCADE; unique_together (user, event) |
-| **NewsArticle** | author | FK | User | `article.author` → `user.news_articles` | SET_NULL, null=True, blank=True |
-| **NewsArticle** | tags | M2M | Tag | `article.tags` ↔ `tag.news_articles` | blank |
-| **Partner** | event | FK | Event | `partner.event` → `event.partners` | SET_NULL, null=True, blank=True |
-| **EventGallery** | event | FK | Event | `gallery.event` → `event.galleries` | CASCADE |
-| **Material** | category | FK | MaterialCategory | `material.category` | PROTECT |
+| Модель | Поле | Тип | С кем | related_name / примечание |
+|--------|------|-----|--------|---------------------------|
+| **EventRegistration** | user | FK | User | `event_registrations`, CASCADE |
+| **EventRegistration** | event | FK | Event | `registrations`, CASCADE; unique (user, event) |
+| **EventSegment** | event | FK | Event | `segments`, CASCADE |
+| **EventSegment** | speakers | M2M | Speaker | `event_segments` |
+| **Event** | tags | M2M | Tag | `events` |
+| **Event** | speakers | M2M | Speaker | `events` |
+| **NewsArticle** | author | FK | User | `news_articles`, SET_NULL |
+| **NewsArticle** | tags | M2M | Tag | `news_articles` |
+| **Speaker** | topics | M2M | Tag | `speakers` |
+| **Partner** | event | FK | Event | `partners`, SET_NULL |
+| **EventGallery** | event | FK | Event | `galleries`, CASCADE |
+| **Material** | category | FK | MaterialCategory | `materials`, PROTECT |
+| **PageBlock** | page | FK | pages.Page | `blocks`, CASCADE |
+| **PageBlock** | block_type | FK | BlockType | `page_blocks`, CASCADE |
+| **BlockItem** | block | FK | PageBlock | `items`, CASCADE |
 
 ---
 
 ## Приоритет для MVP
 
-Черновик исторический; реализация уже шире. При планировании учитывайте два типа страниц: **content.Page** и **pages.Page**.
+Реализация уже покрывает перечисленное; при проектировании API учитывайте два типа страниц: **`content.Page`** и **`pages.Page`**.
 
-1. **User** — обязательно
-2. **Event**, **EventRegistration** — ядро
-3. **Speaker**, **EventSegment** — для детальной страницы события
-4. **NewsArticle**, **Tag** — раздел новостей
-5. **Partner**, **TeamMember** — главная страница
-6. **Material**, **MaterialCategory**, **EventGallery**
-7. **content.Page**, **pages** (конструктор), **SiteSettings**, **PartnershipApplication**
+1. **User** — обязательно  
+2. **Event**, **EventRegistration** — ядро  
+3. **Speaker**, **EventSegment** — карточка события  
+4. **NewsArticle**, **Tag** — новости  
+5. **Partner**, **TeamMember** — главная / о проекте  
+6. **Material**, **MaterialCategory**, **EventGallery**  
+7. **content.Page**, **pages** (блоки), **SiteSettings**, **PartnershipApplication**  
+8. **ApiKey** — доступ к публичному API

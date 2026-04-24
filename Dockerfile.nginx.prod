@@ -1,4 +1,4 @@
-# Образ nginx: сборка React + конфиг для одного домена с Django за тем же nginx.
+# Образ nginx: сборка React + конфиг с подстановкой NGINX_SERVER_NAME.
 FROM node:lts-alpine AS frontend-build
 WORKDIR /app
 ARG PUBLIC_URL=/react-assets
@@ -9,7 +9,10 @@ COPY frontend/ ./
 RUN npm run build
 
 FROM nginx:alpine
+RUN apk add --no-cache gettext
 COPY --from=frontend-build /app/build /usr/share/nginx/html
-COPY nginx.prod.conf /etc/nginx/conf.d/default.conf
+COPY nginx.prod.conf.template /etc/nginx/default.conf.template
+COPY docker/nginx-render-config.sh /docker-entrypoint.d/99-pm-meetup-render.sh
+RUN chmod +x /docker-entrypoint.d/99-pm-meetup-render.sh
 EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]

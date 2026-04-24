@@ -50,8 +50,11 @@ frontend/.env.local
 frontend/.env.development.local
 frontend/.env.production.local
 
-# ===== Docker =====
+# ===== Docker / TLS =====
 .docker/
+ssl/*.pem
+certbot/www/*
+!certbot/www/.gitkeep
 
 # ===== OS =====
 .DS_Store

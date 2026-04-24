@@ -1,0 +1,25 @@
+TLS для nginx (Docker): файлы в этой папке монтируются в /etc/nginx/ssl/
+
+  fullchain.pem  — сертификат + цепочка (Let's Encrypt) или один PEM (self-signed)
+  privkey.pem    — приватный ключ
+
+Смена домена
+------------
+1. В .env выставьте один и тот же хост:
+   NGINX_SERVER_NAME=новый.поддомен.example
+   ALLOWED_HOSTS=новый.поддомен.example,localhost,127.0.0.1
+   CSRF_TRUSTED_ORIGINS=https://новый.поддомен.example
+2. Пересоберите nginx: docker compose -f docker-compose.prod.yml up -d --build nginx
+3. Выпустите новый сертификат (Let's Encrypt) или заново: bash scripts/init_ssl_selfsigned.sh новый.поддомен.example
+
+Первый запуск без Let's Encrypt
+--------------------------------
+  bash scripts/init_ssl_selfsigned.sh
+
+Let's Encrypt (пример: certbot на хосте, nginx в Docker уже слушает 80)
+-----------------------------------------------------------------------
+  mkdir -p certbot/www
+  certbot certonly --webroot -w "$(pwd)/certbot/www" -d "${NGINX_SERVER_NAME:-admin.pmmeetup.pro}"
+  sudo cp /etc/letsencrypt/live/<домен>/fullchain.pem ssl/fullchain.pem
+  sudo cp /etc/letsencrypt/live/<домен>/privkey.pem ssl/privkey.pem
+  sudo chown "$USER" ssl/*.pem

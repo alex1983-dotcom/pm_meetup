@@ -194,11 +194,16 @@ docker compose exec web coverage report
 
 ## Production
 
-Сервис **`nginx`** собирается из `Dockerfile.nginx.prod`: внутри multi-stage собирается **React** (`npm run build`) и подключается `nginx.prod.conf` — один вход `:80`/`:443`, с фронта отдаётся SPA, на Django уходят `/api/`, `/admin/`, `/mdeditor/`, а **Django-статика** — с тома `./staticfiles` по префиксу `/static/`. У CRA задан `PUBLIC_URL=/react-assets`, чтобы пути ассетов не пересекались с `/static/` админки.
+**Полная пошаговая инструкция развёртывания на сервере** (DNS, `.env`, TLS, миграции, смена домена): [`deployment-full.md`](deployment-full.md).
 
-После изменений в `frontend/` или `nginx.prod.conf` нужна пересборка: `docker compose -f docker-compose.prod.yml up -d --build`.
+Сервис **`nginx`** собирается из `Dockerfile.nginx.prod`: multi-stage **React** (`npm run build`), конфиг из **`nginx.prod.conf.template`** — при старте подставляется **`NGINX_SERVER_NAME`** (в `.env` / compose; по умолчанию `admin.pmmeetup.pro`). **HTTPS** на `:443`, **HTTP** на `:80` с `/.well-known/acme-challenge/` и редиректом на HTTPS. TLS-файлы: том **`./ssl`** → `/etc/nginx/ssl/` (`fullchain.pem`, `privkey.pem`). ACME webroot: **`./certbot/www`**. SPA, прокси на Django: `/api/`, `/admin/`, `/mdeditor/`, статика **`./staticfiles`** → `/static/`. CRA: `PUBLIC_URL=/react-assets`.
+
+Перед первым `up`: **`bash scripts/init_ssl_selfsigned.sh`** (временный self-signed) или положить свои PEM в `ssl/`. В `.env` задайте **`NGINX_SERVER_NAME`**, **`ALLOWED_HOSTS`**, **`CSRF_TRUSTED_ORIGINS`** (`https://тот-же-домен`) согласованно при смене домена.
+
+После изменений в `frontend/`, `nginx.prod.conf.template` или `docker/nginx-render-config.sh`: `docker compose -f docker-compose.prod.yml up -d --build`.
 
 ```bash
+bash scripts/init_ssl_selfsigned.sh   # если ещё нет ssl/*.pem
 docker compose -f docker-compose.prod.yml up -d
 docker compose -f docker-compose.prod.yml build
 docker compose -f docker-compose.prod.yml restart

@@ -96,7 +96,7 @@ EXTRA_FILENAMES = frozenset(
         "manage.py",
         "Procfile",
         "nginx.conf",
-        "nginx.prod.conf",
+        "nginx.prod.conf.template",
     }
 )
 

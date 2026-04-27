@@ -41,6 +41,7 @@ services:
     volumes:
       - ./media:/app/media
       - ./logs:/app/logs
+      - ./staticfiles:/app/staticfiles
     networks:
       - pm_meetup_network
 

@@ -16,6 +16,7 @@
 |----------|------------|
 | [api-endpoints.md](api-endpoints.md) | Сводка REST v1, префиксы, пагинация, поиск |
 | [search-swagger-guide.md](search-swagger-guide.md) | Поиск `pg_trgm`, `min_rank`, работа со Swagger |
+| [static-assets-without-api.md](static-assets-without-api.md) | Постоянные картинки без API: Django `static/` vs CRA `public`/`src` |
 
 ## Модели и данные
 

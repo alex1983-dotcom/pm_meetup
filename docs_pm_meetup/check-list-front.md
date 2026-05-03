@@ -1,5 +1,7 @@
 Инструкция для Frontend-разработчиков (PM_Meetup)
 
+**Постоянные картинки вне API** (договорённость бэкенд ↔ фронт): [static-assets-without-api.md](static-assets-without-api.md).
+
 ## 1. Требования
 Единственное, что нужно установить на компьютер:
 *   **Docker Desktop** (https://www.docker.com/products/docker-desktop/)

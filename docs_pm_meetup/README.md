@@ -43,6 +43,7 @@
 | Документ | Содержание |
 |----------|------------|
 | [docker-commands.md](docker-commands.md) | Docker Compose, типовые команды |
+| [nginx-production.md](nginx-production.md) | Nginx в проде: пути конфига, TLS, Let’s Encrypt, команды |
 | [../fixtures/README.md](../fixtures/README.md) | Фикстуры и `dump_fixtures` |
 | [../scripts/README.md](../scripts/README.md) | Скрипты |
 | [../frontend/README.md](../frontend/README.md) | Фронтенд (CRA) |

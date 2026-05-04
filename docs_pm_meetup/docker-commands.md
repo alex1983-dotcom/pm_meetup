@@ -194,7 +194,7 @@ docker compose exec web coverage report
 
 ## Production
 
-**Полная пошаговая инструкция развёртывания на сервере** (DNS, `.env`, TLS, миграции, смена домена): [`deployment-full.md`](deployment-full.md).
+**Nginx в Docker: где лежит конфиг, TLS, certbot, все команды** — см. отдельный документ: [`nginx-production.md`](nginx-production.md).
 
 Сервис **`nginx`** собирается из `Dockerfile.nginx.prod`: multi-stage **React** (`npm run build`), конфиг из **`nginx.prod.conf.template`** — при старте подставляется **`NGINX_SERVER_NAME`** (в `.env` / compose; по умолчанию `admin.pmmeetup.pro`). **HTTPS** на `:443`, **HTTP** на `:80` с `/.well-known/acme-challenge/` и редиректом на HTTPS. TLS-файлы: том **`./ssl`** → `/etc/nginx/ssl/` (`fullchain.pem`, `privkey.pem`). ACME webroot: **`./certbot/www`**. SPA, прокси на Django: `/api/`, `/admin/`, `/mdeditor/`, статика **`./staticfiles`** → `/static/`. CRA: `PUBLIC_URL=/react-assets`.
 

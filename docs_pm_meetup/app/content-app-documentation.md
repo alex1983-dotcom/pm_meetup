@@ -26,7 +26,7 @@
 | Поле                   | Тип                  | Описание                             |
 | ---------------------- | -------------------- | ------------------------------------ |
 | name                   | CharField(200)       | Название компании                    |
-| logo                   | ImageField           | Логотип (media/partners/)            |
+| logo                   | ImageField, blank, null | Логотип (media/partners/), необязательный |
 | description            | TextField            | Описание                             |
 | website_url            | URLField             | Сайт партнёра                        |
 | partnership_level      | CharField, выбор     | general / gold / silver              |
@@ -42,7 +42,7 @@
 | ---------------------- | -------------------- | ------------------------ |
 | full_name              | CharField(200)       | ФИО                      |
 | position               | CharField(200)       | Должность                |
-| photo                  | ImageField           | Фотография (media/team/) |
+| photo                  | ImageField, blank, null | Фотография (media/team/), необязательная |
 | description            | TextField            | Описание / биография     |
 | email                  | EmailField           | Email                    |
 | linkedin_url           | URLField             | LinkedIn                 |

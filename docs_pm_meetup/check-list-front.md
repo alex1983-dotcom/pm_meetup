@@ -1,14 +1,18 @@
 Инструкция для Frontend-разработчиков (PM_Meetup)
 
-**Постоянные картинки вне API** (договорённость бэкенд ↔ фронт): [static-assets-without-api.md](static-assets-without-api.md).
+**Постоянные картинки вне API:** [static-assets-without-api.md](static-assets-without-api.md).
+
+**Доступ к API, сессии, видимость событий:** [auth-sessions.md](auth-sessions.md).
+
+Команды ниже — Docker Compose **v2** (`docker compose`). Старый CLI: `docker-compose` (с дефисом).
 
 ## 1. Требования
+
 Единственное, что нужно установить на компьютер:
-*   **Docker Desktop** (https://www.docker.com/products/docker-desktop/)
 
-*(Python и Node.js находятся внутри контейнеров)*
+* **Docker Desktop** (https://www.docker.com/products/docker-desktop/)
 
-> Весь процесс разработки будет проводится через контейнеризацию Docker
+Python и Node.js находятся внутри контейнеров.
 
 ---
 
@@ -16,152 +20,132 @@
 
 **Перед первым запуском:**
 
-1. В корне проекта создать файл **`.env`** (скопировать из `.env.example`). В `.env` обязательно совпадают пароли для БД: **`POSTGRES_PASSWORD`** и **`DB_PASSWORD`** (одно и то же значение). Иначе контейнер backend будет падать при старте.
-2. Папка **`static`** у корня может отсутствовать после клонирования (каталог в `.gitignore`). Создайте пустую директорию вручную — иначе Django выдаст предупреждение `staticfiles.W004` (на работу API это обычно не влияет).
+1. Создать **`.env`** из `.env.example`. Пароли **`POSTGRES_PASSWORD`** и **`DB_PASSWORD`** должны совпадать.
+2. Создать пустую папку **`static/`** у корня (в `.gitignore`) — иначе предупреждение `staticfiles.W004`.
 
-**Фронту не нужно создавать миграции** — все файлы миграций уже есть в репозитории. Нужно только применить их и один раз создать суперпользователя для админки.
+Миграции создавать не нужно — файлы уже в репозитории. Контейнер `web` при старте сам выполняет `migrate`; ниже `migrate` указан для явной проверки после проблем.
 
 ```bash
-# 1. Клонировать репозиторий
 git clone <URL_репозитория>
 cd pm_meetup
 
-# 2. Создать .env из шаблона (если ещё нет) и проверить, что POSTGRES_PASSWORD = DB_PASSWORD
 cp .env.example .env
-# Отредактировать .env при необходимости
+# Проверить POSTGRES_PASSWORD = DB_PASSWORD
 
-# 3. Запустить всё (Backend + Frontend + DB)
-docker-compose up -d
+docker compose up -d
 
-# 4. Подождать 10–15 секунд, проверить, что backend запущен
-docker-compose ps
-# Контейнер web должен быть в статусе "Up". Если "Restarting" — см. раздел "Типичные проблемы" ниже.
+docker compose ps
+# web — Up (не Restarting)
 
-# 5. Применить миграции (схема БД уже в репо — только применить)
-docker-compose exec web python manage.py migrate
-
-# 6. Создать суперпользователя для входа в админку (обязательно при первом запуске)
-docker-compose exec web python manage.py createsuperuser
+docker compose exec web python manage.py migrate
+docker compose exec web python manage.py createsuperuser
 ```
 
 ---
-## 3. Создание суперпользователя (обязательно при первом запуске)
 
-Без суперпользователя нельзя зайти в админку (`/admin/`) и получить API-ключ. Выполнить **один раз** после первого `migrate`:
+## 3. Создание суперпользователя
+
+Без суперпользователя нельзя зайти в `/admin/` и создать API-ключ.
 
 ```bash
-docker-compose exec web python manage.py createsuperuser
+docker compose exec web python manage.py createsuperuser
 ```
 
-Вход в админку — по **email** и паролю (логина отдельно нет). При создании запрашиваются:
+Вход в админку — по **email** и паролю. Запрашиваются email, имя, фамилия, пароль (мин. 8 символов).
 
-- **Email** (обязательно)
-- **Имя**
-- **Фамилия**
-- **Пароль** и повтор пароля (минимум 8 символов, не совпадать с email)
+---
 
 ## 4. Проверка работы
 
-| Сервис             | URL                               | Описание                              |
-| ------------------ | --------------------------------- | ------------------------------------- |
-| **React Frontend** | `http://localhost:3000`           | Ваше приложение                       |
-| **Django Admin**   | `http://localhost:8000/admin/`    | Админка (вход по email и паролю из createsuperuser) |
-| **Swagger API**    | `http://localhost:8000/api/docs/` | Документация API                      |
+| Сервис | URL | Описание |
+|--------|-----|----------|
+| React Frontend | `http://localhost:3000` | Приложение |
+| Django Admin | `http://localhost:8000/admin/` | Админка |
+| Swagger API | `http://localhost:8000/api/docs/` | Документация API |
+
+---
+
+## 5. Логика API для фронта (кратко)
+
+| Тема | Поведение |
+|------|-----------|
+| Read-only запросы | `X-API-KEY` **или** запрос из браузера с `localhost:3000` (origin) |
+| Список событий | Без `?status=published` приходят и черновики — на витрине всегда добавляйте `status=published` |
+| Новости | Только опубликованные (`is_published=True`) |
+| Регистрация на событие | Нужна **сессия** пользователя; публичного login API нет |
+| Подробности | [auth-sessions.md](auth-sessions.md), [api-endpoints.md](api-endpoints.md) |
 
 ---
 
 ## 6. Основные команды
 
-| Задача                       | Команда                                                            |
-| ---------------------------- | ------------------------------------------------------------------ |
-| **Остановить проект**        | `docker-compose down`                                              |
-| **Перезапустить**            | `docker-compose restart`                                           |
-| **Посмотреть логи**          | `docker-compose logs -f`                                           |
-| **Логи только фронта**       | `docker-compose logs -f frontend`                                   |
-| **Логи только бэка**         | `docker-compose logs -f web`                                       |
-| **Применить миграции**       | `docker-compose exec web python manage.py migrate`                 |
-| **Создать суперпользователя**| `docker-compose exec web python manage.py createsuperuser`         |
-| **Собрать статику**          | `docker-compose exec web python manage.py collectstatic --noinput` |
+| Задача | Команда |
+|--------|---------|
+| Остановить проект | `docker compose down` |
+| Перезапустить | `docker compose restart` |
+| Логи | `docker compose logs -f` |
+| Логи фронта | `docker compose logs -f frontend` |
+| Логи бэка | `docker compose logs -f web` |
+| Миграции | `docker compose exec web python manage.py migrate` |
+| Суперпользователь | `docker compose exec web python manage.py createsuperuser` |
+| Статика | `docker compose exec web python manage.py collectstatic --noinput` |
 
-> **Фронту:** миграции только **применяются** (`migrate`). Команду `makemigrations` использует backend-разработчик; после обновления кода достаточно сделать `git pull` и снова `migrate`.
+Фронту: `makemigrations` не нужен — после `git pull` достаточно `migrate`.
 
 ---
 
 ## 7. Если что-то сломалось
 
 ```bash
-# 1. Остановить всё
-docker-compose down
-
-# 2. Очистить кэш (если были ошибки сборки)
-docker-compose build --no-cache
-
-# 3. Запустить заново
-docker-compose up -d
+docker compose down
+docker compose build --no-cache
+docker compose up -d
 ```
 
 ---
 
-## 8. Типичные проблемы при развёртывании (Backend и API)
+## 8. Типичные проблемы
 
-Фронт зависит от backend: если контейнер **web** не запущен или постоянно перезапускается, API не отвечает и фронт не сможет с ним работать. Ниже — частые причины и что делать.
+### Контейнер web в Restarting
 
-### Контейнер web в статусе "Restarting", команды `exec` не выполняются
+```bash
+docker compose logs web --tail=100
+```
 
-**Причина:** backend падает при старте (чаще всего при попытке подключиться к БД или применить миграции).
+- **`password authentication failed`** — выровнять `POSTGRES_PASSWORD` и `DB_PASSWORD`, затем `docker compose down -v` (данные БД удалятся) и снова `up`.
+- **Ошибки миграций** — `git pull`, проверить файлы в `apps/*/migrations/`, снова `up` и `migrate`.
 
-**Что сделать:**
+### API не отвечает / CORS
 
-1. Посмотреть логи backend:
-   ```bash
-   docker-compose logs web --tail=100
-   ```
-2. По тексту ошибки:
-   - **`password authentication failed for user "postgres"`** — не совпадают пароли БД. В `.env` должны быть одинаковые значения: `POSTGRES_PASSWORD=...` и `DB_PASSWORD=...`. После исправления: `docker-compose down -v` (удалит данные БД!), затем `docker-compose up -d`. Через 10–15 сек снова `migrate` и при необходимости `createsuperuser`.
-   - **`Dependency on app with no migrations: users`** или **`BadMigrationError`** — в репозитории не хватает файлов миграций. Нужно обновить код (`git pull`), убедиться, что все миграции в репо, затем снова `docker-compose up -d` и `migrate`.
+- `docker compose ps` — `web` должен быть **Up**.
+- Backend в dev: `http://localhost:8000`.
 
-### API не отвечает (502, connection refused, CORS)
+### Windows: порт 8000 не поднимается
 
-- Убедиться, что контейнер **web** в статусе **Up**: `docker-compose ps`.
-- Если **Restarting** — действовать по пункту выше (логи `web`, пароли БД, миграции).
-- Фронт должен ходить на тот же хост/порт, где поднят backend (в dev обычно `http://localhost:8000`). Проверить в настройках фронта (переменные окружения / .env).
+Ошибка `forbidden by its access permissions` — порт в зарезервированном диапазоне Hyper-V. См. [docker-commands.md](docker-commands.md) (раздел «Частые проблемы»).
 
-### После первого клона или сброса БД
+### После первого клона
 
-Порядок действий:
-
-1. Создать `.env` из `.env.example`, проверить `POSTGRES_PASSWORD` и `DB_PASSWORD`.
-2. `docker-compose up -d`.
-3. Подождать 10–15 сек, проверить `docker-compose ps` (web — Up).
-4. Применить миграции: `docker-compose exec web python manage.py migrate`.
-5. Создать суперпользователя: `docker-compose exec web python manage.py createsuperuser`.
-6. Открыть фронт и API по URL из таблицы «Проверка работы».
-
-Файлы миграций уже в репозитории; фронту нужно только выполнить `migrate` и один раз `createsuperuser`.
+1. `.env` с совпадающими паролями БД.
+2. `docker compose up -d`.
+3. `createsuperuser`.
+4. Проверить URL из таблицы §4.
 
 ---
 
-## 9. Установка зависимостей через Docker
+## 9. Установка npm-пакетов
 
-### Команда для установки зависимостей
-
-```
-# В корне проекта PM_Meetup
-docker-compose exec frontend npm install <название-пакета>
+```bash
+docker compose exec frontend npm install <название-пакета>
 ```
 
-### После установки
+Пакет ставится в контейнер, `package.json` на хосте обновляется. Контейнер **не перезапускается** автоматически — выполните `docker compose restart frontend` или пересоберите стек. Закоммитьте `package.json` / `package-lock.json`.
 
-1. **Пакет устанавливается** внутри контейнера `frontend`
-2. **`package.json` обновляется** 
-3. **Контейнер автоматически перезапускается** и подхватывает новый пакет
-4. **Коммитим** изменённый `package.json` в Git
+---
 
 ## 10. API и доступы
 
-*   **API доступно только с ключом** (кроме Swagger и админки).
-*   **Получить ключ:** Зайти в админку → раздел "API-ключи" → Создать.
-*   **Использовать ключ:**
-    *   В заголовке: `X-API-KEY: ваш_ключ`
-    *   Или в URL: `?key=ваш_ключ`
-
+* Доступ к read-only API: **`X-API-KEY`**, **`?key=`** или запрос с origin **`localhost:3000`** (см. [auth-sessions.md](auth-sessions.md)).
+* Swagger и schema — без ключа.
+* Ключ: админка → «API-ключи» → создать → скопировать «Токен».
+* Регистрации на события — только с **сессией** (вход в `/admin/` в том же браузере для проверки в Swagger).

@@ -48,8 +48,8 @@ docker compose exec web python manage.py migrate
 # Показать статус миграций
 docker compose exec web python manage.py showmigrations
 
-# Откат приложения к указанной миграции (пример)
-docker compose exec web python manage.py migrate events 0009_previous_migration_name
+# Откат приложения к указанной миграции (пример; имя — из showmigrations)
+docker compose exec web python manage.py migrate events 0009_remove_eventtheme_and_event_themes
 ```
 
 ---
@@ -233,7 +233,7 @@ docker compose exec web python manage.py migrate
 docker compose exec web python manage.py createsuperuser
 ```
 
-Сервис `web` при старте уже выполняет `migrate`, `collectstatic`, `runserver`. Открыть:
+Сервис `web` при старте уже выполняет `migrate`, `collectstatic`, `runserver` (см. `command` в `docker-compose.yml`). Ручной `migrate` после первого `up` обычно не нужен, но не помешает. Открыть:
 
 | URL | Описание |
 |-----|----------|
@@ -250,7 +250,8 @@ docker compose exec web python manage.py createsuperuser
 | Контейнер `web` в **Restarting** | `docker compose logs web` — часто неверный пароль БД или старый volume с другим паролем; см. `.env`, при смене пароля БД может понадобиться `docker compose down -v` (данные БД удалятся) |
 | Миграции не применяются | `docker compose exec web python manage.py migrate` |
 | Пустая БД | `loaddata initial_data` или `seed_data` |
-| Порты заняты | `docker compose down`, проверить `docker ps` |
+| Порты заняты / Windows: `forbidden by its access permissions` на `:8000` | `docker compose down`, `netstat -ano \| findstr :8000`. Если порт не занят процессом — проверить зарезервированные диапазоны (PowerShell от админа): `netsh interface ipv4 show excludedportrange protocol=tcp`. Если 8000 в диапазоне — перезапуск `winnat` (`net stop winnat` → `net start winnat`) или смена хост-порта в compose, например `9000:8000` |
+| Порты заняты другим процессом | `docker compose down`, `docker ps`, завершить процесс по PID из `netstat` |
 
 ---
 

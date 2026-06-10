@@ -8,7 +8,7 @@
 2. **Docker:** `docker compose up --build` — поднимутся PostgreSQL, Django на `:8000`, фронт на `:3000`.
 3. **Локально (без Docker):** виртуальное окружение, `pip install -r requirements.txt`, PostgreSQL с расширением `pg_trgm`, `python manage.py migrate`, `python manage.py runserver`.
 
-Подробные команды и прод-сборка: [`docs/docker-commands.md`](docs/docker-commands.md).
+Подробные команды и прод-сборка: [`docs_pm_meetup/docker-commands.md`](docs_pm_meetup/docker-commands.md).
 
 ## Структура репозитория
 
@@ -25,14 +25,15 @@
 | `frontend/` | React-приложение |
 | `fixtures/` | JSON-фикстуры для тестов и демо-данных |
 | `scripts/` | Вспомогательные скрипты |
-| `docs/` | Индекс документации (`docs/README.md`), Docker, API, приложения (`docs/app/*`) |
+| `docs_pm_meetup/` | Индекс документации (`docs_pm_meetup/README.md`), Docker, API, приложения (`docs_pm_meetup/app/*`) |
 
-Полная карта модулей и файлов: [`docs/codebase-overview.md`](docs/codebase-overview.md). Оглавление всех документов: [`docs/README.md`](docs/README.md).
+Полная карта модулей и файлов: [`docs_pm_meetup/codebase-overview.md`](docs_pm_meetup/codebase-overview.md). Оглавление всех документов: [`docs_pm_meetup/README.md`](docs_pm_meetup/README.md).
 
 ## API
 
 - **Swagger:** `http://localhost:8000/api/docs/`
-- **Сводка эндпоинтов:** [`docs/api-endpoints.md`](docs/api-endpoints.md)
+- **Сводка эндпоинтов:** [`docs_pm_meetup/api-endpoints.md`](docs_pm_meetup/api-endpoints.md)
+- **Доступ и сессии:** [`docs_pm_meetup/auth-sessions.md`](docs_pm_meetup/auth-sessions.md)
 - Доступ к API: заголовок `X-API-KEY` (ключ из админки) или запрос с доверенного origin (например `http://localhost:3000`). Исключение: схема и Swagger UI открыты без ключа.
 
 ## Разработка

@@ -1,5 +1,7 @@
 # Документация: приложение «События» (events)
 
+> **Соответствие коду:** `apps/events/`. Список событий **не** фильтруется по `published` без query-параметра. Регистрации (`GET`/`POST` `/api/v1/events/registrations/`) требуют **сессии** пользователя — см. [auth-sessions.md](../auth-sessions.md).
+
 Документ описывает модели и разделы админ-панели, связанные с мероприятиями PM.Meetup: спикеры, события, программа (сегменты), регистрации и галереи.
 
 ---
@@ -179,7 +181,20 @@
 
 ## 5. REST API (для фронтенда)
 
-Базовый префикс: `**/api/v1/events/`**. Swagger: `**/api/docs/**` (тег **events**).
+Базовый префикс: `/api/v1/events/`. Swagger: `/api/docs/` (тег **events**).
+
+### Видимость событий в API
+
+`EventViewSet` использует `Event.objects.all()`. Параметр `?status=published` **опционален**.
+
+| Запрос | Что вернётся без `status=published` |
+|--------|-------------------------------------|
+| `GET /api/v1/events/events/` | События всех статусов: `draft`, `published`, `cancelled`, … |
+| `GET /api/v1/events/events/<slug>/` | Событие с любым статусом, если slug существует |
+
+Для публичной витрины фронт должен запрашивать **`?status=published`**. Это отличается от новостей (`is_published=True` в queryset всегда).
+
+Сегменты, спикеры и галереи **не** фильтруются по статусу родительского события.
 
 
 | Метод | URL                              | Описание                                                                                                          |
@@ -196,7 +211,9 @@
 | POST  | `/api/v1/events/registrations/`  | Регистрация на событие (тело: `event`, `extra_data`; требуется авторизация)                                       |
 
 
-Все эндпоинты (кроме POST регистрации) — только чтение. Для доступа к API нужен заголовок `X-API-KEY` или запрос с доверенного фронта (см. `OnlyWithApiKeyOrFromFrontend`).
+Read-only эндпоинты: `GET`. Доступ по правилам **`DocsOrApiKey`** — `X-API-KEY`, `?key=`, доверенный origin или Swagger (`apps/core/permissions.py`).
+
+**Регистрации:** помимо `DocsOrApiKey`, нужна **сессия** (`SessionAuthentication`). `X-API-KEY` не привязывает запрос к пользователю. Публичного login API нет — см. [auth-sessions.md](../auth-sessions.md).
 
 **Поля события в JSON**
 
@@ -206,7 +223,7 @@
 
 ### Поиск и фильтрация событий
 
-- `search` — триграммный fuzzy-поиск (PostgreSQL `pg_trgm`) по `title`, `description`, `location_city`, `location_venue`, `speakers.full_name`, а также по тегам (`tags.name`, `tags.slug`).
+- `search` — триграммный fuzzy-поиск (PostgreSQL `pg_trgm`) по `title`, `short_description`, `description`, `location_city`, `location_venue`, `speakers.full_name`, а также по тегам (`tags.name`, `tags.slug`).
 - `min_rank` — порог релевантности `0..1` (по умолчанию `0.12`).
 - `status` — фильтр по статусу (`draft`, `published`, ...).
 - `tag` — один тег по slug.

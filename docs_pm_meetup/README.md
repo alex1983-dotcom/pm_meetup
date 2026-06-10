@@ -1,6 +1,6 @@
 # Документация PM Meetup
 
-Индекс файлов в каталоге `docs/`. Подробности по приложениям — в `docs/app/*`.
+Индекс файлов в каталоге **`docs_pm_meetup/`**. Подробности по приложениям — в `app/*`.
 
 ## Обзор и архитектура
 
@@ -8,13 +8,15 @@
 |----------|------------|
 | [codebase-overview.md](codebase-overview.md) | Карта кодовой базы: приложения Django, конфиг, фронт |
 | [specification.md](specification.md) | Целевое ТЗ админ-панели (черновик требований) |
-| [../README.md](../README.md) | Быстрый старт и общая информация в корне репозитория |
+| [project_configuration.md](project_configuration.md) | Переменные `.env` и настройки Django |
+| [../README.md](../README.md) | Быстрый старт в корне репозитория |
 
 ## API и интеграция
 
 | Документ | Содержание |
 |----------|------------|
 | [api-endpoints.md](api-endpoints.md) | Сводка REST v1, префиксы, пагинация, поиск |
+| [auth-sessions.md](auth-sessions.md) | API-ключ, origin, сессия, видимость контента |
 | [search-swagger-guide.md](search-swagger-guide.md) | Поиск `pg_trgm`, `min_rank`, работа со Swagger |
 | [static-assets-without-api.md](static-assets-without-api.md) | Постоянные картинки без API: Django `static/` vs CRA `public`/`src` |
 
@@ -22,9 +24,9 @@
 
 | Документ | Содержание |
 |----------|------------|
-| [models-draft.md](models-draft.md) | Черновик моделей и связей (сверять с кодом в `apps/`) |
+| [models-draft.md](models-draft.md) | Набросок моделей и связей (сверять с `apps/*/models.py`) |
 
-Тип события vs теги vs программа (сегменты) кратко изложено в [app/events-app-documentation.md](app/events-app-documentation.md) (раздел для заказчика в конце).
+Тип события vs теги vs программа (сегменты) — в [app/events-app-documentation.md](app/events-app-documentation.md).
 
 ## Документация по приложениям Django (`apps/*`)
 
@@ -43,7 +45,7 @@
 | Документ | Содержание |
 |----------|------------|
 | [docker-commands.md](docker-commands.md) | Docker Compose, типовые команды |
-| [nginx-production.md](nginx-production.md) | Nginx в проде: пути конфига, TLS, Let’s Encrypt, команды |
+| [nginx-production.md](nginx-production.md) | Nginx в проде: пути конфига, TLS, Let's Encrypt |
 | [../fixtures/README.md](../fixtures/README.md) | Фикстуры и `dump_fixtures` |
 | [../scripts/README.md](../scripts/README.md) | Скрипты |
 | [../frontend/README.md](../frontend/README.md) | Фронтенд (CRA) |
@@ -52,9 +54,9 @@
 
 | Документ | Содержание |
 |----------|------------|
-| [admin-questions.md](admin-questions.md) | Вопросы по админке |
-| [check-list-front.md](check-list-front.md) | Чек-лист для фронта |
+| [admin-questions.md](admin-questions.md) | Вопросы по админке и сводка «что уже в коде» |
+| [check-list-front.md](check-list-front.md) | Чек-лист для фронтенд-разработчика |
 
 ---
 
-**Актуальность:** при изменении URL или моделей обновляйте `api-endpoints.md`, соответствующий `app/*-documentation.md` и при необходимости [codebase-overview.md](codebase-overview.md).
+**Актуальность:** при изменении URL, моделей или прав доступа обновляйте `api-endpoints.md`, `auth-sessions.md`, соответствующий `app/*-documentation.md` и при необходимости [codebase-overview.md](codebase-overview.md).

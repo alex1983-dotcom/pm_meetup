@@ -64,13 +64,13 @@
 3. Заполните:
    - `search = проджект менеджер`,
    - `min_rank = 0.12`,
-   - `tags = trendy,techconference` (по желанию),
-   - `ordering = -publication_date`.
+   - `tags = trendy,techconference` (по желанию).
+   - Параметр `ordering` при активном `search` **игнорируется** — сортировка по релевантности.
 4. Нажмите **Execute**.
 
 Пример запроса:
 
-`/api/v1/news/articles/?search=проджект%20менеджер&min_rank=0.12&tags=trendy,techconference&ordering=-publication_date`
+`/api/v1/news/articles/?search=проджект%20менеджер&min_rank=0.12&tags=trendy,techconference`
 
 ### Материалы (materials)
 
@@ -79,13 +79,13 @@
 3. Заполните:
    - `search = воркшп` (пример с опечаткой),
    - `min_rank = 0.10`,
-   - `category = courses` (по желанию),
-   - `ordering = -created_at`.
+   - `category = courses` (по желанию).
+   - `ordering` при `search` не применяется.
 4. Нажмите **Execute**.
 
 Пример запроса:
 
-`/api/v1/materials/materials/?search=воркшп&min_rank=0.10&category=courses&ordering=-created_at`
+`/api/v1/materials/materials/?search=воркшп&min_rank=0.10&category=courses`
 
 ## 4. Рекомендации для фронтенда
 

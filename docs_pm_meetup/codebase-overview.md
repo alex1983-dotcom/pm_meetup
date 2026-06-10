@@ -1,6 +1,6 @@
 # Карта кодовой базы PM Meetup
 
-Краткий ориентир по репозиторию. Детали моделей и API — в `docs/app/*` и в Swagger `/api/docs/`.
+Краткий ориентир по репозиторию. Детали моделей и API — в `docs_pm_meetup/app/*`, [auth-sessions.md](auth-sessions.md) и Swagger `/api/docs/`.
 
 ## Корень проекта
 
@@ -39,4 +39,4 @@
 
 - Префикс REST: `/api/v1/...`, страницы с блоками: `/api/pages/<slug>/`.
 - Документация OpenAPI: `/api/schema/`, Swagger UI: `/api/docs/`.
-- Сводка маршрутов: `docs/api-endpoints.md`.
+- Сводка маршрутов: [api-endpoints.md](api-endpoints.md). Доступ и сессии: [auth-sessions.md](auth-sessions.md).

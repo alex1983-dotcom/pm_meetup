@@ -2,7 +2,7 @@
 
 Документ приведён в соответствие с кодом в `apps/*/models.py` (актуально на момент правки). Ниже — доменные модели и служебные сущности ядра.
 
-**Общее:** модели `Event`, `Speaker`, `EventSegment`, `EventRegistration`, `EventGallery`, `NewsArticle`, `Partner`, `TeamMember`, `SiteSettings`, `content.Page`, `PartnershipApplication`, `Material`, `MaterialCategory`, `BlockItem` наследуют **`TimeStampedModel`** (`created_at`, `updated_at`) из `apps.core.models`. **`Tag`** тоже наследует `TimeStampedModel`. **`ApiKey`** — отдельная модель без таймстампов обновления (только `created_at`). **`pages.Page`**, **`BlockType`**, **`PageBlock`** — без `TimeStampedModel` (у `PageBlock` нет своих `created_at`/`updated_at` в модели).
+**Общее:** модели `Event`, `Speaker`, `EventSegment`, `EventRegistration`, `EventGallery`, `NewsArticle`, `Partner`, `TeamMember`, `SiteSettings`, `content.Page`, `PartnershipApplication`, `Material`, `MaterialCategory`, `BlockItem`, **`pages.Page`** наследуют **`TimeStampedModel`** (`created_at`, `updated_at`) из `apps.core.models`. **`Tag`** тоже наследует `TimeStampedModel`. **`ApiKey`** — отдельная модель без `updated_at` (только `created_at`). **`BlockType`**, **`PageBlock`** — без `TimeStampedModel`.
 
 ---
 

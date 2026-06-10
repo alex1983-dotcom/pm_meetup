@@ -60,9 +60,3 @@ certbot/www/*
 .DS_Store
 Thumbs.db
 
-# ========== Документация ================
-docs/Daily-Notes/
-docs/app_pdf/
-docs_pm_meetup/pm_meetup_draft
-
-

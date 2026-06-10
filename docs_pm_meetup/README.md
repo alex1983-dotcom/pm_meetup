@@ -1,6 +1,8 @@
 # Документация PM Meetup
 
-Индекс файлов в каталоге **`docs_pm_meetup/`**. Подробности по приложениям — в `app/*`.
+Корень Obsidian-vault и индекс файлов в **`docs_pm_meetup/`**. Подробности по приложениям — в `app/*`.
+
+**`specification.md`** — целевое ТЗ (может опережать код). **`Daily-Notes/office-and-dev-slang.md`** — словарь терминов, не описание продукта.
 
 ## Обзор и архитектура
 
@@ -19,26 +21,30 @@
 | [auth-sessions.md](auth-sessions.md) | API-ключ, origin, сессия, видимость контента |
 | [search-swagger-guide.md](search-swagger-guide.md) | Поиск `pg_trgm`, `min_rank`, работа со Swagger |
 | [static-assets-without-api.md](static-assets-without-api.md) | Постоянные картинки без API: Django `static/` vs CRA `public`/`src` |
+| [api_powershell/README.md](api_powershell/README.md) | Запросы к API из PowerShell |
 
 ## Модели и данные
 
 | Документ | Содержание |
 |----------|------------|
 | [models-draft.md](models-draft.md) | Набросок моделей и связей (сверять с `apps/*/models.py`) |
+| [models-codebase.md](models-codebase.md) | Выжимка `apps/*/models.py` для Obsidian |
+| [models-relations-diagram.md](models-relations-diagram.md) | Mermaid-схемы связей |
+| [model-schema-graph.md](model-schema-graph.md) | Генерация DOT-графа моделей |
 
 Тип события vs теги vs программа (сегменты) — в [app/events-app-documentation.md](app/events-app-documentation.md).
 
 ## Документация по приложениям Django (`apps/*`)
 
-| Приложение | Файл |
-|------------|------|
-| core | [app/core-app-documentation.md](app/core-app-documentation.md) |
-| users | [app/users-app-documentation.md](app/users-app-documentation.md) |
-| events | [app/events-app-documentation.md](app/events-app-documentation.md) |
-| news | [app/news-app-documentation.md](app/news-app-documentation.md) |
-| content | [app/content-app-documentation.md](app/content-app-documentation.md) |
-| pages | [app/pages-app-documentation.md](app/pages-app-documentation.md) |
-| materials | [app/materials-app-documentation.md](app/materials-app-documentation.md) |
+| Приложение | Файл | PDF |
+|------------|------|-----|
+| core | [app/core-app-documentation.md](app/core-app-documentation.md) | [app_pdf/core-app-documentation.pdf](app_pdf/core-app-documentation.pdf) |
+| users | [app/users-app-documentation.md](app/users-app-documentation.md) | [app_pdf/users-app-documentation.pdf](app_pdf/users-app-documentation.pdf) |
+| events | [app/events-app-documentation.md](app/events-app-documentation.md) | [app_pdf/events-app-documentation.pdf](app_pdf/events-app-documentation.pdf) |
+| news | [app/news-app-documentation.md](app/news-app-documentation.md) | [app_pdf/news-app-documentation.pdf](app_pdf/news-app-documentation.pdf) |
+| content | [app/content-app-documentation.md](app/content-app-documentation.md) | [app_pdf/content-app-documentation.pdf](app_pdf/content-app-documentation.pdf) |
+| pages | [app/pages-app-documentation.md](app/pages-app-documentation.md) | — |
+| materials | [app/materials-app-documentation.md](app/materials-app-documentation.md) | [app_pdf/materials-app-documentation.pdf](app_pdf/materials-app-documentation.pdf) |
 
 ## Инфраструктура и процессы
 
@@ -56,6 +62,9 @@
 |----------|------------|
 | [admin-questions.md](admin-questions.md) | Вопросы по админке и сводка «что уже в коде» |
 | [check-list-front.md](check-list-front.md) | Чек-лист для фронтенд-разработчика |
+| [Daily-Notes/office-and-dev-slang.md](Daily-Notes/office-and-dev-slang.md) | Словарь офисных и dev-терминов |
+| [hols_PM_MEETUP.canvas](hols_PM_MEETUP.canvas) | Obsidian Canvas — обзорная схема |
+| `media/` | Скриншоты макетов |
 
 ---
 

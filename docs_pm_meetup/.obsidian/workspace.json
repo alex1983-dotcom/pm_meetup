@@ -1,0 +1,198 @@
+{
+  "main": {
+    "id": "3dc4ed883eb4370d",
+    "type": "split",
+    "children": [
+      {
+        "id": "09c36404be232aa1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d4908586c629e3eb",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "hols_PM_MEETUP.canvas",
+                "viewState": {
+                  "x": -13683.377904793573,
+                  "y": 2863.457111402317,
+                  "zoom": -0.9999999999999998
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "hols_PM_MEETUP"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "55ae39a690792ac4",
+    "type": "split",
+    "children": [
+      {
+        "id": "36c34fd89e4061b4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3bfe47f88b84691e",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Файловый менеджер"
+            }
+          },
+          {
+            "id": "20ebd2134ce4a5fa",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Поиск"
+            }
+          },
+          {
+            "id": "d8277a11089c8985",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Закладки"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "right": {
+    "id": "d8c7d6ff4652d153",
+    "type": "split",
+    "children": [
+      {
+        "id": "c9cb759630b02ba3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "97a5fb29c796c799",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "hols_PM_MEETUP.canvas",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Обратные ссылки для hols_PM_MEETUP"
+            }
+          },
+          {
+            "id": "360b9060af8d8264",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "hols_PM_MEETUP.canvas",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Исходящие ссылки из hols_PM_MEETUP"
+            }
+          },
+          {
+            "id": "e516bde13f4d305f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Теги"
+            }
+          },
+          {
+            "id": "97693bcc686fccb5",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Все свойства"
+            }
+          },
+          {
+            "id": "16218380824b0349",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "hols_PM_MEETUP.canvas",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Структура hols_PM_MEETUP"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Меню быстрого перехода": false,
+      "graph:Граф": false,
+      "canvas:Создать новый холст": false,
+      "daily-notes:Сегодняшняя заметка": false,
+      "templates:Вставить шаблон": false,
+      "command-palette:Открыть палитру команд": false,
+      "bases:Создать новую базу": false,
+      "obsidian-excalidraw-plugin:Создать новый чертеж": false
+    }
+  },
+  "active": "d4908586c629e3eb",
+  "lastOpenFiles": [
+    "app/events-app-documentation.md",
+    "hols_PM_MEETUP.canvas",
+    "media/Events.jpg",
+    "Evenvts.md"
+  ]
+}

@@ -60,3 +60,7 @@ certbot/www/*
 .DS_Store
 Thumbs.db
 
+# ===== Obsidian =====
+.obsidian/
+
+
